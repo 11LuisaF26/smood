@@ -32,7 +32,25 @@
 								<form role="form" method="post" action="">
 
 									{% csrf_token %}  
-															
+
+									<div class="input-group mb-3">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="feather icon-user"></i></span>
+										</div>
+										{{ form.name }}
+									</div>
+									<span class="text-error">{{ form.name.errors }}</span>
+
+
+									<div class="input-group mb-3">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="feather icon-user"></i></span>
+										</div>
+										{{ form.last_name }}
+									</div>
+									<span class="text-error">{{ form.last_name.errors }}</span>
+
+
 									<div class="input-group mb-3">
 										<div class="input-group-prepend">
 											<span class="input-group-text"><i class="feather icon-user"></i></span>
@@ -40,7 +58,7 @@
 										{{ form.username }}
 									</div>
 									<span class="text-error">{{ form.username.errors }}</span>
-
+									
 									<div class="input-group mb-3">
 										<div class="input-group-prepend">
 											<span class="input-group-text"><i class="feather icon-mail"></i></span>
@@ -77,13 +95,6 @@
 
 								<p class="mb-0 text-muted">Have an account? <a href={% url 'login' %} class="f-w-400">Login</a></p>
 							{% endif %}
-
-							<p class="mb-2 text-muted">
-								<br />
-								&copy; <a target="_blank" rel="noopener" href="https://codedthemes.com/?ref=appseed" class="f-w-400">CodedThemes</a>
-								- coded by <a target="_blank" rel="noopener" href="https://appseed.us" class="f-w-400">AppSeed</a>
-							</p>
-
 						</div>
 					</div>
 				</div>

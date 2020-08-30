@@ -1,0 +1,83 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Crear Empresa {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<!-- [ Main Content ] start -->
+<section class="pcoded-main-container">
+    <div class="pcoded-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">Empresas</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/ "><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="/empresas/">Empresas</a></li>
+                            <li class="breadcrumb-item"><a href="#!">Crear empresa </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <!-- [ stiped-table ] start -->
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Crear empresa</h5>                        
+                    </div>
+                    <div class="card-body table-border-style">
+                        <form action="{% url 'crear_empresa' %}" method="post" role="form">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label>NIT</label>
+                                <input type="text" class="form-control" id="NIT" {{ form.nit_empresa }} </input>
+                            </div>
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <input type="text" class="form-control" id="nombre_empresa" {{ form.nombre_empresa }}
+                                    </input>
+
+                            </div>
+                            <div class="form-group">
+                                <label>Estado Empresa</label>
+                                <select type="text" class="form-control" id="estado_empresa" {{ form.estado_empresa }}
+                                    </select>
+
+                            </div>                          
+
+                            <div class="form-group">
+                                <label>Usuarios</label>
+                                <select type="text" class="form-control" id="empresa_campana" {{ form.usuarios }} </select>                            
+                            </div>                                
+                            <button type="submit" name="crearempresa" class="btn btn-primary btn-block mb-4">Crear
+                                empresa</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- [ stiped-table ] end -->
+        </div>
+    </div>
+</section>>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<!-- Apex Chart -->
+<script src="/static/assets/js/plugins/apexcharts.min.js"></script>
+<!-- custom-chart js -->
+<script src="/static/assets/js/pages/dashboard-main.js"></script>
+
+{% endblock javascripts %}

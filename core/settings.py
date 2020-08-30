@@ -5,6 +5,7 @@ Copyright (c) 2019 - present AppSeed.us
 """
 
 import os
+from django.urls import reverse_lazy
 from decouple import config
 from unipath import Path
 import dj_database_url
@@ -17,7 +18,7 @@ PROJECT_DIR = Path(__file__).parent
 SECRET_KEY = config('SECRET_KEY', default='S#perS3crEt_1122')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False)
+DEBUG = config('DEBUG', default=True)
 
 # load production server from .env
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', config('SERVER', default='127.0.0.1')]
@@ -31,7 +32,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app'  # Enable the inner app 
+    'app'
+    
 ]
 
 MIDDLEWARE = [
@@ -42,7 +44,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    #'whitenoise.middleware.WhiteNoiseMiddleware',
+    #'ip_restriction.IpWhitelister',
+    'admin_ip_restrictor.middleware.AdminIPRestrictorMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -124,5 +128,15 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'core/static'),
 )
+
+#Restringir direcciones IP
+# ALLOW_ADMIN = False
+# ALLOW_AUTHENTICATED = False
+# ALLOWED_IPS = ['192.168.0.4']
+# RESTRICT_ADMIN = True
+# ALLOWED_ADMIN_IPS = ['192.168.0.4']
+# ALLOWED_ADMIN_IP_RANGES = ['192.168.0.0/24']
+# RESTRICTED_APP_NAMES = ['admin']
+# TRUST_PRIVATE_IP = True
 #############################################################
 #############################################################

@@ -1,0 +1,63 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Crear Empresa {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<!-- [ Main Content ] start -->
+<section class="pcoded-main-container">
+    <div class="pcoded-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">Redes Sociales</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/ "><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="/redes/">Redes Sociales</a></li>
+                            <li class="breadcrumb-item"><a href="#!">Crear Redes Sociales </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+<div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                        <div class="card-header">
+                            <h5>Crear Ubicación</h5>                        
+                        </div>                
+                        <div class="card-body table-border-style">                        
+                            <form action="{% url 'crear_ubicacion' %}" method="post">
+                                {% csrf_token %}                            
+                                <div class="form-group">
+                                    <label>Nombre</label>
+                                    <input type="text" class="form-control" id="nombre_ubicacion" {{ form.nombre_ubicacion }} 
+                                    </input>
+                                </div>                                
+                                    <button type="submit" name="register" class="btn btn-primary btn-block mb-4">Crear</button>                            
+                            </form>
+                        </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<!-- Apex Chart -->
+<script src="/static/assets/js/plugins/apexcharts.min.js"></script>
+<!-- custom-chart js -->
+<script src="/static/assets/js/pages/dashboard-main.js"></script>
+
+{% endblock javascripts %}

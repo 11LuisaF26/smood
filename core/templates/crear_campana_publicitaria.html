@@ -1,0 +1,107 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Crear Campaña publicitaria {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<!-- [ Main Content ] start -->
+<section class="pcoded-main-container">
+    <div class="pcoded-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">Campaña publicitaria</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/ "><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="/campanas/">Campañas publicitarias</a></li>
+                            <li class="breadcrumb-item"><a href="#!">Crear campaña publicitaria</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- [ stiped-table ] start -->
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Crear Campaña Publicitaria</h5>                        
+                    </div>
+                    <div class="card-body table-border-style">                        
+                            <form action="{% url 'crear_campana' %}" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label>Nombre de la campaña publicitaria</label>
+                                <input type="text" class="form-control" id="nombre_campana" {{ form.nombre_campana }}
+                                    </input>
+                            </div>
+                            <div class="form-group">
+                                <label>Descripción</label>
+                                <textarea type="text" class="form-control" id="descripcion_campana"
+                                    {{ form.descripcion_campana }} </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Objetivo</label>
+                                <input type="text" class="form-control" id="objetivo_campana" {{ form.objetivo_campana }}
+                                </input>    
+                            </div>
+                             <div class="form-group">
+                                <label>Público</label>
+                                <input type="text" class="form-control" id="publico_campana" {{ form.publico_campana }}
+                                </input>    
+                            </div>
+                            <div class="form-group">
+                                <label>Ubicación</label>
+                                <input type="text" class="form-control" id="ubicacion_campana" {{ form.ubicacion_campana }}
+                                </input>    
+                            </div>
+                            <div class="form-group">
+                                <label>Presupuesto</label>
+                                <input type="number" class="form-control" id="presupuesto_campana" {{ form.presupuesto_campana }}
+                                </input>    
+                            </div>
+                            <div class="form-group">
+                                <label>Eficacia</label>
+                                <input type="text" class="form-control" id="eficacia_camapana" {{ form.eficacia_camapana }}
+                                </input>    
+                            </div>
+                            <div class="form-group">
+                                <label>Empresa</label>
+                                <select type="text" class="form-control" id="empresa_campana" {{ form.empresa_campana }}
+                                </select>    
+                            </div>
+                            <div class="form-group">
+                                <label>Usuario</label>
+                                <select type="text" class="form-control" id="usuario_campana" {{ form.usuario_campana }}
+                                </select>                            
+                            </div>                                
+                            <button type="submit" name="crear_campana" class="btn btn-primary btn-block mb-4">Crear
+                                    campaña</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- [ stiped-table ] end -->
+        </div>
+    </div>
+</section>>
+ 
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+    <!-- Apex Chart -->
+    <script src="/static/assets/js/plugins/apexcharts.min.js"></script>
+    <!-- custom-chart js -->
+    <script src="/static/assets/js/pages/dashboard-main.js"></script>
+
+{% endblock javascripts %}

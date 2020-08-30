@@ -9,7 +9,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.forms.utils import ErrorList
 from django.http import HttpResponse
 from .forms import LoginForm, SignUpForm
@@ -45,8 +45,10 @@ def register_user(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get("username")
-            raw_password = form.cleaned_data.get("password1")
+            raw_password = form.cleaned_data.get("password1")   
+            group = Group.objects.get(name='Cliente')                     
             user = authenticate(username=username, password=raw_password)
+            user.groups.add(group)
 
             msg     = 'User created - please <a href="/login">login</a>.'
             success = True
