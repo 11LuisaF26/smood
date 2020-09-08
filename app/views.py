@@ -89,6 +89,8 @@ def redes_sociales(request):
 #******************************
 @login_required(login_url="/login/")
 def add_camapana_publicitaria(request):
+    msg     = None
+    success = False  
     user = request.user
     form = campana_publicitaria_form()
     if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists(): 
@@ -96,17 +98,21 @@ def add_camapana_publicitaria(request):
             form = campana_publicitaria_form(request.POST) # Bound form
             if form.is_valid():
                 new_campana = form.save() # Guardar los datos en la base de datos
-                return HttpResponseRedirect(reverse('campanas'))
+                msg     = 'Campaña publicitaria creada.'
+                success = True
+                #return HttpResponseRedirect(reverse('campanas'))
         else:
             form = campana_publicitaria_form() # Unbound form
     elif user.groups.filter(name='Cliente').exists():
         raise PermissionDenied
     
-    return render(request, 'crear_campana_publicitaria.html', {'form': form})
+    return render(request, 'crear_campana_publicitaria.html', {'form': form, "msg" : msg, "success" : success })
 
 
 @login_required(login_url="/login/")
 def add_empresas(request):
+    msg     = None
+    success = False  
     user = request.user
     form = empresa_form()
     if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists():        
@@ -114,16 +120,20 @@ def add_empresas(request):
             form = empresa_form(request.POST) # Bound form
             if form.is_valid():
                 new_empresa = form.save() # Guardar los datos en la base de datos
-                return HttpResponseRedirect(reverse('empresas'))
+                msg     = 'Empresa creada.'
+                success = True
+                #return HttpResponseRedirect(reverse('empresas'))
         else:
             form = empresa_form() # Unbound form       
 
     elif user.groups.filter(name='Cliente').exists():
         raise PermissionDenied
-    return render(request, 'crear_empresa.html', {'form': form})
+    return render(request, 'crear_empresa.html', {'form': form, "msg" : msg, "success" : success })
     
 @login_required(login_url="/login/")
 def add_red_social(request):
+    msg     = None
+    success = False  
     user = request.user
     form = red_social_form()
     if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists():
@@ -131,16 +141,20 @@ def add_red_social(request):
             form = red_social_form(request.POST) # Bound form
             if form.is_valid():
                 new_red_social = form.save() # Guardar los datos en la base de datos
-                return HttpResponseRedirect(reverse('redes_sociales'))
+                msg     = 'Red social creada.'
+                success = True
+                # return HttpResponseRedirect(reverse('redes_sociales'))
         else:
             form = red_social_form() # Unbound form
     elif user.groups.filter(name='Cliente').exists():
         raise PermissionDenied    
 
-    return render(request, 'crear_redes_sociales.html', {'form': form})
+    return render(request, 'crear_redes_sociales.html', {'form': form, "msg" : msg, "success" : success })
 
 @login_required(login_url="/login/")
 def add_ubicacion(request):
+    msg     = None
+    success = False  
     user = request.user
     form = ubicacion_form()
     if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists():        
@@ -148,17 +162,21 @@ def add_ubicacion(request):
             form = ubicacion_form(request.POST) # Bound form
             if form.is_valid():
                 new_ubicacion = form.save() # Guardar los datos en la base de datos
-                return HttpResponseRedirect(reverse('redes_sociales'))
+                msg     = 'Ubicacion creada.'
+                success = True
+                #return HttpResponseRedirect(reverse('redes_sociales'))
         else:
             form = ubicacion_form() # Unbound form
     elif user.groups.filter(name='Cliente').exists():
         raise PermissionDenied
 
 
-    return render(request, 'crear_ubicacion.html', {'form': form})
+    return render(request, 'crear_ubicacion.html', {'form': form, "msg" : msg, "success" : success })
 
 @login_required(login_url="/login/")
 def add_hashtag(request):
+    msg     = None
+    success = False    
     user = request.user   
     form = hashtag_form()
     if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists():        
@@ -166,10 +184,12 @@ def add_hashtag(request):
             form = hashtag_form(request.POST) # Bound form
             if form.is_valid():
                 new_hashtag = form.save() # Guardar los datos en la base de datos
-                return HttpResponseRedirect(reverse('redes_sociales'))
+                msg     = 'Hashtag creado.'
+                success = True
+                #return HttpResponseRedirect(reverse('redes_sociales'))
         else:
             form = hashtag_form() # Unbound form
     elif user.groups.filter(name='Cliente').exists():
         raise PermissionDenied
 
-    return render(request, 'crear_hashtag.html', {'form': form})  
+    return render(request, 'crear_hashtag.html', {'form': form, "msg" : msg, "success" : success })  

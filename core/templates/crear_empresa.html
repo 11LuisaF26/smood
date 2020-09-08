@@ -35,6 +35,15 @@
                     <div class="card-header">
                         <h5>Crear empresa</h5>                        
                     </div>
+                    <span class="card-body table-border-style">
+                        {% if msg %}
+                            {{ msg | safe }}
+                        {% else %}
+                            Escribe el hashtag que deseas agregar
+                        {% endif %} 
+                    </span>                   
+                    
+                    {% if not success %}  
                     <div class="card-body table-border-style">
                         <form action="{% url 'crear_empresa' %}" method="post" role="form">
                             {% csrf_token %}
@@ -62,6 +71,7 @@
                             <button type="submit" name="crearempresa" class="btn btn-primary btn-block mb-4">Crear
                                 empresa</button>
                         </form>
+                        {% endif %} 
                     </div>
                 </div>
             </div>

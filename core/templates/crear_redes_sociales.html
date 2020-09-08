@@ -35,6 +35,15 @@
                     <div class="card-header">
                         <h5>Crear Redes Sociales</h5>                        
                     </div>
+                    <span class="card-body table-border-style">
+                        {% if msg %}
+                            {{ msg | safe }}
+                        {% else %}
+                            Escribe el hashtag que deseas agregar
+                        {% endif %} 
+                    </span>                   
+                    
+                    {% if not success %}  
                     <div class="card-body table-border-style">
                         <form action="{% url 'crear_red' %}" method="post" role="form">
                             {% csrf_token %}
@@ -44,7 +53,11 @@
                             </div>
                             <div class="form-group">
                                 <label>Nombre de la red social</label>
-                                <input type="text" class="form-control" id="nombre_red_social" {{ form.nombre_red_social }} </input>
+                                <select type="text" class="form-control" id="nombre_red_social" {{ form.nombre_red_social }} 
+                                    <option>Twitter</option>
+                                    <option>Facebook</option>
+                                    <option>Instagram</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label>Usuario</label>
@@ -96,7 +109,8 @@
                             </div> -->
                             <button type="submit" name="crearredsocial" class="btn btn-primary btn-block mb-4">Crear
                                 red Social</button>
-                        </form>                        
+                        </form>           
+                        {% endif %}              
                     </div>
                 </div>
             </div>    

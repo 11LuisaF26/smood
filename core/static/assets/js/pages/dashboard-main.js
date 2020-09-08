@@ -231,7 +231,7 @@ function floatchart() {
                 type: 'gradient',
                 gradient: {
                     shade: 'light',
-                    gradientToColors: ['#4099ff', '#2ed8b6'],
+                    gradientToColors: ['#001233', '#2ed8b6'],
                     shadeIntensity: 0.5,
                     type: 'horizontal',
                     opacityFrom: 1,
@@ -241,7 +241,7 @@ function floatchart() {
             },
             markers: {
                 size: 5,
-                colors: ['#4099ff', '#2ed8b6'],
+                colors: ['#001233', '#2ed8b6'],
                 opacity: 0.9,
                 strokeWidth: 2,
                 hover: {

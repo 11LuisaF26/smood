@@ -17,7 +17,7 @@ $(document).ready(function() {
                 stroke: {
                     curve: 'straight',
                 },
-                colors: ["#4099ff"],
+                colors: ["#001233"],
                 fill: {
                     type: "gradient",
                     gradient: {
@@ -111,7 +111,7 @@ $(document).ready(function() {
                 series: [{
                     data: data
                 }],
-                colors: ["#4099ff"],
+                colors: ["#001233"],
                 title: {
                     text: 'Dynamic Updating Chart',
                     align: 'left'
@@ -603,7 +603,7 @@ $(document).ready(function() {
                     size: 0,
                     style: 'hollow',
                 },
-                colors: ["#4099ff"],
+                colors: ["#001233"],
                 xaxis: {
                     type: 'datetime',
                     min: new Date('01 Mar 2012').getTime(),
@@ -703,7 +703,7 @@ $(document).ready(function() {
                 dataLabels: {
                     enabled: false
                 },
-                colors: ["#0e9e4a", "#4099ff", "#FF5370"],
+                colors: ["#0e9e4a", "#001233", "#FF5370"],
                 stroke: {
                     show: true,
                     width: 2,
@@ -766,7 +766,7 @@ $(document).ready(function() {
                         enabled: true
                     }
                 },
-                colors: ["#4099ff", "#0e9e4a", "#FFB64D", "#FF5370"],
+                colors: ["#001233", "#0e9e4a", "#FFB64D", "#FF5370"],
                 responsive: [{
                     breakpoint: 480,
                     options: {
@@ -836,7 +836,7 @@ $(document).ready(function() {
                         },
                     }
                 },
-                colors: ["#4099ff", "#0e9e4a"],
+                colors: ["#001233", "#0e9e4a"],
                 dataLabels: {
                     enabled: true,
                     offsetX: -6,
@@ -891,7 +891,7 @@ $(document).ready(function() {
                     },
 
                 },
-                colors: ["#4099ff", "#00bcd4", "#0e9e4a", "#FFB64D", "#FF5370"],
+                colors: ["#001233", "#00bcd4", "#0e9e4a", "#FFB64D", "#FF5370"],
                 stroke: {
                     width: 1,
                     colors: ['#fff']
@@ -968,7 +968,7 @@ $(document).ready(function() {
                 stroke: {
                     width: [0, 4]
                 },
-                colors: ["#4099ff", "#FF5370"],
+                colors: ["#001233", "#FF5370"],
                 fill: {
                     type: 'gradient',
                     gradient: {
@@ -1023,7 +1023,7 @@ $(document).ready(function() {
                         columnWidth: '50%'
                     }
                 },
-                colors: ['#FF5370', '#4099ff', '#FFB64D'],
+                colors: ['#FF5370', '#001233', '#FFB64D'],
                 series: [{
                     name: 'Facebook',
                     type: 'column',
@@ -1430,7 +1430,7 @@ $(document).ready(function() {
                         })
                     }
                 ],
-                colors: ["#4099ff", "#0e9e4a", "#FFB64D", "#FF5370"],
+                colors: ["#001233", "#0e9e4a", "#FFB64D", "#FF5370"],
                 fill: {
                     type: 'gradient',
                     gradient: {
@@ -1514,7 +1514,7 @@ $(document).ready(function() {
                 fill: {
                     type: 'gradient',
                 },
-                colors: ["#4099ff", "#0e9e4a", "#FFB64D", "#FF5370"],
+                colors: ["#001233", "#0e9e4a", "#FFB64D", "#FF5370"],
                 title: {
                     text: '3D Bubble Chart'
                 },
@@ -1549,7 +1549,7 @@ $(document).ready(function() {
                         type: 'xy'
                     }
                 },
-                colors: ["#4099ff", "#0e9e4a", "#FF5370", "#FFB64D", "#00bcd4"],
+                colors: ["#001233", "#0e9e4a", "#FF5370", "#FFB64D", "#00bcd4"],
                 series: [{
                     name: "SAMPLE A",
                     data: [
@@ -1722,7 +1722,7 @@ $(document).ready(function() {
                 dataLabels: {
                     enabled: false
                 },
-                colors: ["#4099ff", "#0e9e4a", "#FF5370", "#FFB64D", "#00bcd4"],
+                colors: ["#001233", "#0e9e4a", "#FF5370", "#FFB64D", "#00bcd4"],
                 grid: {
                     xaxis: {
                         showLines: true
@@ -1782,7 +1782,7 @@ $(document).ready(function() {
                 dataLabels: {
                     enabled: false
                 },
-                colors: ["#4099ff"],
+                colors: ["#001233"],
                 series: [{
                         name: 'Metric1',
                         data: generateDatasehratheat(12, {
@@ -1971,7 +1971,7 @@ $(document).ready(function() {
                         })
                     }
                 ],
-                colors: ["#4099ff", "#00bcd4", "#0e9e4a", "#FFB64D", "#FF5370"],
+                colors: ["#001233", "#00bcd4", "#0e9e4a", "#FFB64D", "#FF5370"],
                 xaxis: {
                     type: 'category',
                 },
@@ -1993,7 +1993,7 @@ $(document).ready(function() {
                 },
                 labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
                 series: [44, 55, 13, 43, 22],
-                colors: ["#4099ff", "#0e9e4a", "#00bcd4", "#FFB64D", "#FF5370"],
+                colors: ["#001233", "#0e9e4a", "#00bcd4", "#FFB64D", "#FF5370"],
                 legend: {
                     show: true,
                     position: 'bottom',
@@ -2033,7 +2033,7 @@ $(document).ready(function() {
                     type: 'donut',
                 },
                 series: [44, 55, 41, 17, 15],
-                colors: ["#4099ff", "#0e9e4a", "#00bcd4", "#FFB64D", "#FF5370"],
+                colors: ["#001233", "#0e9e4a", "#00bcd4", "#FFB64D", "#FF5370"],
                 fill: {
                     type: 'gradient',
                     gradient: {
@@ -2094,7 +2094,7 @@ $(document).ready(function() {
                         }
                     },
                 },
-                colors: ["#4099ff"],
+                colors: ["#001233"],
                 fill: {
                     type: 'gradient',
                     gradient: {
@@ -2145,7 +2145,7 @@ $(document).ready(function() {
                         }
                     }
                 },
-                colors: ["#4099ff", "#0e9e4a", "#FFB64D", "#FF5370"],
+                colors: ["#001233", "#0e9e4a", "#FFB64D", "#FF5370"],
                 fill: {
                     type: 'gradient',
                     gradient: {
@@ -2290,7 +2290,7 @@ $(document).ready(function() {
                 title: {
                     text: 'Radar Chart - Multi Series'
                 },
-                colors: ["#4099ff", "#0e9e4a", "#FF5370"],
+                colors: ["#001233", "#0e9e4a", "#FF5370"],
                 stroke: {
                     width: 0
                 },

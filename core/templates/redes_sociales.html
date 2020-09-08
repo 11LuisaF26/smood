@@ -42,13 +42,11 @@
                                     <thead>
                                         <tr> 
                                             <th>#</th>
-                                            <th>Nombre</th>
+                                            <th>Nombre Escucha</th>
+                                            <th>Red Social</th>
                                             <th>Usuario</th>
                                             <th>Fecha Inicio</th> 
-                                            <th>Fecha Final</th>                            
-                                            <th>Cantidad de seguidores</th>
-                                            <th>Cantidad de likes</th>
-                                            <th>Cantidad de reacciones</th>
+                                            <th>Fecha Final</th>                                                                        
                                             <th>Empresa</th>
                                             <th>Campaña Publicitaria</th>
                                         </tr>
@@ -59,13 +57,11 @@
                                        <!-- url in view -->
                                         <tr> 
                                             <td>{{ forloop.counter }}</td>
+                                            <td>{{redes_sociales.nombre_escucha}} </td>
                                             <td>{{redes_sociales.nombre_red_social}} </td>
                                             <td>{{redes_sociales.usuario_red_social}}</td>
                                             <td>{{redes_sociales.fecha_inicio_red_social}}</td>
                                             <td>{{redes_sociales.fecha_final_red_social}}</td>
-                                            <td>{{redes_sociales.cantidad_seguidores_red_social}}</td>
-                                            <td>{{redes_sociales.cantidad_likes_red_social}}</td>
-                                            <td>{{redes_sociales.cantidad_reacciones_red_social}}</td>
                                             <td>{{redes_sociales.empresa_red_social}}</td>
                                             <td>{{redes_sociales.campana_publicitaria_red_social}}</td>
                                             

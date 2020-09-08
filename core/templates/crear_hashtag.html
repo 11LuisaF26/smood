@@ -32,7 +32,16 @@
                 <div class="card">
                     <div class="card-header">
                         <h5>Crear hashtag</h5>                        
-                    </div>                
+                    </div>     
+                    <span class="card-body table-border-style">
+                        {% if msg %}
+                            {{ msg | safe }}
+                        {% else %}
+                            Escribe el hashtag que deseas agregar
+                        {% endif %} 
+                    </span>                   
+                    
+                    {% if not success %}           
                     <div class="card-body table-border-style"> 
             <form action="{% url 'crear_hashtag' %}" method="post" role="form">
                 <form>
@@ -45,6 +54,7 @@
                 <button type="submit" name="crearhashtag" class="btn btn-primary btn-block mb-4">Crear
                     hashtag</button>
              </form>
+             {% endif %}
             </form>
         </div>
     </div>
