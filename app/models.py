@@ -49,7 +49,6 @@ class campana_publicitaria(models.Model):
     def __str__(self):
         return self.nombre_campana
 
-    
 class ubicacion(models.Model):
     nombre_ubicacion = models.CharField(blank=True, max_length=100, verbose_name='Nombre')    
 
@@ -86,9 +85,19 @@ class red_social(models.Model):
     # cantidad_likes_red_social = models.IntegerField(null=True, verbose_name='Cantidad de Likes')
     # cantidad_reacciones_red_social = models.IntegerField(null=True, verbose_name='Cantidad de reacciones')
 
+class data_red(models.Model):
+    
+    publicacion_id = models.CharField(null=True, max_length=30, verbose_name='Id')
+    publicacion_fecha = models.CharField(blank=True, max_length=60, verbose_name='Fecha')
+    publicacion_texto = models.CharField(blank=True, max_length=60, verbose_name='Text')
+    publicacion_likes = models.IntegerField(null=True, verbose_name='Likes')
+    publicacion_comentarios = models.IntegerField(null=True, verbose_name='Comentarios')
+    publicacion_compartidos = models.IntegerField(null=True, verbose_name='Veces compartido')
+    publicacion_user = models.CharField(blank=True, max_length=30, verbose_name='User')
+    
     class Meta():
-        verbose_name = "red_social"
-        verbose_name_plural = "redes_sociales"
+        verbose_name = "data_red"
+        verbose_name_plural = "data_redes"
 
     def __str__(self):
-        return self.nombre_red_social
+        return self.publicacion_id
