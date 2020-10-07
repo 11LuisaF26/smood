@@ -1,12 +1,17 @@
+# -*- coding: utf-8 -*-
 from background_task import background
 from django.contrib.auth.models import User
 from facebook_scraper import get_posts
 from app.models import data_red
+from app.models import twitter_credencial
+from requests.exceptions import HTTPError, ConnectionError, Timeout
+from . import twitter_conn
 import logging
+import json
 logger = logging.getLogger(__name__)
 
 @background(schedule=5)
-def get_facebook_post(nombre_pagina, numero_paginas):
+def get_facebook_post(nombre_pagina, numero_paginas, nombre_red_social):
     for publicacion in get_posts(nombre_pagina, pages=numero_paginas):
         if publicacion:
             publicacion_id = publicacion["post_id"]
@@ -24,9 +29,56 @@ def get_facebook_post(nombre_pagina, numero_paginas):
                         publicacion_likes = publicacion_likes,
                         publicacion_comentarios = publicacion_comentarios,
                         publicacion_compartidos = publicacion_compartidos,
-                        publicacion_user = publicacion_user
+                        publicacion_user = publicacion_user,
+                        publicacion_red_social = nombre_red_social
                 )
             d.save()
 
         else:
             logger.error("Ha ocurrido un error")
+
+@background(schedule=5)
+def obtener_twitters(nombre_usuario, nombre_red_social):
+    twitter_credenciales = twitter_credencial.objects.all().values()
+    #bearer_token = twitter_credenciales["bearer_token"]
+
+    bearer_token = "AAAAAAAAAAAAAAAAAAAAACxvIQEAAAAAD51htfGW8TNRh2Ytqdv829iBUuc%3DNYLgE6zuguIYeNBE8IAuyspAEzZliltH0m0zSNuHtZdNJp8rgJ"
+    conn = twitter_conn.TwitterConn(access_token=bearer_token)
+    
+    try:
+        response_user_tweets = conn.obtener_twiiter_user(nombre_usuario=nombre_usuario)
+        response_user_tweets.raise_for_status()
+    except (ConnectionError, TimeoutError) as e:
+        logger.error(str(e))
+        raise ValidationError("ConnectionError or TimeoutError")
+    except HTTPError as e:
+        logger.error(str(e))
+        raise ValidationError("HTTP Error")
+    except Exception as e:
+        logger.error(str(e))
+        raise ValidationError("Exception")
+    else:
+        content_response_user_tweets = response_user_tweets.content.decode("utf-8")
+        data_response_user_tweets = json.loads(content_response_user_tweets)
+        list_data = data_response_user_tweets["data"]
+
+        for data in list_data:
+            publicacion_id = data["id"]
+            publicacion_texto = data["text"][:50]
+            publicacion_fecha = data["created_at"]
+            publicacion_likes = data["public_metrics"]["like_count"]
+            publicacion_comentarios = data["public_metrics"]["reply_count"]
+            publicacion_compartidos = data["public_metrics"]["retweet_count"]
+            publicacion_user = data["author_id"]
+
+            d = data_red(
+                        publicacion_id = publicacion_id, 
+                        publicacion_fecha = publicacion_texto,
+                        publicacion_texto = publicacion_fecha, 
+                        publicacion_likes = publicacion_likes,
+                        publicacion_comentarios = publicacion_comentarios,
+                        publicacion_compartidos = publicacion_compartidos,
+                        publicacion_user = publicacion_user,
+                        publicacion_red_social = nombre_red_social
+                )
+            d.save()

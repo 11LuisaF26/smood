@@ -94,6 +94,7 @@ class data_red(models.Model):
     publicacion_comentarios = models.IntegerField(null=True, verbose_name='Comentarios')
     publicacion_compartidos = models.IntegerField(null=True, verbose_name='Veces compartido')
     publicacion_user = models.CharField(blank=True, max_length=30, verbose_name='User')
+    publicacion_red_social = models.CharField(blank=True, max_length=30, verbose_name='Red Social')
     
     class Meta():
         verbose_name = "data_red"
@@ -101,3 +102,18 @@ class data_red(models.Model):
 
     def __str__(self):
         return self.publicacion_id
+
+class twitter_credencial(models.Model):
+    
+    app_key = models.CharField(max_length=100, verbose_name='App key')
+    secret_key = models.CharField(max_length=100, verbose_name='Secret key')
+    bearer_token = models.CharField(max_length=100, verbose_name='Bearer token')
+    access_token = models.CharField(max_length=100, verbose_name='Access token')
+    token_secret = models.CharField(max_length=100, verbose_name='Token secret')
+    
+    class Meta():
+        verbose_name = "twitter_credential"
+        verbose_name_plural = "twitter_credentials"
+
+    def __str__(self):
+        return self.bearer_token

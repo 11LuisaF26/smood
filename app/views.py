@@ -88,18 +88,27 @@ def redes_sociales(request):
 
             if nombre_red_social == "Facebook":
                 nombre_pagina = red_social_in["usuario_red_social"]
-                tasks.get_facebook_post(nombre_pagina=nombre_pagina, numero_paginas=numero_paginas)
+                tasks.get_facebook_post(nombre_pagina=nombre_pagina, numero_paginas=numero_paginas, nombre_red_social=nombre_red_social)
             
             if nombre_red_social == "Twitter":
-                #nombre_pagina = red_social_in["usuario_red_social"]
-                #tasks.get_facebbok_post()
-                logger.error("Es una red social de tipo twitter")
-
+                nombre_usuario = red_social_in["usuario_red_social"]
+                tasks.obtener_twitters(nombre_usuario = nombre_usuario, nombre_red_social=nombre_red_social)
+                
     else:
         empresas = empresa.objects.filter(usuarios = request.user)
-        redes_sociales_to_list = red_social.objects.filter(empresa_red_social__in = empresas)
-        logger.error(type(redes_sociales_to_list))
-        logger.error(redes_sociales_to_list)
+        numero_paginas = 5
+        redes_sociales_to_list = red_social.objects.filter(empresa_red_social__in = empresas).values()
+        for red_social_in in redes_sociales_to_list:
+            nombre_red_social = red_social_in["nombre_red_social"]
+
+            if nombre_red_social == "Facebook":
+                nombre_pagina = red_social_in["usuario_red_social"]
+                tasks.get_facebook_post(nombre_pagina=nombre_pagina, numero_paginas=numero_paginas, nombre_red_social=nombre_red_social)
+            
+            if nombre_red_social == "Twitter":
+                nombre_usuario = red_social_in["usuario_red_social"]
+                tasks.obtener_twitters(nombre_usuario = nombre_usuario, nombre_red_social=nombre_red_social)
+
     return render(request, "redes_sociales.html", {"redes_sociales":redes_sociales_to_list})
 
 #******************************
