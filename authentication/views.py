@@ -29,9 +29,9 @@ def login_view(request):
                 login(request, user)
                 return redirect("/")
             else:    
-                msg = 'Invalid credentials'    
+                msg = 'Credenciales Invalidas'    
         else:
-            msg = 'Error validating the form'    
+            msg = 'Error validando el formulario'    
 
     return render(request, "accounts/login.html", {"form": form, "msg" : msg})
 
@@ -50,13 +50,13 @@ def register_user(request):
             user = authenticate(username=username, password=raw_password)
             user.groups.add(group)
 
-            msg     = 'User created - please <a href="/login">login</a>.'
+            msg     = 'Usuario creado - por favor <a href="/login">ingresa</a>.'
             success = True
             
             #return redirect("/login/")
 
         else:
-            msg = 'Form is not valid'    
+            msg = 'El formulario no es valido'    
     else:
         form = SignUpForm()
 
