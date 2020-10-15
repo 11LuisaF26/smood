@@ -89,11 +89,11 @@ def redes_sociales(request):
             if nombre_red_social == "Facebook":
                 nombre_pagina = red_social_in["usuario_red_social"]
                 tasks.get_facebook_post(nombre_pagina=nombre_pagina, numero_paginas=numero_paginas, nombre_red_social=nombre_red_social)
-            
+            '''
             if nombre_red_social == "Twitter":
                 nombre_usuario = red_social_in["usuario_red_social"]
                 tasks.obtener_twitters(nombre_usuario = nombre_usuario, nombre_red_social=nombre_red_social)
-                
+            ''' 
     else:
         empresas = empresa.objects.filter(usuarios = request.user)
         numero_paginas = 5
@@ -104,13 +104,21 @@ def redes_sociales(request):
             if nombre_red_social == "Facebook":
                 nombre_pagina = red_social_in["usuario_red_social"]
                 tasks.get_facebook_post(nombre_pagina=nombre_pagina, numero_paginas=numero_paginas, nombre_red_social=nombre_red_social)
-            
+            '''
             if nombre_red_social == "Twitter":
                 nombre_usuario = red_social_in["usuario_red_social"]
                 tasks.obtener_twitters(nombre_usuario = nombre_usuario, nombre_red_social=nombre_red_social)
-
+            '''
     return render(request, "redes_sociales.html", {"redes_sociales":redes_sociales_to_list})
 
+@login_required(login_url="/login/")
+def facebooK_data(request):        
+    user = request.user
+    if user.groups.filter(name='Administrador').exists():       
+        facebook_red_social = red_social.objects.get(nombre_red_social="Facebook")
+        facebook_data_to_list = data_red.objects.filter(data_red_social = facebook_red_social)
+    
+    return render(request, "facebook_data.html", {"facebook_data":facebook_data_to_list})
 #******************************
 # Funciones para insertar
 #******************************

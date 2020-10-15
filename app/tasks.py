@@ -2,6 +2,7 @@
 from background_task import background
 from django.contrib.auth.models import User
 from facebook_scraper import get_posts
+from app.models import red_social
 from app.models import data_red
 from app.models import twitter_credencial
 from requests.exceptions import HTTPError, ConnectionError, Timeout
@@ -12,8 +13,13 @@ logger = logging.getLogger(__name__)
 
 @background(schedule=5)
 def get_facebook_post(nombre_pagina, numero_paginas, nombre_red_social):
-    for publicacion in get_posts(nombre_pagina, pages=numero_paginas):
-        if publicacion:
+    data_redes = data_red.objects.all().values()
+    list_publication_ids = []
+    for data in data_redes:
+        list_publication_ids.append(data["publicacion_id"])
+    
+    for publicacion in get_posts(nombre_pagina, pages=numero_paginas):    
+        if publicacion and publicacion["post_id"] not in list_publication_ids:
             publicacion_id = publicacion["post_id"]
             publicacion_texto = publicacion["post_text"][:50]
             publicacion_fecha = publicacion["time"]
@@ -21,28 +27,29 @@ def get_facebook_post(nombre_pagina, numero_paginas, nombre_red_social):
             publicacion_comentarios = publicacion["comments"]
             publicacion_compartidos = publicacion["shares"]
             publicacion_user = publicacion["user_id"]
-
+            red_social_interes = red_social.objects.get(nombre_red_social=nombre_red_social)
+            
             d = data_red(
                         publicacion_id = publicacion_id, 
-                        publicacion_fecha = publicacion_texto,
-                        publicacion_texto = publicacion_fecha, 
+                        publicacion_fecha = publicacion_fecha,
+                        publicacion_texto = publicacion_texto, 
                         publicacion_likes = publicacion_likes,
                         publicacion_comentarios = publicacion_comentarios,
                         publicacion_compartidos = publicacion_compartidos,
                         publicacion_user = publicacion_user,
-                        publicacion_red_social = nombre_red_social
+                        data_red_social = red_social_interes
                 )
             d.save()
-
-        else:
-            logger.error("Ha ocurrido un error")
-
+        
+'''
 @background(schedule=5)
 def obtener_twitters(nombre_usuario, nombre_red_social):
     twitter_credenciales = twitter_credencial.objects.all().values()
-    #bearer_token = twitter_credenciales["bearer_token"]
+    for credential in twitter_credenciales:
+        bearer_token = credential["bearer_token"]
 
-    bearer_token = "AAAAAAAAAAAAAAAAAAAAACxvIQEAAAAAD51htfGW8TNRh2Ytqdv829iBUuc%3DNYLgE6zuguIYeNBE8IAuyspAEzZliltH0m0zSNuHtZdNJp8rgJ"
+    logger.error("bearer_token")
+    logger.error(bearer_token)
     conn = twitter_conn.TwitterConn(access_token=bearer_token)
     
     try:
@@ -71,6 +78,7 @@ def obtener_twitters(nombre_usuario, nombre_red_social):
             publicacion_compartidos = data["public_metrics"]["retweet_count"]
             publicacion_user = data["author_id"]
 
+            
             d = data_red(
                         publicacion_id = publicacion_id, 
                         publicacion_fecha = publicacion_texto,
@@ -82,3 +90,4 @@ def obtener_twitters(nombre_usuario, nombre_red_social):
                         publicacion_red_social = nombre_red_social
                 )
             d.save()
+'''

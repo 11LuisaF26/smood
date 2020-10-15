@@ -94,7 +94,7 @@ class data_red(models.Model):
     publicacion_comentarios = models.IntegerField(null=True, verbose_name='Comentarios')
     publicacion_compartidos = models.IntegerField(null=True, verbose_name='Veces compartido')
     publicacion_user = models.CharField(blank=True, max_length=30, verbose_name='User')
-    publicacion_red_social = models.CharField(blank=True, max_length=30, verbose_name='Red Social')
+    data_red_social = models.ForeignKey(red_social, on_delete=models.CASCADE, null=True)
     
     class Meta():
         verbose_name = "data_red"

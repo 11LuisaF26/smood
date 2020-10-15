@@ -20,6 +20,7 @@ urlpatterns = [
     path('campanas/', views.campanas_publicitarias, name='campanas_publicitarias'),
     path('campanas/create/', views.add_camapana_publicitaria, name='crear_campana'),
     path('redes/',  views.redes_sociales, name='redes_sociales'),
+    path('facebook/', views.facebooK_data, name='facebook'),
     path('redes/create/', views.add_red_social, name='crear_red'),
     path('ubicacion/', views.add_ubicacion,  name='crear_ubicacion'),
     path('hashtag/', views.add_hashtag, name='crear_hashtag'),
