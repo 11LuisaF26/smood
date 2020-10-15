@@ -41,15 +41,18 @@ def get_facebook_post(nombre_pagina, numero_paginas, nombre_red_social):
                 )
             d.save()
         
-'''
+
 @background(schedule=5)
 def obtener_twitters(nombre_usuario, nombre_red_social):
+    data_redes = data_red.objects.all().values()
+    list_publication_ids = []
+    for data in data_redes:
+        list_publication_ids.append(data["publicacion_id"])
+
     twitter_credenciales = twitter_credencial.objects.all().values()
     for credential in twitter_credenciales:
         bearer_token = credential["bearer_token"]
 
-    logger.error("bearer_token")
-    logger.error(bearer_token)
     conn = twitter_conn.TwitterConn(access_token=bearer_token)
     
     try:
@@ -70,24 +73,25 @@ def obtener_twitters(nombre_usuario, nombre_red_social):
         list_data = data_response_user_tweets["data"]
 
         for data in list_data:
-            publicacion_id = data["id"]
-            publicacion_texto = data["text"][:50]
-            publicacion_fecha = data["created_at"]
-            publicacion_likes = data["public_metrics"]["like_count"]
-            publicacion_comentarios = data["public_metrics"]["reply_count"]
-            publicacion_compartidos = data["public_metrics"]["retweet_count"]
-            publicacion_user = data["author_id"]
+            if data and data["id"] not in list_publication_ids:
+                publicacion_id = data["id"]
+                publicacion_texto = data["text"][:50]
+                publicacion_fecha = data["created_at"]
+                publicacion_likes = data["public_metrics"]["like_count"]
+                publicacion_comentarios = data["public_metrics"]["reply_count"]
+                publicacion_compartidos = data["public_metrics"]["retweet_count"]
+                publicacion_user = data["author_id"]
+                red_social_interes = red_social.objects.get(nombre_red_social=nombre_red_social)
 
-            
-            d = data_red(
-                        publicacion_id = publicacion_id, 
-                        publicacion_fecha = publicacion_texto,
-                        publicacion_texto = publicacion_fecha, 
-                        publicacion_likes = publicacion_likes,
-                        publicacion_comentarios = publicacion_comentarios,
-                        publicacion_compartidos = publicacion_compartidos,
-                        publicacion_user = publicacion_user,
-                        publicacion_red_social = nombre_red_social
-                )
-            d.save()
-'''
+                d = data_red(
+                            publicacion_id = publicacion_id, 
+                            publicacion_fecha = publicacion_fecha,
+                            publicacion_texto = publicacion_texto, 
+                            publicacion_likes = publicacion_likes,
+                            publicacion_comentarios = publicacion_comentarios,
+                            publicacion_compartidos = publicacion_compartidos,
+                            publicacion_user = publicacion_user,
+                            data_red_social = red_social_interes
+                    )
+                d.save()
+                

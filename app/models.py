@@ -105,11 +105,11 @@ class data_red(models.Model):
 
 class twitter_credencial(models.Model):
     
-    app_key = models.CharField(max_length=100, verbose_name='App key')
-    secret_key = models.CharField(max_length=100, verbose_name='Secret key')
-    bearer_token = models.CharField(max_length=100, verbose_name='Bearer token')
-    access_token = models.CharField(max_length=100, verbose_name='Access token')
-    token_secret = models.CharField(max_length=100, verbose_name='Token secret')
+    app_key = models.CharField(max_length=300, verbose_name='App key')
+    secret_key = models.CharField(max_length=300, verbose_name='Secret key')
+    bearer_token = models.CharField(max_length=300, verbose_name='Bearer token')
+    access_token = models.CharField(max_length=300, verbose_name='Access token')
+    token_secret = models.CharField(max_length=300, verbose_name='Token secret')
     
     class Meta():
         verbose_name = "twitter_credential"
