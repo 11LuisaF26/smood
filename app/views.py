@@ -92,8 +92,12 @@ def redes_sociales(request):
             
             if nombre_red_social == "Twitter":
                 nombre_usuario = red_social_in["usuario_red_social"]
-                tasks.obtener_twitters(nombre_usuario = nombre_usuario, nombre_red_social=nombre_red_social)
-             
+                tasks.obtener_twitters_user(nombre_usuario = nombre_usuario, nombre_red_social=nombre_red_social)
+
+                hashtag_id = red_social_in["hashtag_red_social_id"]
+                query = hashtag.objects.get(id=hashtag_id)
+                tasks.obtener_twitters_query(query = str(query), nombre_red_social=nombre_red_social)
+            
     else:
         empresas = empresa.objects.filter(usuarios = request.user)
         numero_paginas = 5
@@ -107,7 +111,11 @@ def redes_sociales(request):
             
             if nombre_red_social == "Twitter":
                 nombre_usuario = red_social_in["usuario_red_social"]
-                tasks.obtener_twitters(nombre_usuario = nombre_usuario, nombre_red_social=nombre_red_social)
+                tasks.obtener_twitters_user(nombre_usuario = nombre_usuario, nombre_red_social=nombre_red_social)
+
+                hashtag_id = red_social_in["hashtag_red_social_id"]
+                query = hashtag.objects.get(id=hashtag_id)
+                tasks.obtener_twitters_query(query = str(query), nombre_red_social=nombre_red_social)
             
     return render(request, "redes_sociales.html", {"redes_sociales":redes_sociales_to_list})
 
@@ -152,7 +160,6 @@ def add_camapana_publicitaria(request):
         raise PermissionDenied
     
     return render(request, 'crear_campana_publicitaria.html', {'form': form, "msg" : msg, "success" : success })
-
 
 @login_required(login_url="/login/")
 def add_empresas(request):

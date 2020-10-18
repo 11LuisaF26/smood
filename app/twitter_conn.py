@@ -51,8 +51,9 @@ class TwitterConn:
 
         endpoint = "https://api.twitter.com/2/tweets/search/recent"
 
-
         payload = {
+            "tweet.fields": "author_id,context_annotations,created_at,entities,geo,id,in_reply_to_user_id,lang,possibly_sensitive,public_metrics,referenced_tweets,source,text,withheld",
+            "expansions": "referenced_tweets.id",
             "query": query
         }
 
