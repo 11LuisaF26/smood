@@ -17,6 +17,9 @@ from django.urls import reverse
 from django.core.exceptions import PermissionDenied
 from .models import *
 from .forms import *
+from app import tasks
+import logging
+logger = logging.getLogger(__name__)
 
 @login_required(login_url="/login/")
 def index(request):
@@ -78,11 +81,61 @@ def campanas_publicitarias(request):
 def redes_sociales(request):
     user = request.user
     if user.groups.filter(name='Administrador').exists():       
-        redes_sociales_to_list = red_social.objects.all()
-    else:                 
+        numero_paginas = 5
+        redes_sociales_to_list = red_social.objects.all().values()
+        for red_social_in in redes_sociales_to_list:
+            nombre_red_social = red_social_in["nombre_red_social"]
+
+            if nombre_red_social == "Facebook":
+                nombre_pagina = red_social_in["usuario_red_social"]
+                tasks.get_facebook_post(nombre_pagina=nombre_pagina, numero_paginas=numero_paginas, nombre_red_social=nombre_red_social)
+            
+            if nombre_red_social == "Twitter":
+                nombre_usuario = red_social_in["usuario_red_social"]
+                tasks.obtener_twitters_user(nombre_usuario = nombre_usuario, nombre_red_social=nombre_red_social)
+
+                hashtag_id = red_social_in["hashtag_red_social_id"]
+                query = hashtag.objects.get(id=hashtag_id)
+                tasks.obtener_twitters_query(query = str(query), nombre_red_social=nombre_red_social)
+            
+    else:
         empresas = empresa.objects.filter(usuarios = request.user)
-        redes_sociales_to_list = red_social.objects.filter(empresa_red_social__in = empresas)
+        numero_paginas = 5
+        redes_sociales_to_list = red_social.objects.filter(empresa_red_social__in = empresas).values()
+        for red_social_in in redes_sociales_to_list:
+            nombre_red_social = red_social_in["nombre_red_social"]
+
+            if nombre_red_social == "Facebook":
+                nombre_pagina = red_social_in["usuario_red_social"]
+                tasks.get_facebook_post(nombre_pagina=nombre_pagina, numero_paginas=numero_paginas, nombre_red_social=nombre_red_social)
+            
+            if nombre_red_social == "Twitter":
+                nombre_usuario = red_social_in["usuario_red_social"]
+                tasks.obtener_twitters_user(nombre_usuario = nombre_usuario, nombre_red_social=nombre_red_social)
+
+                hashtag_id = red_social_in["hashtag_red_social_id"]
+                query = hashtag.objects.get(id=hashtag_id)
+                tasks.obtener_twitters_query(query = str(query), nombre_red_social=nombre_red_social)
+            
     return render(request, "redes_sociales.html", {"redes_sociales":redes_sociales_to_list})
+
+@login_required(login_url="/login/")
+def facebook_data(request):        
+    user = request.user
+    if user.groups.filter(name='Administrador').exists():       
+        facebook_red_social = red_social.objects.get(nombre_red_social="Facebook")
+        facebook_data_to_list = data_red.objects.filter(data_red_social = facebook_red_social)
+    
+    return render(request, "facebook_data.html", {"facebook_data":facebook_data_to_list})
+
+@login_required(login_url="/login/")
+def twitter_data(request):        
+    user = request.user
+    if user.groups.filter(name='Administrador').exists():       
+        twitter_red_social = red_social.objects.get(nombre_red_social="Twitter")
+        twitter_data_to_list = data_red.objects.filter(data_red_social = twitter_red_social)
+    
+    return render(request, "twitter_data.html", {"twitter_data":twitter_data_to_list})
 
 #******************************
 # Funciones para insertar
@@ -107,7 +160,6 @@ def add_camapana_publicitaria(request):
         raise PermissionDenied
     
     return render(request, 'crear_campana_publicitaria.html', {'form': form, "msg" : msg, "success" : success })
-
 
 @login_required(login_url="/login/")
 def add_empresas(request):
