@@ -38,13 +38,13 @@
                         {% if msg %}
                             {{ msg | safe }}
                         {% else %}
-                            Escribe el hashtag que deseas agregar
+                            Escribe la campaña publicitaria que deseas agregar
                         {% endif %} 
                     </span>                   
                     
                     {% if not success %}  
                     <div class="card-body table-border-style">                        
-                            <form action="{% url 'crear_campana' %}" method="post">
+                            <form action="" method="post" role="form">
                             {% csrf_token %}
                             <div class="form-group">
                                 <label>Nombre de la campaña publicitaria</label>
@@ -91,8 +91,7 @@
                                 <select type="text" class="form-control" id="usuario_campana" {{ form.usuario_campana }}
                                 </select>                            
                             </div>                                
-                            <button type="submit" name="crear_campana" class="btn btn-primary btn-block mb-4">Crear
-                                    campaña</button>
+                            <button type="submit" name="crear_campana" class="btn btn-primary btn-block mb-4">Guardar</button>
                             </form>
                             {% endif %} 
                         </div>

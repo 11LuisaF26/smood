@@ -141,46 +141,71 @@ def twitter_data(request):
 # Funciones para insertar
 #******************************
 @login_required(login_url="/login/")
-def add_camapana_publicitaria(request):
+def add_empresas(request, id=0):
     msg     = None
     success = False  
     user = request.user
-    form = campana_publicitaria_form()
-    if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists(): 
-        if request.method == 'POST': # si el usuario está enviando el formulario con datos
-            form = campana_publicitaria_form(request.POST) # Bound form
-            if form.is_valid():
-                new_campana = form.save() # Guardar los datos en la base de datos
-                msg     = 'Campaña publicitaria creada.'
-                success = True
-                #return HttpResponseRedirect(reverse('campanas'))
+    form = empresa_form()    
+    if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists():        
+        if request.method == 'GET':
+            if id==0:
+                form = empresa_form()
+            else:
+                emp = empresa.objects.get(pk=id)
+                form = empresa_form(instance = emp)                
+            return render(request, 'crear_empresa.html', {'form': form, "msg" : msg, "success" : success })
         else:
-            form = campana_publicitaria_form() # Unbound form
+            if id==0:
+                form = empresa_form(request.POST)
+            else:                 
+                emp = empresa.objects.get(pk=id)
+                form = empresa_form(request.POST, instance = emp)
+
+<<<<<<< HEAD
+=======
+            if form.is_valid():
+                edit_empresa = form.save()
+                msg     = 'Empresa guardada.'
+                success = True
+                return render(request, 'crear_empresa.html', {'form': form, "msg" : msg, "success" : success })
+        return render(request, 'crear_empresa.html', {'form': form, "msg" : msg, "success" : success }) 
+
+>>>>>>> upstream/master
+@login_required(login_url="/login/")
+def add_camapana_publicitaria(request, id=0):
+    msg     = None
+    success = False  
+    user = request.user
+    form = campana_publicitaria_form()   
+    if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists():        
+        if request.method == 'GET':
+            if id==0:
+                form = campana_publicitaria_form()
+            else:
+                emp = campana_publicitaria.objects.get(pk=id)
+                form = campana_publicitaria_form(instance = emp)                
+            return render(request, 'crear_campana_publicitaria.html', {'form': form, "msg" : msg, "success" : success })
+        else:
+            if id==0:
+                form = campana_publicitaria_form(request.POST)
+            else:                 
+                emp = campana_publicitaria.objects.get(pk=id)
+                form = campana_publicitaria_form(request.POST, instance = emp)
+
+            if form.is_valid():
+                edit_campana = form.save()
+                msg     = 'Campana Publicitaria guardada.'
+                success = True
+                return render(request, 'crear_campana_publicitaria.html', {'form': form, "msg" : msg, "success" : success })
     elif user.groups.filter(name='Cliente').exists():
         raise PermissionDenied
-    
     return render(request, 'crear_campana_publicitaria.html', {'form': form, "msg" : msg, "success" : success })
 
-@login_required(login_url="/login/")
-def add_empresas(request):
-    msg     = None
-    success = False  
-    user = request.user
-    form = empresa_form()
-    if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists():        
-        if request.method == 'POST': # si el usuario está enviando el formulario con datos
-            form = empresa_form(request.POST) # Bound form
-            if form.is_valid():
-                new_empresa = form.save() # Guardar los datos en la base de datos
-                msg     = 'Empresa creada.'
-                success = True
-                #return HttpResponseRedirect(reverse('empresas'))
-        else:
-            form = empresa_form() # Unbound form       
+    
+    
 
-    elif user.groups.filter(name='Cliente').exists():
-        raise PermissionDenied
-    return render(request, 'crear_empresa.html', {'form': form, "msg" : msg, "success" : success })
+
+
     
 @login_required(login_url="/login/")
 def add_red_social(request):
@@ -245,3 +270,51 @@ def add_hashtag(request):
         raise PermissionDenied
 
     return render(request, 'crear_hashtag.html', {'form': form, "msg" : msg, "success" : success })  
+
+@login_required(login_url="/login/")
+def delete_empresas (request, id=0):
+    msg     = None
+    success = False  
+    user = request.user
+    form = empresa_form()    
+    if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists(): 
+        emp = empresa.objects.get(pk=id)
+        emp.delete()
+        msg     = 'Empresa eliminada.'
+        success = True
+        return render(request, 'crear_empresa.html', {'form': form, "msg" : msg, "success" : success })
+    elif user.groups.filter(name='Cliente').exists():
+        raise PermissionDenied
+    return render(request, 'crear_empresa.html', {'form': form, "msg" : msg, "success" : success })
+
+@login_required(login_url="/login/")
+def delete_red_social (request, id=0):
+    msg     = None
+    success = False  
+    user = request.user
+    form = red_social_form()  
+    if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists(): 
+        red = red_social.objects.get(pk=id)
+        red.delete()
+        msg     = 'Red social eliminada.'
+        success = True
+        return render(request, 'crear_redes_sociales.html', {'form': form, "msg" : msg, "success" : success })
+    elif user.groups.filter(name='Cliente').exists():
+        raise PermissionDenied
+    return render(request, 'crear_redes_sociales.html', {'form': form, "msg" : msg, "success" : success })
+
+@login_required(login_url="/login/")
+def delete_camapana_publicitaria (request, id=0):
+    msg     = None
+    success = False  
+    user = request.user
+    form = campana_publicitaria_form()  
+    if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists(): 
+        camp = campana_publicitaria.objects.get(pk=id)
+        camp.delete()
+        msg     = 'Campaña eliminada.'
+        success = True
+        return render(request, 'campanas.html', {'form': form, "msg" : msg, "success" : success })
+    elif user.groups.filter(name='Cliente').exists():
+        raise PermissionDenied
+    return render(request, 'campanas.html', {'form': form, "msg" : msg, "success" : success })

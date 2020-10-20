@@ -17,40 +17,57 @@
                 <!-- [ stiped-table ] start -->
                 <!-- <div class="col-xl-12"> -->
                 {% for campana_publicitaria in campanas_publicitarias %}
-                <div class="col-md-6 col-xl-3">
+                <div class="col-md-6 col-xl-3">                    
                     <div class="card bg-c-blue order-card" data-toggle="modal" data-target="#exampleModalLong">
                         <div class="card-body">
                             <h5 class="text-white">{{campana_publicitaria.nombre_campana}}</h5>
                             <h2 class="text-right text-white"><i class="feather icon-shopping-cart float-left"></i><span>{{campana_publicitaria.eficacia_camapana}}</span></h2>
-                            <p class="m-b-0">Presupuesto<span class="float-right">${{campana_publicitaria.presupuesto_campana}}</span></p>
-                        </div>
+                            <p class="m-b-0">Presupuesto<span class="float-right">${{campana_publicitaria.presupuesto_campana}}</span></p>                                                                                   
+                        </div>                                                                       
                     </div>
+                    
                 
                 <!-- Modal -->
                         <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Selecciona una opción</h5>
+                                <h5 class="modal-title" id="exampleModalLongTitle">Opciones de escuchas </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <a href="/redes/create/" name="crear_red" class="btn btn-primary btn-block mb-4">Crear Escucha </a >
-                                <br><br>
-                                <a href="/redes/create/" name="crear_red" class="btn btn-primary btn-block mb-4">Consultar Escuchas </a >
+                                <a href="/redes/save/" name="crear_red" class="btn btn-primary btn-block mb-4">Crear Escucha </a >
+                                <br>
+                                <a href="/redes/" name="crear_red" class="btn btn-primary btn-block mb-4">Consultar Escuchas </a >
+                            </div>
+                            
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Opciones de la campaña publicitaria</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <a href="{% url 'editar_campana' campana_publicitaria.id %}" class="btn btn-primary btn-block mb-4">
+                                    <i class="far fa-edit fa-lg"></i>    Editar campaña publicitaria
+                                </a>
+                                {% csrf_token %}                                  
+                                <form action="{% url 'eliminar_campana' campana_publicitaria.id %}" method="POST" class="btn btn-primary btn-block mb-4">                                                                      
+                                    <button type="submit" class="btn">
+                                        <i class="far fa-trash-alt fa-lg text-danger float-right"></i> 
+                                    </button>Eliminar campaña publicitaria
+                                </form>                                
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>                                
                             </div>
                             </div>
                         </div>
-                        </div>
-
-                    </div>
-                    {% endfor %}
+                        </div>                        
+                    </div>                    
+                    {% endfor %}                    
                 </div>
                 <!-- [ stiped-table ] end -->
             </div>

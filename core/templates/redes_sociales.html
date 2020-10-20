@@ -49,6 +49,7 @@
                                             <th>Fecha Final</th>                                                                        
                                             <th>Empresa</th>
                                             <th>Campaña Publicitaria</th>
+                                            <th>Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -64,7 +65,18 @@
                                             <td>{{redes_sociales.fecha_final_red_social}}</td>
                                             <td>{{redes_sociales.empresa_red_social}}</td>
                                             <td>{{redes_sociales.campana_publicitaria_red_social}}</td>
-                                            
+                                            <td>
+                                                <a href="{% url 'editar_redes' redes_sociales.id %}" class="btn text-secondary px-0">
+                                                    <i class="far fa-edit fa-lg"></i>
+                                                </a>
+                                                <form action="{% url 'eliminar_redes' redes_sociales.id %}" method="POST" class="d-inline">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn">
+                                                        <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+                                                    </button>
+                                                    
+                                                </form>                                                
+                                            </td>                                            
                                         </tr>
                                     {% endfor %}
                                     </tbody>
