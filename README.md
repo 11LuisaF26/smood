@@ -2,6 +2,8 @@
 
 > **Open-Source Admin Dashboard** coded in **Django Framework** by **AppSeed** [Web App Generator](https://appseed.us/app-generator) - Features:
 
+> **Open-Source Admin Dashboard** coded in **Django Framework** by **AppSeed** [Web App Generator](https://appseed.us/app-generator) - Features:
+
 - Sample UI Kit: **GradientAble Dashboard** (Lite Version) provided by **CodedThemes**
 - UI-Ready app, SQLite Database, Django Native ORM
 - Modular design, clean code-base
