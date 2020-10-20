@@ -60,7 +60,6 @@ class campana_publicitaria(models.Model):
         verbose_name_plural = "campanas_publicitarias"
 
     def __str__(self):
-<<<<<<< HEAD
         return self.nombre_campana
 
 class ubicacion(models.Model):
@@ -72,9 +71,6 @@ class ubicacion(models.Model):
 
     def __str__(self):
         return self.nombre_ubicacion
-=======
-        return str(self.nombre_campana)
->>>>>>> upstream/master
 
 class hashtag(models.Model):
     nombre_hastag = models.CharField(blank=True, max_length=100, verbose_name='Nombre')

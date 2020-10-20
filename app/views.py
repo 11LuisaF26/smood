@@ -161,16 +161,6 @@ def add_empresas(request, id=0):
                 emp = empresa.objects.get(pk=id)
                 form = empresa_form(request.POST, instance = emp)
 
-<<<<<<< HEAD
-=======
-            if form.is_valid():
-                edit_empresa = form.save()
-                msg     = 'Empresa guardada.'
-                success = True
-                return render(request, 'crear_empresa.html', {'form': form, "msg" : msg, "success" : success })
-        return render(request, 'crear_empresa.html', {'form': form, "msg" : msg, "success" : success }) 
-
->>>>>>> upstream/master
 @login_required(login_url="/login/")
 def add_camapana_publicitaria(request, id=0):
     msg     = None
