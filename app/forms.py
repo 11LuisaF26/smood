@@ -3,6 +3,12 @@ from django.db import models
 from django import forms
 from .models import *
 
+class ubicacion_form(ModelForm): 
+    class Meta():
+        model = ubicacion
+        fields = ( 'nombre_ubicacion',)
+
+
 class campana_publicitaria_form(ModelForm):
     class Meta():
         model = campana_publicitaria
@@ -20,13 +26,6 @@ class red_social_form(ModelForm):
         fields = ('nombre_escucha','nombre_red_social','usuario_red_social','fecha_inicio_red_social','fecha_final_red_social','empresa_red_social','campana_publicitaria_red_social', 'ubicacion_red_social','hashtag_red_social', 
         # 'cantidad_seguidores_red_social', 'cantidad_likes_red_social','cantidad_reacciones_red_social',
         )
-        
-class ubicacion_form(ModelForm): 
-    class Meta():
-        model = ubicacion
-        fields = ( 'nombre_ubicacion',)
-
-
 
 class hashtag_form(ModelForm): 
     class Meta():

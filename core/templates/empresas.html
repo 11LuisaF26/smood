@@ -45,6 +45,7 @@
                                             <th>NIT</th>
                                             <th>Nombre</th>
                                             <th>Estado</th>                             
+                                            <th>Acciones</th>                             
                                         </tr>
                                     </thead>
                                     
@@ -55,6 +56,18 @@
                                             <td>{{empresa.nit_empresa}} </td>
                                             <td>{{empresa.nombre_empresa}}</td>
                                             <td>{{empresa.estado_empresa}}</td>
+                                            <td>
+                                                <a href="{% url 'editar_empresa' empresa.id %}" class="btn text-secondary px-0">
+                                                    <i class="far fa-edit fa-lg"></i>
+                                                </a>
+                                                <form action="{% url 'eliminar_empresa' empresa.id %}" method="POST" class="d-inline">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn">
+                                                        <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+                                                    </button>
+                                                    
+                                                </form>                                                
+                                            </td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>
