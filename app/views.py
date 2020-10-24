@@ -120,6 +120,17 @@ def redes_sociales(request):
     return render(request, "redes_sociales.html", {"redes_sociales":redes_sociales_to_list})
 
 @login_required(login_url="/login/")
+def ubicaciones(request):    
+    ubicaciones = ubicacion.objects.all()
+    return render(request, "ubicaciones.html", {"ubicaciones":ubicaciones})
+
+@login_required(login_url="/login/")
+def hashtags(request):    
+    hashtags = hashtag.objects.all()
+    return render(request, "hashtags.html", {"hashtags":hashtags})
+
+
+@login_required(login_url="/login/")
 def facebook_data(request):        
     user = request.user
     if user.groups.filter(name='Administrador').exists():       
