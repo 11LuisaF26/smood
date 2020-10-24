@@ -19,7 +19,7 @@ class estado_empresa(models.Model):
         return self.estado_nombre_empresa
 
 class empresa(models.Model):
-    nit_empresa = models.IntegerField(null=True, unique=True, verbose_name='NIT')
+    nit_empresa = models.CharField(null=True, unique=True, max_length=100, verbose_name='NIT')
     nombre_empresa = models.CharField(blank=True, max_length=100, verbose_name='Nombre')
     estado_empresa = models.ForeignKey(estado_empresa, on_delete=models.CASCADE, null=True)
     usuarios = models.ManyToManyField(User)

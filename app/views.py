@@ -197,12 +197,7 @@ def add_camapana_publicitaria(request, id=0):
         raise PermissionDenied
     return render(request, 'crear_campana_publicitaria.html', {'form': form, "msg" : msg, "success" : success })
 
-    
-    
 
-
-
-    
 @login_required(login_url="/login/")
 def add_red_social(request):
     msg     = None
