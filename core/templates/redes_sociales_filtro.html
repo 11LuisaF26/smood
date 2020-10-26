@@ -1,0 +1,103 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Empresas {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}	
+
+    <!-- [ Main Content ] start -->
+    <section class="pcoded-main-container">
+        <div class="pcoded-content">
+            <!-- [ breadcrumb ] start -->
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10">Redes Sociales</h5>
+                            </div>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="#!">Redes sociales</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <!-- [ stiped-table ] start -->
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Redes sociales</h5>
+                            <span class="d-block m-t-5">Redes sociales registradas</span>
+                        </div>
+                        <div class="card-body table-border-style">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr> 
+                                            <th>#</th>
+                                            <th>Nombre Escucha</th>
+                                            <th>Red Social</th>
+                                            <th>Usuario</th>
+                                            <th>Fecha Inicio</th> 
+                                            <th>Fecha Final</th>                                                                        
+                                            <th>Empresa</th>
+                                            <th>Campaña Publicitaria</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                       {% for redes_sociales in redes_sociales%}
+                                       <!-- url in view -->
+                                        <tr> 
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{redes_sociales.nombre_escucha}} </td>
+                                            <td>{{redes_sociales.nombre_red_social}} </td>
+                                            <td>{{redes_sociales.usuario_red_social}}</td>
+                                            <td>{{redes_sociales.fecha_inicio_red_social}}</td>
+                                            <td>{{redes_sociales.fecha_final_red_social}}</td>
+                                            <td>{{redes_sociales.empresa_red_social}}</td>
+                                            <td>{{redes_sociales.campana_publicitaria_red_social}}</td>
+                                            <td>
+                                                <a href="{% url 'editar_redes' redes_sociales.id %}" class="btn text-secondary px-0">
+                                                    <i class="far fa-edit fa-lg"></i>
+                                                </a>
+                                                <form action="{% url 'eliminar_redes' redes_sociales.id %}" method="POST" class="d-inline">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn">
+                                                        <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+                                                    </button>
+                                                    
+                                                </form>                                                
+                                            </td>                                            
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- [ stiped-table ] end -->
+            </div>
+        </div>
+    </section>>
+            <!-- [ br]end -->
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+    <!-- Apex Chart -->
+    <script src="/static/assets/js/plugins/apexcharts.min.js"></script>
+    <!-- custom-chart js -->
+    <script src="/static/assets/js/pages/dashboard-main.js"></script>
+
+{% endblock javascripts %}

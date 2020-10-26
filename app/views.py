@@ -3,7 +3,7 @@
 MIT License
 Copyright (c) 2019 - present AppSeed.us
 """
-
+import io
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import loader
@@ -17,6 +17,16 @@ from django.urls import reverse
 from django.core.exceptions import PermissionDenied
 from .models import *
 from .forms import *
+from app import tasks
+from core import settings
+import logging
+import sqlite3
+import pandas as pd
+from wordcloud import WordCloud
+import numpy as np  
+import matplotlib.pyplot as plt
+import urllib, base64
+logger = logging.getLogger(__name__)
 
 @login_required(login_url="/login/")
 def index(request):
@@ -78,11 +88,75 @@ def campanas_publicitarias(request):
 def redes_sociales(request):
     user = request.user
     if user.groups.filter(name='Administrador').exists():       
-        redes_sociales_to_list = red_social.objects.all()
+        numero_paginas = 5
+        redes_sociales_to_list = red_social.objects.all().values()
+        for red_social_in in redes_sociales_to_list:
+            nombre_red_social = red_social_in["nombre_red_social"]
+
+            if nombre_red_social == "Facebook":
+                nombre_pagina = red_social_in["usuario_red_social"]
+                tasks.get_facebook_post(nombre_pagina=nombre_pagina, numero_paginas=numero_paginas, nombre_red_social=nombre_red_social)
+            
+            if nombre_red_social == "Twitter":
+                nombre_usuario = red_social_in["usuario_red_social"]
+                tasks.obtener_twitters_user(nombre_usuario = nombre_usuario, nombre_red_social=nombre_red_social)
+
+                hashtag_id = red_social_in["hashtag_red_social_id"]
+                query = hashtag.objects.get(id=hashtag_id)
+                tasks.obtener_twitters_query(query = str(query), nombre_red_social=nombre_red_social)
+         
     else:                 
         empresas = empresa.objects.filter(usuarios = request.user)
-        redes_sociales_to_list = red_social.objects.filter(empresa_red_social__in = empresas)
+        numero_paginas = 5
+        redes_sociales_to_list = red_social.objects.filter(empresa_red_social__in = empresas).values()
+        for red_social_in in redes_sociales_to_list:
+            nombre_red_social = red_social_in["nombre_red_social"]
+
+            if nombre_red_social == "Facebook":
+                nombre_pagina = red_social_in["usuario_red_social"]
+                tasks.get_facebook_post(nombre_pagina=nombre_pagina, numero_paginas=numero_paginas, nombre_red_social=nombre_red_social)
+            
+            if nombre_red_social == "Twitter":
+                nombre_usuario = red_social_in["usuario_red_social"]
+                tasks.obtener_twitters_user(nombre_usuario = nombre_usuario, nombre_red_social=nombre_red_social)
+
+                hashtag_id = red_social_in["hashtag_red_social_id"]
+                query = hashtag.objects.get(id=hashtag_id)
+                tasks.obtener_twitters_query(query = str(query), nombre_red_social=nombre_red_social)
+            
     return render(request, "redes_sociales.html", {"redes_sociales":redes_sociales_to_list})
+
+@login_required(login_url="/login/")
+def facebook_data(request):        
+    user = request.user
+    if user.groups.filter(name='Administrador').exists():       
+        facebook_red_social = red_social.objects.get(nombre_red_social="Facebook")
+        facebook_data_to_list = data_red.objects.filter(data_red_social = facebook_red_social)
+
+    return render(request, "facebook_data.html", {"facebook_data":facebook_data_to_list})
+
+@login_required(login_url="/login/")
+def twitter_data(request):        
+    user = request.user
+    if user.groups.filter(name='Administrador').exists():       
+        twitter_red_social = red_social.objects.get(nombre_red_social="Twitter")
+        twitter_data_to_list = data_red.objects.filter(data_red_social = twitter_red_social)
+    
+    return render(request, "twitter_data.html", {"twitter_data":twitter_data_to_list})
+
+@login_required(login_url="/login/")
+def redes_sociales_filtro(request, id):        
+    if request.method == 'GET':
+        if id==0:
+            form = campana_publicitaria_form()
+        else:
+            emp = empresa.objects.get(pk=id)
+            form = empresa_form(instance = emp)                
+    return render(request, 'crear_empresa.html', {'form': form, "msg" : msg, "success" : success })
+
+    # camapana = campana_publicitaria.objects.filter(c = request.campana_publicitaria.nombre_campana)
+    # redes_sociales_to_list = red_social.objects.filter(campana_redes_sociales__in=camapana)
+    # return render(request, "redes_sociales.html", {"redes_sociales":redes_sociales_to_list})
 
 #******************************
 # Funciones para insertar
@@ -147,9 +221,6 @@ def add_camapana_publicitaria(request, id=0):
 
     
     
-
-
-
     
 @login_required(login_url="/login/")
 def add_red_social(request):
@@ -262,3 +333,41 @@ def delete_camapana_publicitaria (request, id=0):
     elif user.groups.filter(name='Cliente').exists():
         raise PermissionDenied
     return render(request, 'campanas.html', {'form': form, "msg" : msg, "success" : success })
+
+#******************************
+# Nube de palabras
+#******************************
+def nube_de_palabras (text):    
+    
+        twitter_red_social = red_social.objects.get(nombre_red_social="Twitter")
+        twitter_data_to_list = data_red.objects.filter(data_red_social = twitter_red_social).values('publicacion_texto')
+        text = str(twitter_data_to_list)
+        
+        wordcloud = WordCloud().generate(text)
+        plt.imshow(wordcloud)
+        plt.axis("off")
+        # plt.show()
+        image = io.BytesIO()
+        plt.savefig(image, format='png')
+        image.seek(0)  # rewind the data
+        string = base64.b64encode(image.read())
+
+        image_64 = 'data:image/png;base64,' + urllib.parse.quote(string)
+        return image_64            
+        # 
+        # plt.imshow(wordcloud)
+        # plt.axis("off")
+        # s = plt.show()
+
+def cloud_gen(request):
+    twitter_red_social = red_social.objects.get(nombre_red_social="Twitter")
+    twitter_data_to_list = data_red.objects.filter(data_red_social = twitter_red_social).values('publicacion_texto')
+    texto = str(twitter_data_to_list)
+    text = ''
+    
+    for i in texto:
+        if __name__ == '__main__':
+            text += i.text
+
+    wordcloud = nube_de_palabras(text)
+    return render(request, "nube_de_palabras.html",{'wordcloud':wordcloud})
