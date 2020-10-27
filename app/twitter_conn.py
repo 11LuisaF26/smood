@@ -29,6 +29,7 @@ class TwitterConn:
         payload = {
             "tweet.fields": "author_id,context_annotations,created_at,entities,geo,id,in_reply_to_user_id,lang,possibly_sensitive,public_metrics,referenced_tweets,source,text,withheld",
             "expansions": "referenced_tweets.id",
+            "max_results": 99,
             "query": f"from:{nombre_usuario}"
         }
 
@@ -54,6 +55,7 @@ class TwitterConn:
         payload = {
             "tweet.fields": "author_id,context_annotations,created_at,entities,geo,id,in_reply_to_user_id,lang,possibly_sensitive,public_metrics,referenced_tweets,source,text,withheld",
             "expansions": "referenced_tweets.id",
+            "max_results": 99,
             "query": query
         }
 

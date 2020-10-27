@@ -21,7 +21,7 @@ def get_facebook_post(nombre_pagina, numero_paginas, id_red_social):
     for publicacion in get_posts(nombre_pagina, pages=numero_paginas):    
         if publicacion and publicacion["post_id"] not in list_publication_ids:
             publicacion_id = publicacion["post_id"]
-            publicacion_texto = publicacion["post_text"][:50]
+            publicacion_texto = publicacion["post_text"][:200]
             publicacion_fecha = publicacion["time"]
             publicacion_likes = publicacion["likes"]
             publicacion_comentarios = publicacion["comments"]
@@ -75,7 +75,7 @@ def obtener_twitters_user(nombre_usuario, id_red_social):
         for data in list_data:
             if data and data["id"] not in list_publication_ids:
                 publicacion_id = data["id"]
-                publicacion_texto = data["text"][:50]
+                publicacion_texto = data["text"][:200]
                 publicacion_fecha = data["created_at"]
                 publicacion_likes = data["public_metrics"]["like_count"]
                 publicacion_comentarios = data["public_metrics"]["reply_count"]
@@ -128,7 +128,7 @@ def obtener_twitters_query(query, id_red_social):
         for data in list_data:
             if data and data["id"] not in list_publication_ids:
                 publicacion_id = data["id"]
-                publicacion_texto = data["text"][:50]
+                publicacion_texto = data["text"][:200]
                 publicacion_fecha = data["created_at"]
                 publicacion_likes = data["public_metrics"]["like_count"]
                 publicacion_comentarios = data["public_metrics"]["reply_count"]
