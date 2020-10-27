@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} Empresas {% endblock %} 
+{% block title %} Data de tedes sociales {% endblock %} 
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -16,11 +16,11 @@
                     <div class="row align-items-center">
                         <div class="col-md-12">
                             <div class="page-header-title">
-                                <h5 class="m-b-10">Facebook</h5>
+                                <h5 class="m-b-10">Data</h5>
                             </div>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li>
-                                <li class="breadcrumb-item"><a href="#!">Facebook</a></li>
+                                <li class="breadcrumb-item"><a href="#!">Data</a></li>
                             </ul>
                         </div>
                     </div>
@@ -33,8 +33,8 @@
                 <div class="col-xl-12">
                     <div class="card">
                         <div class="card-header">
-                            <h5>Facebook</h5>
-                            <span class="d-block m-t-5">Datos de facebook</span>
+                            <h5>Data</h5>
+                            <span class="d-block m-t-5">Data</span>
                         </div>                        
                         <div class="card-body table-border-style">
                             <div class="table-responsive">
@@ -50,7 +50,7 @@
                                     </thead>
                                     
                                     <tbody>                                        
-                                       {% for data in facebook_data %}
+                                    {% for data in redes_data %}
                                         <tr> 
                                             <td>{{ forloop.counter }}</td>
                                             <td>{{data.publicacion_fecha}} </td>

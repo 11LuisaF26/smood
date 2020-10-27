@@ -148,22 +148,11 @@ def hashtags(request):
 
 
 @login_required(login_url="/login/")
-def facebook_data(request):        
+def redes_data(request):        
     user = request.user
     if user.groups.filter(name='Administrador').exists():       
-        facebook_red_social = red_social.objects.get(nombre_red_social="Facebook")
-        facebook_data_to_list = data_red.objects.filter(data_red_social = facebook_red_social)
-    
-    return render(request, "facebook_data.html", {"facebook_data":facebook_data_to_list})
-
-@login_required(login_url="/login/")
-def twitter_data(request):        
-    user = request.user
-    if user.groups.filter(name='Administrador').exists():       
-        twitter_red_social = red_social.objects.get(nombre_red_social="Twitter")
-        twitter_data_to_list = data_red.objects.filter(data_red_social = twitter_red_social)
-    
-    return render(request, "twitter_data.html", {"twitter_data":twitter_data_to_list})
+        data_redes = data_red.objects.all()
+        return render(request, "redes_data.html", {"redes_data":data_redes})
 
 #******************************
 # Funciones para insertar
