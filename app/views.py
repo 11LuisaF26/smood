@@ -85,11 +85,10 @@ def redes_sociales(request):
         redes_sociales_to_list = red_social.objects.all().values()
         for red_social_in in redes_sociales_to_list:
             nombre_red_social = red_social_in["nombre_red_social"]
-
             if nombre_red_social == "Facebook":
                 nombre_pagina = red_social_in["usuario_red_social"]
                 if nombre_pagina.startswith("@"):
-                    nombre_pagina = replace("@", "")
+                    nombre_pagina = nombre_pagina.replace("@", "")
                     tasks.get_facebook_post(nombre_pagina=nombre_pagina, numero_paginas=numero_paginas, nombre_red_social=nombre_red_social)
                 else:
                     tasks.get_facebook_post(nombre_pagina=nombre_pagina, numero_paginas=numero_paginas, nombre_red_social=nombre_red_social)
@@ -97,7 +96,7 @@ def redes_sociales(request):
             if nombre_red_social == "Twitter":
                 nombre_usuario = red_social_in["usuario_red_social"]
                 if nombre_usuario.startswith("@"):
-                    nombre_usuario = replace("@", "")
+                    nombre_usuario = nombre_usuario.replace("@", "")
                     tasks.obtener_twitters_user(nombre_usuario = nombre_usuario, nombre_red_social=nombre_red_social)
                 else:
                     tasks.obtener_twitters_user(nombre_usuario = nombre_usuario, nombre_red_social=nombre_red_social)
@@ -115,12 +114,20 @@ def redes_sociales(request):
 
             if nombre_red_social == "Facebook":
                 nombre_pagina = red_social_in["usuario_red_social"]
-                tasks.get_facebook_post(nombre_pagina=nombre_pagina, numero_paginas=numero_paginas, nombre_red_social=nombre_red_social)
+                if nombre_pagina.startswith("@"):
+                    nombre_pagina = nombre_pagina.replace("@", "")
+                    tasks.get_facebook_post(nombre_pagina=nombre_pagina, numero_paginas=numero_paginas, nombre_red_social=nombre_red_social)
+                else:
+                    tasks.get_facebook_post(nombre_pagina=nombre_pagina, numero_paginas=numero_paginas, nombre_red_social=nombre_red_social)
             
             if nombre_red_social == "Twitter":
                 nombre_usuario = red_social_in["usuario_red_social"]
-                tasks.obtener_twitters_user(nombre_usuario = nombre_usuario, nombre_red_social=nombre_red_social)
-
+                if nombre_usuario.startswith("@"):
+                    nombre_usuario = nombre_usuario.replace("@", "")
+                    tasks.obtener_twitters_user(nombre_usuario = nombre_usuario, nombre_red_social=nombre_red_social)
+                else:
+                    tasks.obtener_twitters_user(nombre_usuario = nombre_usuario, nombre_red_social=nombre_red_social)
+                
                 hashtag_id = red_social_in["hashtag_red_social_id"]
                 query = hashtag.objects.get(id=hashtag_id)
                 tasks.obtener_twitters_query(query = str(query), nombre_red_social=nombre_red_social)
