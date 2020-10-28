@@ -5,7 +5,7 @@ Copyright (c) 2019 - present AppSeed.us
 """
 from django.db import models
 from django.contrib.auth.models import User , Group
-
+from django import forms
 
 # Create your models here.
 class estado_empresa(models.Model):
@@ -120,3 +120,13 @@ class twitter_credencial(models.Model):
 
     def __str__(self):
         return self.bearer_token
+
+class instagram_credencial(models.Model):
+    username = models.CharField(max_length=50, verbose_name='Username')
+    password = forms.CharField(widget=forms.PasswordInput)
+    class Meta():
+        verbose_name = "instagram_credential"
+        verbose_name_plural = "instagram_credentials"
+
+    def __str__(self):
+        return self.username
