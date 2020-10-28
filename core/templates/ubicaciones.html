@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} Empresas {% endblock %} 
+{% block title %} Ubicaciones {% endblock %} 
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -16,11 +16,11 @@
                     <div class="row align-items-center">
                         <div class="col-md-12">
                             <div class="page-header-title">
-                                <h5 class="m-b-10">Twitter</h5>
+                                <h5 class="m-b-10">Ubicaciones</h5>
                             </div>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li>
-                                <li class="breadcrumb-item"><a href="#!">Twitter</a></li>
+                                <li class="breadcrumb-item"><a href="#!">Ubicaciones</a></li>
                             </ul>
                         </div>
                     </div>
@@ -33,8 +33,8 @@
                 <div class="col-xl-12">
                     <div class="card">
                         <div class="card-header">
-                            <h5>Twitter</h5>
-                            <span class="d-block m-t-5">Datos de twitter</span>
+                            <h5>Ubicaciones</h5>
+                            <span class="d-block m-t-5">Ubicaciones</span>
                         </div>                        
                         <div class="card-body table-border-style">
                             <div class="table-responsive">
@@ -42,21 +42,15 @@
                                     <thead>
                                         <tr> 
                                             <th>#</th>
-                                            <th>Fecha</th>
-                                            <th>Identificador</th>
-                                            <th>Texto</th>
-                                            <th>Likes</th>                             
+                                            <th>Nombre</th>
                                         </tr>
                                     </thead>
                                     
                                     <tbody>                                        
-                                       {% for data in twitter_data %}
+                                    {% for ubicacion in ubicaciones %}
                                         <tr> 
                                             <td>{{ forloop.counter }}</td>
-                                            <td>{{data.publicacion_fecha}} </td>
-                                            <td>{{data.publicacion_id}}</td>
-                                            <td>{{data.publicacion_texto}}</td>
-                                            <td>{{data.publicacion_likes}}</td>
+                                            <td>{{ubicacion.nombre_ubicacion}}</td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>

@@ -5,7 +5,7 @@ Copyright (c) 2019 - present AppSeed.us
 """
 from django.db import models
 from django.contrib.auth.models import User , Group
-
+from django import forms
 
 # Create your models here.
 class estado_empresa(models.Model):
@@ -19,7 +19,7 @@ class estado_empresa(models.Model):
         return self.estado_nombre_empresa
 
 class empresa(models.Model):
-    nit_empresa = models.IntegerField(null=True, unique=True, verbose_name='NIT')
+    nit_empresa = models.CharField(null=True, unique=True, max_length=100, verbose_name='NIT')
     nombre_empresa = models.CharField(blank=True, max_length=100, verbose_name='Nombre')
     estado_empresa = models.ForeignKey(estado_empresa, on_delete=models.CASCADE, null=True)
     usuarios = models.ManyToManyField(User)
@@ -92,7 +92,7 @@ class data_red(models.Model):
     
     publicacion_id = models.CharField(null=True, max_length=30, verbose_name='Id')
     publicacion_fecha = models.CharField(blank=True, max_length=60, verbose_name='Fecha')
-    publicacion_texto = models.CharField(blank=True, max_length=60, verbose_name='Text')
+    publicacion_texto = models.CharField(blank=True, max_length=300, verbose_name='Text')
     publicacion_likes = models.IntegerField(null=True, verbose_name='Likes')
     publicacion_comentarios = models.IntegerField(null=True, verbose_name='Comentarios')
     publicacion_compartidos = models.IntegerField(null=True, verbose_name='Veces compartido')
@@ -120,3 +120,13 @@ class twitter_credencial(models.Model):
 
     def __str__(self):
         return self.bearer_token
+
+class instagram_credencial(models.Model):
+    username = models.CharField(max_length=50, verbose_name='Username')
+    password = forms.CharField(widget=forms.PasswordInput)
+    class Meta():
+        verbose_name = "instagram_credential"
+        verbose_name_plural = "instagram_credentials"
+
+    def __str__(self):
+        return self.username

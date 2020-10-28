@@ -51,6 +51,32 @@
 							{% endif %}
 					    </ul>
 					</li>
+					<li class="nav-item pcoded-hasmenu">
+					    <a class="nav-link ">
+							<span class="pcoded-micon">
+								<i class="feather icon-layout"></i></span><span class="pcoded-mtext">Hashtags</span></a>
+					    <ul class="pcoded-submenu">
+							{% if perms.app.view_hashtag %}
+							<li><a href="/hashtag/save/">Consultar hashtags</a></li>					        
+							{% endif %}
+							{% if perms.app.add_hashtag %}
+							<li><a href="/hashtag/">Crear Hashtags</a></li>
+							{% endif %}
+					    </ul>
+					</li>
+					<li class="nav-item pcoded-hasmenu">
+					    <a class="nav-link ">
+							<span class="pcoded-micon">
+								<i class="feather icon-layout"></i></span><span class="pcoded-mtext">Ubicaciones</span></a>
+					    <ul class="pcoded-submenu">
+							{% if perms.app.view_ubicacion %}
+							<li><a href="/ubicacion/save/">Consultar ubicaciones</a></li>					        
+							{% endif %}
+							{% if perms.app.add_ubicacion %}
+							<li><a href="/ubicacion/">Crear ubicaciones</a></li>
+							{% endif %}
+					    </ul>
+					</li>
 					<li class="nav-item">
                         <a href="/acercade/ " class="nav-link ">
                             <span class="pcoded-micon">

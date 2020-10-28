@@ -12,7 +12,7 @@ import json
 logger = logging.getLogger(__name__)
 
 @background(schedule=5)
-def get_facebook_post(nombre_pagina, numero_paginas, nombre_red_social):
+def get_facebook_post(nombre_pagina, numero_paginas, id_red_social):
     data_redes = data_red.objects.all().values()
     list_publication_ids = []
     for data in data_redes:
@@ -21,13 +21,13 @@ def get_facebook_post(nombre_pagina, numero_paginas, nombre_red_social):
     for publicacion in get_posts(nombre_pagina, pages=numero_paginas):    
         if publicacion and publicacion["post_id"] not in list_publication_ids:
             publicacion_id = publicacion["post_id"]
-            publicacion_texto = publicacion["post_text"][:50]
+            publicacion_texto = publicacion["post_text"][:200]
             publicacion_fecha = publicacion["time"]
             publicacion_likes = publicacion["likes"]
             publicacion_comentarios = publicacion["comments"]
             publicacion_compartidos = publicacion["shares"]
             publicacion_user = publicacion["user_id"]
-            red_social_interes = red_social.objects.get(nombre_red_social=nombre_red_social)
+            red_social_interes = red_social.objects.get(id=id_red_social)
             
             d = data_red(
                         publicacion_id = publicacion_id, 
@@ -43,7 +43,7 @@ def get_facebook_post(nombre_pagina, numero_paginas, nombre_red_social):
         
 
 @background(schedule=5)
-def obtener_twitters_user(nombre_usuario, nombre_red_social):
+def obtener_twitters_user(nombre_usuario, id_red_social):
     data_redes = data_red.objects.all().values()
     list_publication_ids = []
     for data in data_redes:
@@ -75,14 +75,13 @@ def obtener_twitters_user(nombre_usuario, nombre_red_social):
         for data in list_data:
             if data and data["id"] not in list_publication_ids:
                 publicacion_id = data["id"]
-                publicacion_texto = data["text"][:50]
+                publicacion_texto = data["text"][:200]
                 publicacion_fecha = data["created_at"]
                 publicacion_likes = data["public_metrics"]["like_count"]
                 publicacion_comentarios = data["public_metrics"]["reply_count"]
                 publicacion_compartidos = data["public_metrics"]["retweet_count"]
                 publicacion_user = data["author_id"]
-                red_social_interes = red_social.objects.get(nombre_red_social=nombre_red_social)
-
+                red_social_interes = red_social.objects.get(id=id_red_social)
                 d = data_red(
                             publicacion_id = publicacion_id, 
                             publicacion_fecha = publicacion_fecha,
@@ -97,7 +96,7 @@ def obtener_twitters_user(nombre_usuario, nombre_red_social):
                 
 
 @background(schedule=5)
-def obtener_twitters_query(query, nombre_red_social):
+def obtener_twitters_query(query, id_red_social):
     data_redes = data_red.objects.all().values()
     list_publication_ids = []
     for data in data_redes:
@@ -129,13 +128,13 @@ def obtener_twitters_query(query, nombre_red_social):
         for data in list_data:
             if data and data["id"] not in list_publication_ids:
                 publicacion_id = data["id"]
-                publicacion_texto = data["text"][:50]
+                publicacion_texto = data["text"][:200]
                 publicacion_fecha = data["created_at"]
                 publicacion_likes = data["public_metrics"]["like_count"]
                 publicacion_comentarios = data["public_metrics"]["reply_count"]
                 publicacion_compartidos = data["public_metrics"]["retweet_count"]
                 publicacion_user = data["author_id"]
-                red_social_interes = red_social.objects.get(nombre_red_social=nombre_red_social)
+                red_social_interes = red_social.objects.get(id=id_red_social)
 
                 d = data_red(
                             publicacion_id = publicacion_id, 
