@@ -346,7 +346,7 @@ def nube_de_palabras (text):
         wordcloud = WordCloud().generate(text)
         plt.imshow(wordcloud)
         plt.axis("off")
-        # plt.show()
+        #plt.show()
         image = io.BytesIO()
         plt.savefig(image, format='png')
         image.seek(0)  # rewind the data
