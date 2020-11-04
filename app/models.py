@@ -123,7 +123,9 @@ class twitter_credencial(models.Model):
 
 class instagram_credencial(models.Model):
     username = models.CharField(max_length=50, verbose_name='Username')
-    password = forms.CharField(widget=forms.PasswordInput)
+    password = models.CharField(max_length=50, verbose_name='Password')
+    path = models.CharField(max_length=50, verbose_name='Path')
+
     class Meta():
         verbose_name = "instagram_credential"
         verbose_name_plural = "instagram_credentials"
