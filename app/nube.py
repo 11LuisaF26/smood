@@ -38,7 +38,6 @@ from spacy_spanish_lemmatizer import SpacyCustomLemmatizer
 STOPLIST = set(stopwords.words('spanish'))
 SYMBOLS = " ".join(string.punctuation).split(" ")+ ["-", "...", "..","'"]
 
-
 nlp = spacy.load('en_core_web_sm')
 
 lemmatizer = SpacyCustomLemmatizer()
