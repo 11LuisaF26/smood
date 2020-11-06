@@ -16,7 +16,7 @@
                     <div class="row align-items-center">
                         <div class="col-md-12">
                             <div class="page-header-title">
-                                <h5 class="m-b-10">Nube de Palabras</h5>
+                                <h5 class="m-b-10">Graficos</h5>
                             </div>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li>
@@ -31,36 +31,12 @@
                 <div class="col-xl-12">
                     <div class="card">
                         <div class="card-header">
-                            <h5>Twitter</h5>
-                            <span class="d-block m-t-5">Datos de twitter</span>
+                            <h5>Facebook</h5>
+                            <span class="d-block m-t-5">Graficos</span>
                         </div>                        
                         <div class="card-body table-border-style">
-                            <div class="table-responsive">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr> 
-                                            <th>#</th>
-                                            <th>Fecha</th>
-                                            <th>Identificador</th>
-                                            <th>Texto</th>
-                                            <th>Likes</th>                             
-                                        </tr>
-                                    </thead>
-                                    
-                                    <tbody>                                        
-                                       {% for data in twitter_data %}
-                                        <tr> 
-                                            <td>{{ forloop.counter }}</td>
-                                            <td>{{data.publicacion_fecha}} </td>
-                                            <td>{{data.publicacion_id}}</td>
-                                            <td>{{data.publicacion_texto}}</td>
-                                            <td>{{data.publicacion_likes}}</td>
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                    
-                                </table>
-                                <img src="{{ wordcloud }}">
+                            <div class="table-responsive">                                
+                                
                             </div>
                         </div>
                     </div>
