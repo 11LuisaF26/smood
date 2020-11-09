@@ -49,7 +49,7 @@ class campana_publicitaria(models.Model):
     descripcion_campana = models.CharField(blank=True, max_length=100, verbose_name='Descripcion')
     objetivo_campana = models.CharField(blank=True, max_length=100, verbose_name='Objetivo')
     publico_campana = models.CharField(blank=True, max_length=100, verbose_name='Publico')
-    ubicacion_campana = models.CharField(blank=True, max_length=100, verbose_name='Ubicacion')
+    ubicacion_campana = models.ForeignKey(ubicacion, on_delete=models.CASCADE, null=True)
     presupuesto_campana = models.IntegerField(null=True, verbose_name='Presupuesto')
     eficacia_camapana = models.CharField(blank=True, max_length=100, verbose_name='Eficacia')
     empresa_campana = models.ForeignKey(empresa, on_delete=models.CASCADE, null=True)
@@ -74,19 +74,37 @@ class hashtag(models.Model):
         return self.nombre_hastag
 
 class red_social(models.Model):
-    nombre_escucha = models.CharField(blank=True, max_length=100, verbose_name='NombreEscucha')
     nombre_red_social = models.CharField(blank=True, max_length=100, verbose_name='Nombre')
+
+    class Meta():
+        verbose_name = "red_social"
+        verbose_name_plural = "redes_sociales"
+
+    def __str__(self):
+        return self.nombre_red_social
+
+    # cantidad_seguidores_red_social = models.IntegerField(null=True, verbose_name='Cantidad de seguidores')
+    # cantidad_likes_red_social = models.IntegerField(null=True, verbose_name='Cantidad de Likes')
+    # cantidad_reacciones_red_social = models.IntegerField(null=True, verbose_name='Cantidad de reacciones')
+
+
+class escucha(models.Model):
+    nombre_escucha = models.CharField(blank=True, max_length=100, verbose_name='NombreEscucha')
     usuario_red_social = models.CharField(blank=True, max_length=100, verbose_name='Usuario')
     fecha_inicio_red_social = models.DateField(auto_now=False, auto_now_add=False,verbose_name='Fecha de Inicio')
     fecha_final_red_social = models.DateField(auto_now=False, auto_now_add=False,verbose_name='Fecha Final')    
     empresa_red_social = models.ForeignKey(empresa, on_delete=models.CASCADE, null=True)
     campana_publicitaria_red_social = models.ForeignKey(campana_publicitaria, on_delete=models.CASCADE, null=True)
-    ubicacion_red_social = models.ForeignKey(ubicacion, on_delete=models.CASCADE, null=True)
-    hashtag_red_social = models.ForeignKey(hashtag, on_delete=models.CASCADE, null=True)
+    ubicacion_red_social = models.ManyToManyField(ubicacion)
+    hashtag_red_social = models.ManyToManyField(hashtag)
+    red_social = models.ManyToManyField(red_social)
 
-    # cantidad_seguidores_red_social = models.IntegerField(null=True, verbose_name='Cantidad de seguidores')
-    # cantidad_likes_red_social = models.IntegerField(null=True, verbose_name='Cantidad de Likes')
-    # cantidad_reacciones_red_social = models.IntegerField(null=True, verbose_name='Cantidad de reacciones')
+    class Meta():
+        verbose_name = "escucha"
+        verbose_name_plural = "Escuchas"
+
+    def __str__(self):
+        return self.nombre_escucha
 
 class data_red(models.Model):
     
