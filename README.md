@@ -1,5 +1,5 @@
 
-![alt text](https://commons.wikimedia.org/wiki/File:Utadeo-logo.png)
+![alt text](https://upload.wikimedia.org/wikipedia/commons/9/97/Utadeo-logo.png)
 
 ## How to use it
 
