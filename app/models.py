@@ -33,14 +33,12 @@ class empresa(models.Model):
 
 class ubicacion(models.Model):
     nombre_ubicacion = models.CharField(blank=True, max_length=100, verbose_name='Nombre')    
-
     class Meta():
         verbose_name = "ubicacion"
         verbose_name_plural = "ubicaciones"
-
     def __str__(self):
-        return self.nombre_ubicacion
-
+        return self.nombre_ubicacion       
+        
 class campana_publicitaria(models.Model):
     nombre_campana = models.CharField(blank=True, max_length=100, verbose_name='Nombre')
     descripcion_campana = models.CharField(blank=True, max_length=100, verbose_name='Descripcion')
@@ -59,15 +57,6 @@ class campana_publicitaria(models.Model):
     def __str__(self):  
         return self.nombre_campana     
 
-class ubicacion(models.Model):
-    nombre_ubicacion = models.CharField(blank=True, max_length=100, verbose_name='Nombre')    
-
-    class Meta():
-        verbose_name = "ubicacion"
-        verbose_name_plural = "ubicaciones"
-
-    def __str__(self):
-        return self.nombre_ubicacion       
 class hashtag(models.Model):
     nombre_hastag = models.CharField(blank=True, max_length=100, verbose_name='Nombre')
     
