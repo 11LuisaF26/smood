@@ -1,4 +1,5 @@
-<div style="text-align:center"><img src="https://www.utadeo.edu.co/sites/tadeo/files/logoutadeo_1.jpg" /></div>
+
+![alt text](https://commons.wikimedia.org/wiki/File:Utadeo-logo.png)
 
 ## How to use it
 
