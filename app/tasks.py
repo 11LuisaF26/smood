@@ -22,14 +22,8 @@ def get_facebook_post(nombre_pagina, numero_paginas, id_red_social):
         if publicacion and publicacion["post_id"] not in list_publication_ids:
             publicacion_id = publicacion["post_id"]
             publicacion_texto = publicacion["post_text"][:200]
-            publicacion_fecha = publicacion["time"]
-            publicacion_likes = publicacion["likes"]
-            publicacion_comentarios = publicacion["comments"]
-            publicacion_compartidos = publicacion["shares"]
-            publicacion_user = publicacion["user_id"]
-            red_social_interes = red_social.objects.get(id=id_red_social)
-            
-            d = data_red(
+            publicacion_texto = publicacion["post_text"][:50]
+            red_social_interes = red_social.objects.get(nombre_red_social=nombre_red_social)
                         publicacion_id = publicacion_id, 
                         publicacion_fecha = publicacion_fecha,
                         publicacion_texto = publicacion_texto, 

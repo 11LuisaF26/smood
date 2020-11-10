@@ -3,7 +3,7 @@
 MIT License
 Copyright (c) 2019 - present AppSeed.us
 """
-
+import io
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import loader
@@ -214,7 +214,6 @@ def add_camapana_publicitaria(request, id=0):
         raise PermissionDenied
     return render(request, 'crear_campana_publicitaria.html', {'form': form, "msg" : msg, "success" : success })
 
-
 @login_required(login_url="/login/")
 def add_red_social(request):
     msg     = None
@@ -326,3 +325,49 @@ def delete_camapana_publicitaria (request, id=0):
     elif user.groups.filter(name='Cliente').exists():
         raise PermissionDenied
     return render(request, 'campanas.html', {'form': form, "msg" : msg, "success" : success })
+
+#******************************
+# Nube de palabras
+#******************************
+# def nube_de_palabras (text):    
+    
+#         twitter_red_social = red_social.objects.get(nombre_red_social="Twitter")
+#         twitter_data_to_list = data_red.objects.filter(data_red_social = twitter_red_social).values('publicacion_texto')
+#         text = str(twitter_data_to_list)
+        
+#         stopwords = set(STOPWORDS)
+#         STOPLIST = set(stopwords.words('spanish'))        
+#         stopwords.add('RT')
+#         stopwords.add('publicacion_texto')
+#         stopwords.add("publicacion_texto'")
+#         stopwords.add('publicacion_texto RT')
+#         stopwords.add('una')
+        
+#         wordcloud = WordCloud(background_color='white', stopwords=Tok).generate(text)
+#         plt.imshow(wordcloud)
+#         plt.axis("off")
+#         #plt.show()
+#         image = io.BytesIO()
+#         plt.savefig(image, format='png')
+#         image.seek(0)  # rewind the data
+#         string = base64.b64encode(image.read())
+
+#         image_64 = 'data:image/png;base64,' + urllib.parse.quote(string)
+#         return image_64            
+#         # 
+#         # plt.imshow(wordcloud)
+#         # plt.axis("off")
+#         # s = plt.show()
+
+# def cloud_gen(request):
+#     twitter_red_social = red_social.objects.get(nombre_red_social="Twitter")
+#     twitter_data_to_list = data_red.objects.filter(data_red_social = twitter_red_social).values('publicacion_texto')
+#     texto = str(twitter_data_to_list)
+#     text = ''
+    
+#     for i in texto:
+#         if __name__ == '__main__':
+#             text += i.text
+
+#     wordcloud = nube_de_palabras(text)
+#     return render(request, "nube_de_palabras.html",{'wordcloud':wordcloud})
