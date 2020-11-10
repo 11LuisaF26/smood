@@ -28,6 +28,8 @@ urlpatterns = [
     path('ubicacion/save/', views.ubicaciones,  name='ubicaciones'),
     path('hashtag/', views.add_hashtag, name='crear_hashtag'),
     path('hashtag/save/', views.hashtags, name='hashtags'),
+    path('escuchas/', views.escuchas,  name='escuchas'),
+    path('escucha/save/', views.add_escuchas,  name='crear_escucha'),
     path('acercade/', views.acerca_de, name='acerca_de'),
     path('nube/twitter', nube.cloud_gen_t, name='nube_de_palabras_twitter'),
     path('nube/facebook', nube.cloud_gen_fb, name='nube_de_palabras_fb'),
@@ -37,4 +39,6 @@ urlpatterns = [
     re_path(r'^redes/delete/(?P<id>\w+)/$', views.delete_red_social, name='eliminar_redes'),
     re_path(r'^campanas/save/(?P<id>\w+)/$', views.add_camapana_publicitaria, name='editar_campana'),
     re_path(r'^campanas/delete/(?P<id>\w+)/$', views.delete_camapana_publicitaria, name='eliminar_campana'),
+    re_path(r'^escuchas/save/(?P<id>\w+)/$', views.add_escuchas, name='editar_escucha'),
+    re_path(r'^escuchas/delete/(?P<id>\w+)/$', views.delete_escucha, name='eliminar_escucha'),
 ]

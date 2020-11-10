@@ -30,13 +30,23 @@ class empresa(models.Model):
 
     def __str__(self):
         return self.nombre_empresa
-  
+
+class ubicacion(models.Model):
+    nombre_ubicacion = models.CharField(blank=True, max_length=100, verbose_name='Nombre')    
+
+    class Meta():
+        verbose_name = "ubicacion"
+        verbose_name_plural = "ubicaciones"
+
+    def __str__(self):
+        return self.nombre_ubicacion
+
 class campana_publicitaria(models.Model):
     nombre_campana = models.CharField(blank=True, max_length=100, verbose_name='Nombre')
     descripcion_campana = models.CharField(blank=True, max_length=100, verbose_name='Descripcion')
     objetivo_campana = models.CharField(blank=True, max_length=100, verbose_name='Objetivo')
     publico_campana = models.CharField(blank=True, max_length=100, verbose_name='Publico')
-    ubicacion_campana = models.CharField(blank=True, max_length=100, verbose_name='Ubicacion')
+    ubicacion_campana = models.ForeignKey(ubicacion, on_delete=models.CASCADE, null=True)
     presupuesto_campana = models.IntegerField(null=True, verbose_name='Presupuesto')
     eficacia_camapana = models.CharField(blank=True, max_length=100, verbose_name='Eficacia')
     empresa_campana = models.ForeignKey(empresa, on_delete=models.CASCADE, null=True)
@@ -70,19 +80,36 @@ class hashtag(models.Model):
         return self.nombre_hastag
 
 class red_social(models.Model):
-    nombre_escucha = models.CharField(blank=True, max_length=100, verbose_name='NombreEscucha')
     nombre_red_social = models.CharField(blank=True, max_length=100, verbose_name='Nombre')
+
+    class Meta():
+        verbose_name = "red_social"
+        verbose_name_plural = "redes_sociales"
+
+    def __str__(self):
+        return self.nombre_red_social
+
+    # cantidad_seguidores_red_social = models.IntegerField(null=True, verbose_name='Cantidad de seguidores')
+    # cantidad_likes_red_social = models.IntegerField(null=True, verbose_name='Cantidad de Likes')
+    # cantidad_reacciones_red_social = models.IntegerField(null=True, verbose_name='Cantidad de reacciones')
+
+class escucha(models.Model):
+    nombre_escucha = models.CharField(blank=True, max_length=100, verbose_name='NombreEscucha')
     usuario_red_social = models.CharField(blank=True, max_length=100, verbose_name='Usuario')
     fecha_inicio_red_social = models.DateField(auto_now=False, auto_now_add=False,verbose_name='Fecha de Inicio')
     fecha_final_red_social = models.DateField(auto_now=False, auto_now_add=False,verbose_name='Fecha Final')    
     empresa_red_social = models.ForeignKey(empresa, on_delete=models.CASCADE, null=True)
     campana_publicitaria_red_social = models.ForeignKey(campana_publicitaria, on_delete=models.CASCADE, null=True)
-    ubicacion_red_social = models.ForeignKey(ubicacion, on_delete=models.CASCADE, null=True)
-    hashtag_red_social = models.ForeignKey(hashtag, on_delete=models.CASCADE, null=True)
+    ubicacion_red_social = models.ManyToManyField(ubicacion)
+    hashtag_red_social = models.ManyToManyField(hashtag)
+    red_social = models.ManyToManyField(red_social)
 
-    # cantidad_seguidores_red_social = models.IntegerField(null=True, verbose_name='Cantidad de seguidores')
-    # cantidad_likes_red_social = models.IntegerField(null=True, verbose_name='Cantidad de Likes')
-    # cantidad_reacciones_red_social = models.IntegerField(null=True, verbose_name='Cantidad de reacciones')
+    class Meta():
+        verbose_name = "escucha"
+        verbose_name_plural = "Escuchas"
+
+    def __str__(self):
+        return self.nombre_escucha
 
 class data_red(models.Model):
     
@@ -102,27 +129,17 @@ class data_red(models.Model):
     def __str__(self):
         return self.publicacion_id
 
-class twitter_credencial(models.Model):
+class escucha_credencial(models.Model):
     
-    app_key = models.CharField(max_length=300, verbose_name='App key')
-    secret_key = models.CharField(max_length=300, verbose_name='Secret key')
-    bearer_token = models.CharField(max_length=300, verbose_name='Bearer token')
-    access_token = models.CharField(max_length=300, verbose_name='Access token')
-    token_secret = models.CharField(max_length=300, verbose_name='Token secret')
-    
+    twitter_bearer_token = models.CharField(max_length=300, verbose_name='Bearer token')
+    instagram_username = models.CharField(max_length=50, verbose_name='Username')
+    instagram_password = models.CharField(max_length=50, verbose_name='Password')
+    instagram_path = models.CharField(max_length=50, verbose_name='Path')
+    escucha = models.ForeignKey(escucha, on_delete=models.CASCADE, null=True)
+
     class Meta():
-        verbose_name = "twitter_credential"
-        verbose_name_plural = "twitter_credentials"
+        verbose_name = "escucha_credenciales"
+        verbose_name_plural = "escuchas_credenciales"
 
     def __str__(self):
-        return self.bearer_token
-
-class instagram_credencial(models.Model):
-    username = models.CharField(max_length=50, verbose_name='Username')
-    password = forms.CharField(widget=forms.PasswordInput)
-    class Meta():
-        verbose_name = "instagram_credential"
-        verbose_name_plural = "instagram_credentials"
-
-    def __str__(self):
-        return self.username
+        return self.instagram_username

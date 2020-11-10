@@ -77,6 +77,19 @@
 							{% endif %}
 					    </ul>
 					</li>
+					<li class="nav-item pcoded-hasmenu">
+					    <a class="nav-link ">
+							<span class="pcoded-micon">
+								<i class="feather icon-layout"></i></span><span class="pcoded-mtext">Escuchas</span></a>
+					    <ul class="pcoded-submenu">
+							{% if perms.app.view_escucha %}
+							<li><a href="/escuchas/">Consultar escuchas</a></li>					        
+							{% endif %}
+							{% if perms.app.add_escucha %}
+							<li><a href="/escucha/save/">Crear escuchas</a></li>
+							{% endif %}
+					    </ul>
+					</li>
 					<li class="nav-item">
                         <a href="/acercade/ " class="nav-link ">
                             <span class="pcoded-micon">

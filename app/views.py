@@ -79,62 +79,13 @@ def campanas_publicitarias(request):
 
 @login_required(login_url="/login/")
 def redes_sociales(request):
-    user = request.user
-    if user.groups.filter(name='Administrador').exists():       
-        numero_paginas = 5
-        redes_sociales_to_list = red_social.objects.all().values()
-        for red_social_in in redes_sociales_to_list:
-            nombre_red_social = red_social_in["nombre_red_social"]
-            id_red_social = red_social_in["id"]
-            if nombre_red_social == "Facebook":
-                nombre_pagina = red_social_in["usuario_red_social"]
-                if nombre_pagina.startswith("@"):
-                    nombre_pagina = nombre_pagina.replace("@", "")
-                    tasks.get_facebook_post(nombre_pagina=nombre_pagina, numero_paginas=numero_paginas, id_red_social=id_red_social)
-                else:
-                    tasks.get_facebook_post(nombre_pagina=nombre_pagina, numero_paginas=numero_paginas, id_red_social=id_red_social)
-            
-            if nombre_red_social == "Twitter":
-                nombre_usuario = red_social_in["usuario_red_social"]
-                if nombre_usuario.startswith("@"):
-                    nombre_usuario = nombre_usuario.replace("@", "")
-                    tasks.obtener_twitters_user(nombre_usuario = nombre_usuario, id_red_social=id_red_social)
-                else:
-                    tasks.obtener_twitters_user(nombre_usuario = nombre_usuario, id_red_social=id_red_social)
-
-                hashtag_id = red_social_in["hashtag_red_social_id"]
-                query = hashtag.objects.get(id=hashtag_id)
-                tasks.obtener_twitters_query(query = str(query), id_red_social=id_red_social)
-            
-    else:
-        empresas = empresa.objects.filter(usuarios = request.user)
-        numero_paginas = 5
-        redes_sociales_to_list = red_social.objects.filter(empresa_red_social__in = empresas).values()
-        for red_social_in in redes_sociales_to_list:
-            nombre_red_social = red_social_in["nombre_red_social"]
-            id_red_social = red_social_in["id"]
-
-            if nombre_red_social == "Facebook":
-                nombre_pagina = red_social_in["usuario_red_social"]
-                if nombre_pagina.startswith("@"):
-                    nombre_pagina = nombre_pagina.replace("@", "")
-                    tasks.get_facebook_post(nombre_pagina=nombre_pagina, numero_paginas=numero_paginas, id_red_social=id_red_social)
-                else:
-                    tasks.get_facebook_post(nombre_pagina=nombre_pagina, numero_paginas=numero_paginas, id_red_social=id_red_social)
-            
-            if nombre_red_social == "Twitter":
-                nombre_usuario = red_social_in["usuario_red_social"]
-                if nombre_usuario.startswith("@"):
-                    nombre_usuario = nombre_usuario.replace("@", "")
-                    tasks.obtener_twitters_user(nombre_usuario = nombre_usuario, id_red_social=id_red_social)
-                else:
-                    tasks.obtener_twitters_user(nombre_usuario = nombre_usuario, id_red_social=id_red_social)
-                
-                hashtag_id = red_social_in["hashtag_red_social_id"]
-                query = hashtag.objects.get(id=hashtag_id)
-                tasks.obtener_twitters_query(query = str(query), id_red_social=id_red_social)
-            
+    redes_sociales_to_list = red_social.objects.all()
     return render(request, "redes_sociales.html", {"redes_sociales":redes_sociales_to_list})
+
+@login_required(login_url="/login/")
+def escuchas(request):
+    escuchas_to_list = escucha.objects.all()
+    return render(request, "escuchas.html", {"escuchas":escuchas_to_list})
 
 @login_required(login_url="/login/")
 def ubicaciones(request):    
@@ -145,7 +96,6 @@ def ubicaciones(request):
 def hashtags(request):    
     hashtags = hashtag.objects.all()
     return render(request, "hashtags.html", {"hashtags":hashtags})
-
 
 @login_required(login_url="/login/")
 def redes_data(request):        
@@ -215,7 +165,7 @@ def add_camapana_publicitaria(request, id=0):
     return render(request, 'crear_campana_publicitaria.html', {'form': form, "msg" : msg, "success" : success })
 
 @login_required(login_url="/login/")
-def add_red_social(request):
+def add_red_social(request, id=0):
     msg     = None
     success = False  
     user = request.user
@@ -279,6 +229,31 @@ def add_hashtag(request):
     return render(request, 'crear_hashtag.html', {'form': form, "msg" : msg, "success" : success })  
 
 @login_required(login_url="/login/")
+def add_escuchas(request, id=0):
+    msg     = None
+    success = False  
+    user = request.user
+    form = escucha_form() 
+    logger.error(request.method)
+    logger.error(user.groups)
+    if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists():
+        logger.error(request.method)
+        if request.method == 'POST': # si el usuario está enviando el formulario con datos
+            logger.error("if method post")
+            form = escucha_form(request.POST) # Bound form
+            if form.is_valid():
+                new_escucha = form.save() # Guardar los datos en la base de datos
+                msg     = 'Escucha creada.'
+                success = True
+                # return HttpResponseRedirect(reverse('redes_sociales'))
+        else:
+            form = escucha_form() # Unbound form
+    elif user.groups.filter(name='Cliente').exists():
+        raise PermissionDenied    
+
+    return render(request, 'crear_escuchas.html', {'form': form, "msg" : msg, "success" : success })
+
+@login_required(login_url="/login/")
 def delete_empresas (request, id=0):
     msg     = None
     success = False  
@@ -309,6 +284,22 @@ def delete_red_social (request, id=0):
     elif user.groups.filter(name='Cliente').exists():
         raise PermissionDenied
     return render(request, 'crear_redes_sociales.html', {'form': form, "msg" : msg, "success" : success })
+    
+@login_required(login_url="/login/")
+def delete_escucha (request, id=0):
+    msg     = None
+    success = False  
+    user = request.user
+    form = escucha_form()  
+    if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists(): 
+        escucha_d = escucha.objects.get(pk=id)
+        escucha_d.delete()
+        msg     = 'Escucha eliminada.'
+        success = True
+        return render(request, 'crear_escuchas.html', {'form': form, "msg" : msg, "success" : success })
+    elif user.groups.filter(name='Cliente').exists():
+        raise PermissionDenied
+    return render(request, 'crear_escuchas.html', {'form': form, "msg" : msg, "success" : success })
 
 @login_required(login_url="/login/")
 def delete_camapana_publicitaria (request, id=0):

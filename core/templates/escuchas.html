@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} Empresas {% endblock %} 
+{% block title %} Escuchas {% endblock %} 
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -16,11 +16,11 @@
                     <div class="row align-items-center">
                         <div class="col-md-12">
                             <div class="page-header-title">
-                                <h5 class="m-b-10">Redes Sociales</h5>
+                                <h5 class="m-b-10">Escuchas</h5>
                             </div>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li>
-                                <li class="breadcrumb-item"><a href="#!">Redes sociales</a></li>
+                                <li class="breadcrumb-item"><a href="#!">Escuchas</a></li>
                             </ul>
                         </div>
                     </div>
@@ -33,8 +33,8 @@
                 <div class="col-xl-12">
                     <div class="card">
                         <div class="card-header">
-                            <h5>Redes sociales</h5>
-                            <span class="d-block m-t-5">Redes sociales registradas</span>
+                            <h5>Escuchas</h5>
+                            <span class="d-block m-t-5">Escuchas registradas</span>
                         </div>
                         <div class="card-body table-border-style">
                             <div class="table-responsive">
@@ -42,26 +42,41 @@
                                     <thead>
                                         <tr> 
                                             <th>#</th>
-                                            <th>Red Social</th>
+                                            <th>Nombre escucha</th>
+                                            <th>Fecha inicio red social</th>
+                                            <th>fecha final red social</th>
+                                            <th>Empresa red social</th>
+                                            <th>Campaña</th>
+                                            <th>Ubicación</th>
+                                            <th>Hashtags</th>
+                                            <th>Redes sociales</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         
-                                    {% for redes_sociales in redes_sociales%}
+                                    {% for escucha in escuchas%}
                                     <!-- url in view -->
                                         <tr> 
                                             <td>{{ forloop.counter }}</td>
-                                            <td>{{redes_sociales.nombre_red_social}}</td>
+                                            <td>{{escucha.nombre_escucha}}</td>
+                                            <td>{{escucha.fecha_inicio_red_social}}</td>
+                                            <td>{{escucha.fecha_final_red_social}}</td>
+                                            <td>{{escucha.empresa_red_social}}</td>
+                                            <td>{{escucha.campana_publicitaria_red_social}}</td>
+                                            <td>{{escucha.ubicacion_red_social}}</td>
+                                            <td>{{escucha.hashtag_red_social}}</td>
+                                            <td>{{escucha.red_social}}</td>
                                             <td>
-                                                <a href="{% url 'editar_redes' redes_sociales.id %}" class="btn text-secondary px-0">
+                                                <a href="{% url 'editar_escucha' escucha.id %}" class="btn text-secondary px-0">
                                                     <i class="far fa-edit fa-lg"></i>
                                                 </a>
-                                                <form action="{% url 'eliminar_redes' redes_sociales.id %}" method="POST" class="d-inline">
+                                                <form action="{% url 'eliminar_escucha' escucha.id %}" method="POST" class="d-inline">
                                                     {% csrf_token %}
                                                     <button type="submit" class="btn">
                                                         <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
                                                     </button>
+                                                    
                                                 </form>                                                
                                             </td>
                                         </tr>
