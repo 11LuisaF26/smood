@@ -122,7 +122,7 @@ $(document).ready(function() {
         } else {
             $('.pcoded-header').removeClassPrefix('header-');
             $('.pcoded-header').addClass(temp);
-            $('.m-header > .b-brand > .logo').attr('src', 'assets/images/logo.png');
+            $('.m-header > .b-brand > .logo').attr('src', 'assets/images/3logo.png');
         }
     });
     // rtl layouts
@@ -187,7 +187,7 @@ $(document).ready(function() {
         } else {
             $('.pcoded-header').removeClassPrefix('brand-');
             $('.pcoded-header').addClass(temp);
-            $('.m-header > .b-brand > .logo').attr('src', 'assets/images/logo.png');
+            $('.m-header > .b-brand > .logo').attr('src', 'assets/images/3logo.png');
         }
     });
     $.fn.removeClassPrefix = function(prefix) {

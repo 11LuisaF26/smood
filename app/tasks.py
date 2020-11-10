@@ -90,9 +90,10 @@ class twitter:
                     publicacion_compartidos = data["public_metrics"]["retweet_count"]
                     publicacion_user = data["author_id"]
                     red_social_interes = red_social.objects.get(id=self.id_red_social)
-                                publicacion_id = publicacion_id, 
-                                publicacion_fecha = publicacion_fecha,
-                                publicacion_texto = publicacion_texto, 
+                    publicacion_id = publicacion_id, 
+                    publicacion_fecha = publicacion_fecha,
+                    publicacion_texto = publicacion_texto,
+                    
                     d = data_red(
                                 publicacion_likes = publicacion_likes,
                                 publicacion_comentarios = publicacion_comentarios,
