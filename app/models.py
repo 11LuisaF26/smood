@@ -31,8 +31,6 @@ class empresa(models.Model):
     def __str__(self):
         return self.nombre_empresa
 
-
-    
 class ubicacion(models.Model):
     nombre_ubicacion = models.CharField(blank=True, max_length=100, verbose_name='Nombre')    
 
@@ -42,7 +40,6 @@ class ubicacion(models.Model):
 
     def __str__(self):
         return self.nombre_ubicacion
-
 
 class campana_publicitaria(models.Model):
     nombre_campana = models.CharField(blank=True, max_length=100, verbose_name='Nombre')
@@ -87,7 +84,6 @@ class red_social(models.Model):
     # cantidad_likes_red_social = models.IntegerField(null=True, verbose_name='Cantidad de Likes')
     # cantidad_reacciones_red_social = models.IntegerField(null=True, verbose_name='Cantidad de reacciones')
 
-
 class escucha(models.Model):
     nombre_escucha = models.CharField(blank=True, max_length=100, verbose_name='NombreEscucha')
     usuario_red_social = models.CharField(blank=True, max_length=100, verbose_name='Usuario')
@@ -124,29 +120,17 @@ class data_red(models.Model):
     def __str__(self):
         return self.publicacion_id
 
-class twitter_credencial(models.Model):
+class escucha_credencial(models.Model):
     
-    app_key = models.CharField(max_length=300, verbose_name='App key')
-    secret_key = models.CharField(max_length=300, verbose_name='Secret key')
-    bearer_token = models.CharField(max_length=300, verbose_name='Bearer token')
-    access_token = models.CharField(max_length=300, verbose_name='Access token')
-    token_secret = models.CharField(max_length=300, verbose_name='Token secret')
-    
-    class Meta():
-        verbose_name = "twitter_credential"
-        verbose_name_plural = "twitter_credentials"
-
-    def __str__(self):
-        return self.bearer_token
-
-class instagram_credencial(models.Model):
-    username = models.CharField(max_length=50, verbose_name='Username')
-    password = models.CharField(max_length=50, verbose_name='Password')
-    path = models.CharField(max_length=50, verbose_name='Path')
+    twitter_bearer_token = models.CharField(max_length=300, verbose_name='Bearer token')
+    instagram_username = models.CharField(max_length=50, verbose_name='Username')
+    instagram_password = models.CharField(max_length=50, verbose_name='Password')
+    instagram_path = models.CharField(max_length=50, verbose_name='Path')
+    escucha = models.ForeignKey(escucha, on_delete=models.CASCADE, null=True)
 
     class Meta():
-        verbose_name = "instagram_credential"
-        verbose_name_plural = "instagram_credentials"
+        verbose_name = "escucha_credenciales"
+        verbose_name_plural = "escuchas_credenciales"
 
     def __str__(self):
-        return self.username
+        return self.instagram_username
