@@ -1,4 +1,4 @@
-![alt text](https://www.utadeo.edu.co/sites/tadeo/files/logoutadeo_1.jpg)
+<div style="text-align:center"><img src="https://www.utadeo.edu.co/sites/tadeo/files/logoutadeo_1.jpg" /></div>
 
 ## How to use it
 
