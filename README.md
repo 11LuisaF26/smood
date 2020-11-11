@@ -1,11 +1,6 @@
-
-![alt text](https://i.pinimg.com/originals/ae/06/64/ae06647022c506cd7541fec434f607ad.jpg)
-
-
 <p align="center">
   <img src="https://i.pinimg.com/originals/ae/06/64/ae06647022c506cd7541fec434f607ad.jpg" />
 </p>
-
 
 ## How to use it
 
