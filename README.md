@@ -27,6 +27,9 @@ $ # Crear tablas
 $ python manage.py makemigrations
 $ python manage.py migrate
 $
+$ # Cargar datos para el funcionamiento en las modelos: red_social y estado_empresa
+$ python manage.py loaddata data.json
+$
 $ # Iniciar la aplicación (Modo de desarrollo)
 $ python manage.py runserver # Puerto por defecto 8000
 ```

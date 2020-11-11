@@ -1,0 +1,32 @@
+[
+    {
+        "model": "app.red_social",
+        "fields": {
+            "nombre_red_social": "Instagram"
+        }
+    },
+    {
+        "model": "app.red_social",
+        "fields": {
+            "nombre_red_social": "Facebook"
+        }
+    },
+    {
+        "model": "app.red_social",
+        "fields": {
+            "nombre_red_social": "Twitter"
+        }
+    },
+    {
+        "model": "app.estado_empresa",
+        "fields": {
+            "estado_nombre_empresa": "Activo"
+        }
+    },
+    {
+        "model": "app.estado_empresa",
+        "fields": {
+            "estado_nombre_empresa": "Inactivo"
+        }
+    }
+]
