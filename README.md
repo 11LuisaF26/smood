@@ -1,9 +1,10 @@
 
-<h1 align="center" color="blue">SMOOD - Software de planeación estratégica </H1>
-
 <p align="center">
   <img src="https://i.pinimg.com/originals/ae/06/64/ae06647022c506cd7541fec434f607ad.jpg" />
 </p>
+
+
+<h1 align="center" color="blue">SMOOD - Software de planeación estratégica </H1>
 
 
 ## How to use it
@@ -95,16 +96,6 @@ The project is coded using a simple and intuitive structure presented bellow:
    |
    |-- ************************************************************************
 ```
-
-<br />
-
-> The bootstrap flow
-
-- Django bootstrapper `manage.py` uses `core/settings.py` as the main configuration file
-- `core/settings.py` loads the app magic from `.env` file
-- Redirect the guest users to Login page
-- Unlock the pages served by *app* node for authenticated users
-
 <br />
 
 ## Deployment
