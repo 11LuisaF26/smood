@@ -1,7 +1,5 @@
 
-<h1 align="center">
-  SMOOD
-</H1>
+<h1 align="center" color="blue">SMOOD - Software de planeación estratégica </H1>
 
 <p align="center">
   <img src="https://i.pinimg.com/originals/ae/06/64/ae06647022c506cd7541fec434f607ad.jpg" />
