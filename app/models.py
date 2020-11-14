@@ -82,6 +82,19 @@ class red_social(models.Model):
     # cantidad_likes_red_social = models.IntegerField(null=True, verbose_name='Cantidad de Likes')
     # cantidad_reacciones_red_social = models.IntegerField(null=True, verbose_name='Cantidad de reacciones')
 
+class escucha_credencial(models.Model):
+    twitter_bearer_token = models.CharField(max_length=300, verbose_name='Bearer token')
+    instagram_username = models.CharField(max_length=50, verbose_name='Instagram username')
+    instagram_password = models.CharField(max_length=50, verbose_name='Instagram Password')
+    instagram_path = models.CharField(max_length=50, verbose_name='Instagram Path')
+
+    class Meta():
+        verbose_name = "escucha_credenciales"
+        verbose_name_plural = "escuchas_credenciales"
+
+    def __str__(self):
+        return self.instagram_username
+
 class escucha(models.Model):
     nombre_escucha = models.CharField(blank=True, max_length=100, verbose_name='NombreEscucha')
     usuario_red_social = models.CharField(blank=True, max_length=100, verbose_name='Usuario')
@@ -89,6 +102,7 @@ class escucha(models.Model):
     fecha_final_red_social = models.DateField(auto_now=False, auto_now_add=False,verbose_name='Fecha Final')    
     empresa_red_social = models.ForeignKey(empresa, on_delete=models.CASCADE, null=True)
     campana_publicitaria_red_social = models.ForeignKey(campana_publicitaria, on_delete=models.CASCADE, null=True)
+    credenciales = models.ForeignKey(escucha_credencial, on_delete=models.CASCADE, null=True)
     ubicacion_red_social = models.ManyToManyField(ubicacion)
     hashtag_red_social = models.ManyToManyField(hashtag)
     red_social = models.ManyToManyField(red_social)
@@ -101,14 +115,13 @@ class escucha(models.Model):
         return self.nombre_escucha
 
 class data_red(models.Model):
-    
     publicacion_id = models.CharField(null=True, max_length=30, verbose_name='Id')
-    publicacion_fecha = models.CharField(blank=True, max_length=60, verbose_name='Fecha')
-    publicacion_texto = models.CharField(blank=True, max_length=300, verbose_name='Text')
+    publicacion_fecha = models.CharField(null=True, blank=True, max_length=60, verbose_name='Fecha')
+    publicacion_texto = models.CharField(null=True, blank=True, max_length=300, verbose_name='Text')
     publicacion_likes = models.IntegerField(null=True, verbose_name='Likes')
     publicacion_comentarios = models.IntegerField(null=True, verbose_name='Comentarios')
     publicacion_compartidos = models.IntegerField(null=True, verbose_name='Veces compartido')
-    publicacion_user = models.CharField(blank=True, max_length=30, verbose_name='User')
+    publicacion_user = models.CharField(null=True, blank=True, max_length=30, verbose_name='User')
     data_red_social = models.ForeignKey(red_social, on_delete=models.CASCADE, null=True)
     
     class Meta():
@@ -118,17 +131,16 @@ class data_red(models.Model):
     def __str__(self):
         return self.publicacion_id
 
-class escucha_credencial(models.Model):
+class cuentas_empresa(models.Model):
+    identifier = models.CharField(null=True, max_length=60, verbose_name='Identificador')
+    username = models.CharField(null=True, max_length=30, verbose_name='Username')
+    fullname = models.CharField(null=True, max_length=30, verbose_name='Fullname')
+    profile_pic_url = models.CharField(null=True, max_length=500, verbose_name='Url foto perfil')
+    empresa = models.ForeignKey(empresa, on_delete=models.CASCADE, null=True)
     
-    twitter_bearer_token = models.CharField(max_length=300, verbose_name='Bearer token')
-    instagram_username = models.CharField(max_length=50, verbose_name='Username')
-    instagram_password = models.CharField(max_length=50, verbose_name='Password')
-    instagram_path = models.CharField(max_length=50, verbose_name='Path')
-    escucha = models.ForeignKey(escucha, on_delete=models.CASCADE, null=True)
-
     class Meta():
-        verbose_name = "escucha_credenciales"
-        verbose_name_plural = "escuchas_credenciales"
+        verbose_name = "Cuenta"
+        verbose_name_plural = "Cuentas"
 
     def __str__(self):
-        return self.instagram_username
+        return self.username
