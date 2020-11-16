@@ -114,7 +114,6 @@ def escuchas(request):
             id_red = red['id']
             nombre_red = red['nombre_red_social']
 
-            '''
             if nombre_red == "Facebook":
                 facebook_posts = get_facebook_post(
                     nombre_pagina=search_user, 
@@ -135,7 +134,6 @@ def escuchas(request):
                         bearer_token=twitter_bearer_token, 
                         id_red_social = id_red
                     )
-            '''
             if nombre_red == "Instagram":
                 search_accounts = search_accounts_by_username(
                     nombre_pagina=search_user, 
