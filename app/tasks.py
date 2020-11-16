@@ -246,14 +246,17 @@ def get_instagram_medias_by_tag(username, password, path, id_red_social, list_ha
 
     instagram = Instagram()
     instagram.with_credentials(username, password, path)
-
-    logger.error(instagram)
     
     try:
         instagram.login(True)
-        for hashtag_record in list_hashtag:
-            hashtag_name = hashtag_record['nombre_hastag']
-            medias = instagram.get_medias_by_tag(hashtag_name, count=100)
+        for hashtag_id in list_hashtag_ids:
+            escucha_hashtag = hashtag.objects.filter(id=hashtag_id).values()
+            for value in escucha_hashtag:
+                nombre_hashtag = value['nombre_hastag']
+                if nombre_hashtag.startswith('#'):
+                    nombre_hashtag = nombre_hashtag.replace(nombre_hashtag[0], '')
+            medias = instagram.get_medias_by_tag(nombre_hashtag, count=100)
+            logger.error(medias)
             for media in medias:
                 media_identifier = media.identifier
                 media_create_date = media.created_time
@@ -262,32 +265,33 @@ def get_instagram_medias_by_tag(username, password, path, id_red_social, list_ha
                 media_likes_count = media.likes_count
                 media_comments_count = media.comments_count
                 media_comments = media.comments
+
+                if media_identifier not in list_publication_ids:
+                    publicacion_id = media_identifier
+                    publicacion_texto = media_text[:200]
+                    publicacion_fecha = media_create_date
+                    publicacion_likes = media_likes_count
+                    publicacion_comentarios = media_comments_count
+                    publicacion_compartidos = 0
+                    publicacion_user = media_owner
+
+                    red_social_interes = red_social.objects.get(id=id_red_social)
+                    
+                    new_publication = data_red(
+                        publicacion_id = publicacion_id, 
+                        publicacion_fecha = publicacion_fecha,
+                        publicacion_texto = publicacion_texto, 
+                        publicacion_likes = publicacion_likes,
+                        publicacion_comentarios = publicacion_comentarios,
+                        publicacion_compartidos = publicacion_compartidos,
+                        publicacion_user = publicacion_user,
+                        data_red_social = red_social_interes
+                    )
+                    new_publication.save()
     except:
         logger.error("******************************")
         logger.error("No pudimos completar la tarea")
         logger.error("de obtener medias by tag en instagram")
         logger.error("******************************")
     else:
-        if media_identifier not in list_publication_ids:
-            publicacion_id = media_identifier
-            publicacion_texto = media_text[:200]
-            publicacion_fecha = media_create_date
-            publicacion_likes = media_likes_count
-            publicacion_comentarios = media_comments_count
-            publicacion_compartidos = 0
-            publicacion_user = media_owner
-
-            red_social_interes = red_social.objects.get(id=id_red_social)
-            
-            new_publication = data_red(
-                publicacion_id = publicacion_id, 
-                publicacion_fecha = publicacion_fecha,
-                publicacion_texto = publicacion_texto, 
-                publicacion_likes = publicacion_likes,
-                publicacion_comentarios = publicacion_comentarios,
-                publicacion_compartidos = publicacion_compartidos,
-                publicacion_user = publicacion_user,
-                data_red_social = red_social_interes
-            )
-            new_publication.save()
-    
+        logger.error("The get medias by tag in instagram process has finish succesfully")
