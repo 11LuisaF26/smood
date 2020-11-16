@@ -139,7 +139,7 @@ def obtener_twitters_query(query, bearer_token, id_red_social):
                 new_publication.save()
 
 @background(schedule=5)
-def search_accounts_by_username(nombre_pagina, empresa_id, username, password, path, red_id): #, hashtag_list
+def search_accounts_by_username(nombre_pagina, empresa_id, username, password, path, red_id, hashtag_list):
     instagram = Instagram()
     instagram.with_credentials(username, password, path)
     try:
@@ -173,7 +173,7 @@ def search_accounts_by_username(nombre_pagina, empresa_id, username, password, p
                 )
                 new_account.save()
     get_instagram_medias_by_user(empresa_id=empresa_id, username=username, password=password, path=path, id_red_social=red_id)
-    #get_instagram_medias_by_tag(username=username, password=password, path=path, id_red_social=red_id) #, list_hashtag=hashtag_list
+    get_instagram_medias_by_tag(username=username, password=password, path=path, id_red_social=red_id, list_hashtag_ids=hashtag_list) 
 
 @background(schedule=5)
 def get_instagram_medias_by_user(empresa_id, username, password, path, id_red_social):
@@ -237,9 +237,8 @@ def get_instagram_medias_by_user(empresa_id, username, password, path, id_red_so
         else:
             logger.error("Hemos almacenado las publicaciones de cada cuenta de la empresa")
 
-'''
 @background(schedule=5)
-def get_instagram_medias_by_tag(username, password, path, id_red_social):#, list_hashtag
+def get_instagram_medias_by_tag(username, password, path, id_red_social, list_hashtag_ids): 
     data_redes = data_red.objects.all().values()
     list_publication_ids = []
     for data in data_redes:
@@ -292,4 +291,3 @@ def get_instagram_medias_by_tag(username, password, path, id_red_social):#, list
             )
             new_publication.save()
     
-'''

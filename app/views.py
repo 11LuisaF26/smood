@@ -91,6 +91,10 @@ def escuchas(request):
             search_user.replace(search_user[0], '')
 
         escucha_hashtags = hashtag.objects.filter(escucha__id=escucha_record['id']).values()
+        hastags_ids_list = []
+        for escucha_hashtag in escucha_hashtags:
+            hashtag_id = escucha_hashtag['id']
+            hastags_ids_list.append(hashtag_id)
 
         escucha_empresas = empresa.objects.filter(escucha__id=escucha_record['id']).values()
         for escucha_empresa in escucha_empresas:
@@ -138,8 +142,8 @@ def escuchas(request):
                     username=instagram_user, 
                     password=instagram_pass, 
                     path=instagram_path,
-                    red_id=id_red
-                    #hashtag_list = escucha_hashtags
+                    red_id=id_red,
+                    hashtag_list = hastags_ids_list
                 )
 
     return render(request, "escuchas.html", {"escuchas":escuchas_to_list})
