@@ -105,6 +105,7 @@ def escuchas(request):
 
         redes_sociales = red_social.objects.filter(escucha__id=escucha_record['id']).values()
         
+        list_redes_sociales_id = []
         for red in redes_sociales:
             id_red = red['id']
             nombre_red = red['nombre_red_social']
@@ -136,7 +137,9 @@ def escuchas(request):
                     empresa_id=escucha_empresa_id, 
                     username=instagram_user, 
                     password=instagram_pass, 
-                    path=instagram_path
+                    path=instagram_path,
+                    red_id=id_red
+                    #hashtag_list = escucha_hashtags
                 )
 
     return render(request, "escuchas.html", {"escuchas":escuchas_to_list})

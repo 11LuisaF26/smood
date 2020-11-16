@@ -76,17 +76,17 @@ def obtener_twitters_user(nombre_usuario, bearer_token, id_red_social):
                 publicacion_compartidos = data["public_metrics"]["retweet_count"]
                 publicacion_user = data["author_id"]
                 red_social_interes = red_social.objects.get(id=id_red_social)
-                publicacion_id = publicacion_id, 
-                publicacion_fecha = publicacion_fecha,
-                publicacion_texto = publicacion_texto,
                 
                 new_publication = data_red(
-                            publicacion_likes = publicacion_likes,
-                            publicacion_comentarios = publicacion_comentarios,
-                            publicacion_compartidos = publicacion_compartidos,
-                            publicacion_user = publicacion_user,
-                            data_red_social = red_social_interes
-                    )
+                    publicacion_id = publicacion_id,
+                    publicacion_texto = publicacion_texto,
+                    publicacion_fecha = publicacion_fecha,
+                    publicacion_likes = publicacion_likes,
+                    publicacion_comentarios = publicacion_comentarios,
+                    publicacion_compartidos = publicacion_compartidos,
+                    publicacion_user = publicacion_user,
+                    data_red_social = red_social_interes
+                )
                 new_publication.save()
                 
 @background(schedule=5)
@@ -139,7 +139,7 @@ def obtener_twitters_query(query, bearer_token, id_red_social):
                 new_publication.save()
 
 @background(schedule=5)
-def search_accounts_by_username(nombre_pagina, empresa_id, username, password, path):
+def search_accounts_by_username(nombre_pagina, empresa_id, username, password, path, red_id): #, hashtag_list
     instagram = Instagram()
     instagram.with_credentials(username, password, path)
     try:
@@ -148,6 +148,7 @@ def search_accounts_by_username(nombre_pagina, empresa_id, username, password, p
     except:
         logger.error("******************************")
         logger.error("No pudimos completar la tarea")
+        logger.error("de obtener cuentas por username en instagram")
         logger.error("******************************")
     else:
         for account in accounts:
@@ -171,3 +172,124 @@ def search_accounts_by_username(nombre_pagina, empresa_id, username, password, p
                     empresa = empresa_add
                 )
                 new_account.save()
+    get_instagram_medias_by_user(empresa_id=empresa_id, username=username, password=password, path=path, id_red_social=red_id)
+    #get_instagram_medias_by_tag(username=username, password=password, path=path, id_red_social=red_id) #, list_hashtag=hashtag_list
+
+@background(schedule=5)
+def get_instagram_medias_by_user(empresa_id, username, password, path, id_red_social):
+    data_redes = data_red.objects.all().values()
+    list_publication_ids = []
+    for data in data_redes:
+        list_publication_ids.append(data["publicacion_id"])
+
+    instagram = Instagram()
+    instagram.with_credentials(username, password, path)
+    
+    try:
+        cuentas_empresas = cuentas_empresa.objects.filter(empresa__id=empresa_id).values()
+    except:
+        logger.error("****************************************************************")
+        logger.error("No se han encontrado datos en el modelo de cuentas de la empresa")
+        logger.error("Tarea: Obtener medias by user en instagram")
+        logger.error("****************************************************************")
+    else:
+        try:
+            instagram.login(True)
+            for cuenta in cuentas_empresas:
+                username = cuenta['username']
+                medias = instagram.get_medias(username, 100)
+                for media in medias:
+                    media_identifier = media.identifier
+                    media_create_date = media.created_time
+                    media_text = media.caption
+                    media_owner = media.owner
+                    media_likes_count = media.likes_count
+                    media_comments_count = media.comments_count
+                    media_comments = media.comments
+
+                if media_identifier not in list_publication_ids:
+                    publicacion_id = media_identifier
+                    publicacion_texto = media_text[:200]
+                    publicacion_fecha = media_create_date
+                    publicacion_likes = media_likes_count
+                    publicacion_comentarios = media_comments_count
+                    publicacion_compartidos = 0
+                    publicacion_user = media_owner
+
+                    red_social_interes = red_social.objects.get(id=id_red_social)
+
+                    new_publication = data_red(
+                        publicacion_id = publicacion_id, 
+                        publicacion_fecha = publicacion_fecha,
+                        publicacion_texto = publicacion_texto, 
+                        publicacion_likes = publicacion_likes,
+                        publicacion_comentarios = publicacion_comentarios,
+                        publicacion_compartidos = publicacion_compartidos,
+                        publicacion_user = publicacion_user,
+                        data_red_social = red_social_interes
+                    )
+                    new_publication.save()
+        except:
+            logger.error("******************************")
+            logger.error("No pudimos completar la tarea")
+            logger.error("de obtener medias by username en instagram")
+            logger.error("******************************")
+        else:
+            logger.error("Hemos almacenado las publicaciones de cada cuenta de la empresa")
+
+'''
+@background(schedule=5)
+def get_instagram_medias_by_tag(username, password, path, id_red_social):#, list_hashtag
+    data_redes = data_red.objects.all().values()
+    list_publication_ids = []
+    for data in data_redes:
+        list_publication_ids.append(data["publicacion_id"])
+
+    instagram = Instagram()
+    instagram.with_credentials(username, password, path)
+
+    logger.error(instagram)
+    
+    try:
+        instagram.login(True)
+        for hashtag_record in list_hashtag:
+            hashtag_name = hashtag_record['nombre_hastag']
+            medias = instagram.get_medias_by_tag(hashtag_name, count=100)
+            for media in medias:
+                media_identifier = media.identifier
+                media_create_date = media.created_time
+                media_text = media.caption
+                media_owner = media.owner
+                media_likes_count = media.likes_count
+                media_comments_count = media.comments_count
+                media_comments = media.comments
+    except:
+        logger.error("******************************")
+        logger.error("No pudimos completar la tarea")
+        logger.error("de obtener medias by tag en instagram")
+        logger.error("******************************")
+    else:
+        if media_identifier not in list_publication_ids:
+            publicacion_id = media_identifier
+            publicacion_texto = media_text[:200]
+            publicacion_fecha = media_create_date
+            publicacion_likes = media_likes_count
+            publicacion_comentarios = media_comments_count
+            publicacion_compartidos = 0
+            publicacion_user = media_owner
+
+            red_social_interes = red_social.objects.get(id=id_red_social)
+            
+            new_publication = data_red(
+                publicacion_id = publicacion_id, 
+                publicacion_fecha = publicacion_fecha,
+                publicacion_texto = publicacion_texto, 
+                publicacion_likes = publicacion_likes,
+                publicacion_comentarios = publicacion_comentarios,
+                publicacion_compartidos = publicacion_compartidos,
+                publicacion_user = publicacion_user,
+                data_red_social = red_social_interes
+            )
+            new_publication.save()
+    
+'''
