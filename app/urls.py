@@ -7,6 +7,7 @@ Copyright (c) 2019 - present AppSeed.us
 from django.urls import path, re_path
 from app import views
 from app import nube
+from app import red_de_palabras
 
 urlpatterns = [
     # Matches any html file - to be used for gentella
@@ -30,6 +31,7 @@ urlpatterns = [
     path('acercade/', views.acerca_de, name='acerca_de'),
     path('nube/twitter', nube.cloud_gen_t, name='nube_de_palabras_twitter'),
     path('nube/facebook', nube.cloud_gen_fb, name='nube_de_palabras_fb'),
+    path('red/twitter', red_de_palabras.render_graph, name='nube_de_palabras_twitter'),
     re_path(r'^empresas/save/(?P<id>\w+)/$', views.add_empresas, name='editar_empresa'),
     re_path(r'^empresas/delete/(?P<id>\w+)/$', views.delete_empresas, name='eliminar_empresa'),
     re_path(r'^redes/save/(?P<id>\w+)/$', views.add_red_social, name='editar_redes'),

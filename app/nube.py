@@ -57,8 +57,7 @@ def normalize(text):
 def nube_de_palabras_t (text):       
         twitter_red_social = red_social.objects.get(nombre_red_social="Twitter")
         twitter_data_to_list = data_red.objects.filter(data_red_social = twitter_red_social).values('publicacion_texto')
-        text = str(twitter_data_to_list)
-        # ' ''.join(twitter_data_to_list)
+        text = str(twitter_data_to_list)        
         word_list = normalize(text)    
         
         stopwords = set(STOPWORDS)           
