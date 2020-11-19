@@ -30,6 +30,7 @@ urlpatterns = [
     path('hashtag/save/', views.hashtags, name='hashtags'),
     path('escuchas/', views.escuchas,  name='escuchas'),
     path('escucha/save/', views.add_escuchas,  name='crear_escucha'),
+    path('cuentas/', views.cuentas,  name='cuentas'),
     path('acercade/', views.acerca_de, name='acerca_de'),
     path('nube/twitter', nube.cloud_gen_t, name='nube_de_palabras_twitter'),
     path('nube/facebook', nube.cloud_gen_fb, name='nube_de_palabras_fb'),

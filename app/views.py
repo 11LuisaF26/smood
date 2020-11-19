@@ -166,6 +166,13 @@ def redes_data(request):
         data_redes = data_red.objects.all()
         return render(request, "redes_data.html", {"redes_data":data_redes})
 
+@login_required(login_url="/login/")
+def cuentas(request):        
+    user = request.user
+    if user.groups.filter(name='Administrador').exists():       
+        cuentas = cuentas_empresa.objects.all()
+        return render(request, "cuentas.html", {"cuentas":cuentas})
+
 #******************************
 # Funciones para insertar
 #******************************
@@ -295,9 +302,7 @@ def add_escuchas(request, id=0):
     msg     = None
     success = False  
     user = request.user
-    form = escucha_form() 
-    logger.error(request.method)
-    logger.error(user.groups)
+    form = escucha_form()
     if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists():
         logger.error(request.method)
         if request.method == 'POST': # si el usuario está enviando el formulario con datos
