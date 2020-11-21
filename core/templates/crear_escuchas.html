@@ -88,9 +88,12 @@
                                 <label>Credenciales</label>
                                 <select type="text" class="form-control" id="credenciales" {{ form.credenciales }} </input>
                             </div>
-
-                            <button type="submit" name="crearredsocial" class="btn btn-primary btn-block mb-4">Crear
-                                red Social</button>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="es_competencia" {{ form.es_competencia }} </input>
+                                <label class="custom-control-label" for="es_competencia">Es competencia</label>
+                            </div>
+                            </br>
+                            <button type="submit" name="crearredsocial" class="btn btn-primary btn-block mb-4">Crear escucha</button>
                         </form>           
                         {% endif %}              
                     </div>

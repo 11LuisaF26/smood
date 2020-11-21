@@ -103,6 +103,7 @@ class escucha(models.Model):
     empresa_red_social = models.ForeignKey(empresa, on_delete=models.CASCADE, null=True)
     campana_publicitaria_red_social = models.ForeignKey(campana_publicitaria, on_delete=models.CASCADE, null=True)
     credenciales = models.ForeignKey(escucha_credencial, on_delete=models.CASCADE, null=True)
+    es_competencia = models.BooleanField()
     ubicacion_red_social = models.ManyToManyField(ubicacion)
     hashtag_red_social = models.ManyToManyField(hashtag)
     red_social = models.ManyToManyField(red_social)
