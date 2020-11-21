@@ -1,0 +1,42 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Escuchas por empresa {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}	
+
+    <!-- [ Main Content ] start -->
+    <section class="pcoded-main-container">
+        <div class="pcoded-content">
+            <!-- [ breadcrumb ] start -->
+            <div class="row">
+                <!-- [ stiped-table ] start -->
+                <!-- <div class="col-xl-12"> -->
+                {% for escucha in escuchas %}
+                <div class="col-md-6 col-xl-3">                    
+                    <div class="card bg-c-blue order-card">
+                        <div class="card-body">
+                            <h5 class="text-white">{{escucha.nombre_escucha}}</h5>
+                        </div>                                                                       
+                    </div>
+                </div>                    
+                {% endfor %}                    
+                </div>
+                <!-- [ stiped-table ] end -->
+            </div>
+        </div>
+    </section>>
+            <!-- [ br]end -->
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+    <!-- Apex Chart -->
+    <script src="/static/assets/js/plugins/apexcharts.min.js"></script>
+    <!-- custom-chart js -->
+    <script src="/static/assets/js/pages/dashboard-main.js"></script>
+
+{% endblock javascripts %}

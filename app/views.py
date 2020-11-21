@@ -383,6 +383,11 @@ def delete_camapana_publicitaria (request, id=0):
         raise PermissionDenied
     return render(request, 'campanas.html', {'form': form, "msg" : msg, "success" : success })
 
+@login_required(login_url="/login/")
+def escuchas_campana(request, campana_id):
+    escuchas = escucha.objects.filter(campana_publicitaria_red_social__id=campana_id)
+    return render(request, "escuchas_empresa.html", {"escuchas":escuchas})
+
 #******************************
 # Nube de palabras
 #******************************
