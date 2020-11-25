@@ -61,7 +61,7 @@
                                 <input type="date"  id="fecha_inicio_red_social" {{ form.fecha_inicio_red_social }} 
 
                                 <label> Fecha Final </label>
-                                <input type="date"  id="fecha_final_red_social" {{ form.fecha_final_red_social }} 
+                                <input type="date"  id="fecha_final_red_social" onchange="CompareDate()" {{ form.fecha_final_red_social }} 
                             </div>
                 
                             <div class="form-group">
@@ -114,5 +114,7 @@
 <script src="/static/assets/js/plugins/apexcharts.min.js"></script>
 <!-- custom-chart js -->
 <script src="/static/assets/js/pages/dashboard-main.js"></script>
+
+<script src="/static/assets/js/escuchas_save/dates.js"></script>
 
 {% endblock javascripts %}
