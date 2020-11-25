@@ -137,7 +137,7 @@ class cuentas_empresa(models.Model):
     username = models.CharField(null=True, max_length=30, verbose_name='Username')
     fullname = models.CharField(null=True, max_length=30, verbose_name='Fullname')
     profile_pic_url = models.CharField(null=True, max_length=500, verbose_name='Url foto perfil')
-    empresa = models.ForeignKey(empresa, on_delete=models.CASCADE, null=True)
+    escucha = models.ForeignKey(escucha, on_delete=models.CASCADE, null=True)
     
     class Meta():
         verbose_name = "Cuenta"

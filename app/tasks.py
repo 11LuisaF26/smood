@@ -139,7 +139,7 @@ def obtener_twitters_query(query, bearer_token, id_red_social):
                 new_publication.save()
 
 @background(schedule=5)
-def search_accounts_by_username(nombre_pagina, empresa_id, username, password, path, red_id, hashtag_list):
+def search_accounts_by_username(nombre_pagina, escucha_id, username, password, path, red_id, hashtag_list):
     instagram = Instagram()
     instagram.with_credentials(username, password, path)
     try:
@@ -163,20 +163,20 @@ def search_accounts_by_username(nombre_pagina, empresa_id, username, password, p
                 list_cuentas_username.append(data['username'])
             
             if account_is_verified == True and account_username not in list_cuentas_username:
-                empresa_add = empresa.objects.get(id=empresa_id)
+                escucha_add = escucha.objects.get(id=escucha_id)
                 new_account = cuentas_empresa(
                     identifier = account_identifier, 
                     username = account_username,
                     fullname = account_full_name, 
                     profile_pic_url = account_profile_pic_url,
-                    empresa = empresa_add
+                    escucha = escucha_add
                 )
                 new_account.save()
-    get_instagram_medias_by_user(empresa_id=empresa_id, username=username, password=password, path=path, id_red_social=red_id)
+    get_instagram_medias_by_user(escucha_id=escucha_id, username=username, password=password, path=path, id_red_social=red_id)
     get_instagram_medias_by_tag(username=username, password=password, path=path, id_red_social=red_id, list_hashtag_ids=hashtag_list) 
 
 @background(schedule=5)
-def get_instagram_medias_by_user(empresa_id, username, password, path, id_red_social):
+def get_instagram_medias_by_user(escucha_id, username, password, path, id_red_social):
     data_redes = data_red.objects.all().values()
     list_publication_ids = []
     for data in data_redes:
@@ -186,7 +186,7 @@ def get_instagram_medias_by_user(empresa_id, username, password, path, id_red_so
     instagram.with_credentials(username, password, path)
     
     try:
-        cuentas_empresas = cuentas_empresa.objects.filter(empresa__id=empresa_id).values()
+        cuentas_escucha = cuentas_empresa.objects.filter(escucha__id=escucha_id).values()
     except:
         logger.error("****************************************************************")
         logger.error("No se han encontrado datos en el modelo de cuentas de la empresa")
@@ -195,7 +195,7 @@ def get_instagram_medias_by_user(empresa_id, username, password, path, id_red_so
     else:
         try:
             instagram.login(True)
-            for cuenta in cuentas_empresas:
+            for cuenta in cuentas_escucha:
                 username = cuenta['username']
                 medias = instagram.get_medias(username, 100)
                 for media in medias:
