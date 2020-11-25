@@ -99,7 +99,7 @@ def cloud_gen_t(request):
     return render(request, "nube_de_palabras_twitter.html",{'wordcloud':wordcloud})
 
 
- # **************************
+# **************************
 # Nube de palabras Facebook
 # **************************
 def nube_de_palabras_fb (text):       
@@ -145,4 +145,83 @@ def cloud_gen_fb(request):
     wordcloud = nube_de_palabras_fb(text)
     return render(request, "nube_de_palabras_fb.html",{'wordcloud':wordcloud})   
 
+# **************************
+# Nube de palabras Instagram
+# **************************
 
+def nube_de_palabras_ig (text):       
+        ig_red_social = red_social.objects.get(nombre_red_social="Instagram")
+        ig_data_to_list = data_red.objects.filter(data_red_social = ig_red_social).values('publicacion_texto')
+        text = str(ig_data_to_list)
+        word_list = normalize(text)    
+        
+        stopwords = set(STOPWORDS)           
+        stopwords.add("queryset'")
+        # stopwords.add('publicacion_texto')
+        # stopwords.add("publicacion_texto'")
+        # stopwords.add('publicacion_texto RT')
+        # stopwords.add('una')
+        
+        wordcloud = WordCloud(background_color='white', stopwords=stopwords).generate(word_list)
+        plt.imshow(wordcloud)
+        plt.axis("off")
+        #plt.show()
+        image = io.BytesIO()
+        plt.savefig(image, format='png')
+        image.seek(0)  # rewind the data
+        string = base64.b64encode(image.read())
+
+        image_64 = 'data:image/png;base64,' + urllib.parse.quote(string)
+        return image_64            
+        # 
+        # plt.imshow(wordcloud)
+        # plt.axis("off")
+        # s = plt.show()
+
+def cloud_gen_ig(request):
+    ig_red_social = red_social.objects.get(nombre_red_social="Instagram")
+    ig_data_to_list = data_red.objects.filter(data_red_social = ig_red_social).values('publicacion_texto')
+    texto = str(ig_data_to_list)
+    word_list = normalize(texto)
+    text = ''
+    
+    for i in word_list:
+        if __name__ == '__main__':
+            text += i.text
+
+    wordcloud = nube_de_palabras_ig(text)
+    return render(request, "nube_de_palabras_ig.html",{'wordcloud':wordcloud})  
+
+
+# **************************
+# Red de palabras
+# **************************
+
+def tokenizeText(sample):    
+    doc = nlp(sample)
+    lemmas = [token.lemma_ for token in doc]
+    a_lemmas = [lemma for lemma in lemmas if (lemma.isalpha()  and lemma != '-PRON-') and lemma not in STOPLIST and lemma not in SYMBOLS]
+    return a_lemmas
+
+df=pd.read_csv('C:\\Users\\Jaime\\Documents\\Luisa\\git\\descarga.csv')
+df=df.fillna(" ")
+
+
+def generador(nombre,texto,User):
+    arreglo=[]
+    for i in range(0,len(texto)):
+        if len(texto[i])>10:
+            data=tokenizeText(texto[i])
+            data_tree=dict()
+            data_tree['submissionID']=str(i)
+            data_tree['keywords']=data
+            data_tree['year']=nombre[i]
+            data_tree['cleanTitle']=User[i]
+            arreglo.append(data_tree)
+    return json.dumps(arreglo,ensure_ascii=False)
+
+print('var keywords1='+generador(df["data red social"].values.tolist(),df["Text"].values.tolist(),df["User"].values.tolist())+";")
+
+
+def red(request):
+    return render(request, "red.html") 
