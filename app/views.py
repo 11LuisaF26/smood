@@ -73,9 +73,61 @@ def campanas_publicitarias(request):
     user = request.user
     if user.groups.filter(name='Administrador').exists():       
         campanas_publicitarias_to_list = campana_publicitaria.objects.all()
+        for campana_publicitaria_to_list in campanas_publicitarias_to_list:
+            campana_id = campana_publicitaria_to_list.id
+            try:
+                escucha_campana_values = escucha.objects.filter(campana_publicitaria_red_social__id=campana_id).values()
+                continue
+            except:
+                logger.error("No hay escuchas relacionadas con esta campaña")
+            else:
+                count_official_escucha = 0
+                count_competition_escucha = 0
+                for value in escucha_campana_values:
+                    escucha_id = value['id']
+                    type_escucha = value['es_competencia']
+                    if type_escucha == False or type_escucha == 0:
+                        count_official_escucha += 1
+                        try:
+                            account_escucha_campana_values = cuentas_empresa.objects.filter(escucha__id=escucha_id).values()
+                            continue
+                        except:
+                            logger.error("No hay cuentas para esta escucha")
+                        else:
+                            official_account_count = 0
+                            for account_value in account_escucha_campana_values:
+                                official_account_count += 1
+                                account_id = account_value['id']
+                        #data_escucha_campana_values = data_red.objects.filter(campana_publicitaria_red_social__id=campana_id).values()
+                
+                    else:
+                        count_competition_escucha += 1
+                        try:
+                            account_escucha_campana_values = cuentas_empresa.objects.filter(escucha__id=escucha_id).values()
+                            continue
+                        except:
+                            logger.error("No hay cuentas para esta escucha")
+                        else:
+                            unofficial_account_count = 0
+                            for account_value in account_escucha_campana_values:
+                                unofficial_account_count += 1
+                                account_id = account_value['id']
+
+                official_info_dict = {
+                    'official_escucha_number': count_official_escucha,
+                    'official_account_number': official_account_count
+                }
+
+                unofficial_info_dict = {
+                    'unofficial_escucha_number': count_competition_escucha,
+                    'unofficial_account_number': unofficial_account_count
+                }
+                logger.error(official_info_dict)
+                logger.error(unofficial_info_dict)
     else:
         empresas = empresa.objects.filter(usuarios = request.user)
         campanas_publicitarias_to_list = campana_publicitaria.objects.filter(empresa_campana__in = empresas)
+    
     return render(request, "campanas.html", {"campanas_publicitarias":campanas_publicitarias_to_list})
 
 @login_required(login_url="/login/")
