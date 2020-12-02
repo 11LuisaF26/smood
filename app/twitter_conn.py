@@ -39,6 +39,9 @@ class TwitterConn:
 
         response = requests.get(url=endpoint, params=payload, headers=headers)
         
+        if response.ok:
+            logger.error('Task get twiiter user completed succesfuly')
+
         logger.error(response)
 
         return response
@@ -65,6 +68,9 @@ class TwitterConn:
 
         response = requests.get(url=endpoint, params=payload, headers=headers)
         
+        if response.ok:
+            logger.error('Task get twiiter query completed succesfully')
+
         logger.error(response)
 
         return response
