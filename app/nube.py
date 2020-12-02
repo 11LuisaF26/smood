@@ -202,10 +202,10 @@ def tokenizeText(sample):
     lemmas = [token.lemma_ for token in doc]
     a_lemmas = [lemma for lemma in lemmas if (lemma.isalpha()  and lemma != '-PRON-') and lemma not in STOPLIST and lemma not in SYMBOLS]
     return a_lemmas
-
+'''
 df=pd.read_csv('C:\\Users\\Jaime\\Documents\\Luisa\\git\\descarga.csv')
 df=df.fillna(" ")
-
+'''
 
 def generador(nombre,texto,User):
     arreglo=[]
@@ -220,7 +220,7 @@ def generador(nombre,texto,User):
             arreglo.append(data_tree)
     return json.dumps(arreglo,ensure_ascii=False)
 
-print('var keywords1='+generador(df["data red social"].values.tolist(),df["Text"].values.tolist(),df["User"].values.tolist())+";")
+#print('var keywords1='+generador(df["data red social"].values.tolist(),df["Text"].values.tolist(),df["User"].values.tolist())+";")
 
 
 def red(request):
