@@ -18,6 +18,7 @@ from django.core.exceptions import PermissionDenied
 from .models import *
 from .forms import *
 from .tasks import *
+from datetime import date
 import logging
 logger = logging.getLogger(__name__)
 
@@ -72,9 +73,61 @@ def campanas_publicitarias(request):
     user = request.user
     if user.groups.filter(name='Administrador').exists():       
         campanas_publicitarias_to_list = campana_publicitaria.objects.all()
+        for campana_publicitaria_to_list in campanas_publicitarias_to_list:
+            campana_id = campana_publicitaria_to_list.id
+            try:
+                escucha_campana_values = escucha.objects.filter(campana_publicitaria_red_social__id=campana_id).values()
+                continue
+            except:
+                logger.error("No hay escuchas relacionadas con esta campaña")
+            else:
+                count_official_escucha = 0
+                count_competition_escucha = 0
+                for value in escucha_campana_values:
+                    escucha_id = value['id']
+                    type_escucha = value['es_competencia']
+                    if type_escucha == False or type_escucha == 0:
+                        count_official_escucha += 1
+                        try:
+                            account_escucha_campana_values = cuentas_empresa.objects.filter(escucha__id=escucha_id).values()
+                            continue
+                        except:
+                            logger.error("No hay cuentas para esta escucha")
+                        else:
+                            official_account_count = 0
+                            for account_value in account_escucha_campana_values:
+                                official_account_count += 1
+                                account_id = account_value['id']
+                        #data_escucha_campana_values = data_red.objects.filter(campana_publicitaria_red_social__id=campana_id).values()
+                
+                    else:
+                        count_competition_escucha += 1
+                        try:
+                            account_escucha_campana_values = cuentas_empresa.objects.filter(escucha__id=escucha_id).values()
+                            continue
+                        except:
+                            logger.error("No hay cuentas para esta escucha")
+                        else:
+                            unofficial_account_count = 0
+                            for account_value in account_escucha_campana_values:
+                                unofficial_account_count += 1
+                                account_id = account_value['id']
+
+                official_info_dict = {
+                    'official_escucha_number': count_official_escucha,
+                    'official_account_number': official_account_count
+                }
+
+                unofficial_info_dict = {
+                    'unofficial_escucha_number': count_competition_escucha,
+                    'unofficial_account_number': unofficial_account_count
+                }
+                logger.error(official_info_dict)
+                logger.error(unofficial_info_dict)
     else:
         empresas = empresa.objects.filter(usuarios = request.user)
         campanas_publicitarias_to_list = campana_publicitaria.objects.filter(empresa_campana__in = empresas)
+    
     return render(request, "campanas.html", {"campanas_publicitarias":campanas_publicitarias_to_list})
 
 @login_required(login_url="/login/")
@@ -85,66 +138,70 @@ def redes_sociales(request):
 @login_required(login_url="/login/")
 def escuchas(request):
     escuchas_to_list = escucha.objects.all().values()
-    for escucha_record in escuchas_to_list:
-        search_user = escucha_record['usuario_red_social']
-        if search_user.startswith('@'):
-            search_user.replace(search_user[0], '')
+    for escucha_record in escuchas_to_list:    
+        date_from = escucha_record['fecha_inicio_red_social']
+        date_to = escucha_record['fecha_final_red_social']
+        today = date.today()
+        logger.error(date_from)
+        logger.error(date_to)
+        today = date.today()
+        if date_from < date_to and date_to >= today:
+            logger.error("After conditional")
+            escucha_id = escucha_record['id']
+            search_user = escucha_record['usuario_red_social']
+            if search_user.startswith('@'):
+                search_user.replace(search_user[0], '')
 
-        escucha_hashtags = hashtag.objects.filter(escucha__id=escucha_record['id']).values()
-        hastags_ids_list = []
-        for escucha_hashtag in escucha_hashtags:
-            hashtag_id = escucha_hashtag['id']
-            hastags_ids_list.append(hashtag_id)
+            escucha_hashtags = hashtag.objects.filter(escucha__id=escucha_record['id']).values()
+            hastags_ids_list = []
+            for escucha_hashtag in escucha_hashtags:
+                hashtag_id = escucha_hashtag['id']
+                hastags_ids_list.append(hashtag_id)
 
-        escucha_empresas = empresa.objects.filter(escucha__id=escucha_record['id']).values()
-        for escucha_empresa in escucha_empresas:
-            escucha_empresa_id = escucha_empresa['id']
+            escucha_credenciales = escucha_credencial.objects.filter(escucha__id=escucha_record['id']).values()
+            for credencial in escucha_credenciales:
+                twitter_bearer_token = credencial['twitter_bearer_token']
+                instagram_user = credencial['instagram_username']
+                instagram_pass = credencial['instagram_password']
+                instagram_path = credencial['instagram_path']
 
-        escucha_credenciales = escucha_credencial.objects.filter(escucha__id=escucha_record['id']).values()
-        for credencial in escucha_credenciales:
-            twitter_bearer_token = credencial['twitter_bearer_token']
-            instagram_user = credencial['instagram_username']
-            instagram_pass = credencial['instagram_password']
-            instagram_path = credencial['instagram_path']
-
-        redes_sociales = red_social.objects.filter(escucha__id=escucha_record['id']).values()
-        
-        list_redes_sociales_id = []
-        for red in redes_sociales:
-            id_red = red['id']
-            nombre_red = red['nombre_red_social']
-
-            if nombre_red == "Facebook":
-                facebook_posts = get_facebook_post(
-                    nombre_pagina=search_user, 
-                    numero_paginas = 100,
-                    id_red_social = id_red
-                )
+            redes_sociales = red_social.objects.filter(escucha__id=escucha_record['id']).values()
             
-            if nombre_red == "Twitter":
-                obtener_twitters_user(
-                    nombre_usuario=search_user, 
-                    bearer_token=twitter_bearer_token, 
-                    id_red_social = id_red
-                )
-                for escucha_hashtag in escucha_hashtags:
-                    nombre_hashtag = escucha_hashtag['nombre_hastag']
-                    obtener_twitters_query(
-                        query=nombre_hashtag, 
+            list_redes_sociales_id = []
+            for red in redes_sociales:
+                id_red = red['id']
+                nombre_red = red['nombre_red_social']
+
+                if nombre_red == "Facebook":
+                    facebook_posts = get_facebook_post(
+                        nombre_pagina=search_user, 
+                        numero_paginas = 100,
+                        id_red_social = id_red
+                    )
+                
+                if nombre_red == "Twitter":
+                    obtener_twitters_user(
+                        nombre_usuario=search_user, 
                         bearer_token=twitter_bearer_token, 
                         id_red_social = id_red
                     )
-            if nombre_red == "Instagram":
-                search_accounts = search_accounts_by_username(
-                    nombre_pagina=search_user, 
-                    empresa_id=escucha_empresa_id, 
-                    username=instagram_user, 
-                    password=instagram_pass, 
-                    path=instagram_path,
-                    red_id=id_red,
-                    hashtag_list = hastags_ids_list
-                )
-
+                    for escucha_hashtag in escucha_hashtags:
+                        nombre_hashtag = escucha_hashtag['nombre_hastag']
+                        obtener_twitters_query(
+                            query=nombre_hashtag, 
+                            bearer_token=twitter_bearer_token, 
+                            id_red_social = id_red
+                        )
+                if nombre_red == "Instagram":
+                    search_accounts = search_accounts_by_username(
+                        nombre_pagina=search_user, 
+                        escucha_id=escucha_id, 
+                        username=instagram_user, 
+                        password=instagram_pass, 
+                        path=instagram_path,
+                        red_id=id_red,
+                        hashtag_list = hastags_ids_list
+                    )
     return render(request, "escuchas.html", {"escuchas":escuchas_to_list})
 
 @login_required(login_url="/login/")
@@ -163,6 +220,13 @@ def redes_data(request):
     if user.groups.filter(name='Administrador').exists():       
         data_redes = data_red.objects.all()
         return render(request, "redes_data.html", {"redes_data":data_redes})
+
+@login_required(login_url="/login/")
+def cuentas(request):        
+    user = request.user
+    if user.groups.filter(name='Administrador').exists():       
+        cuentas = cuentas_empresa.objects.all()
+        return render(request, "cuentas.html", {"cuentas":cuentas})
 
 #******************************
 # Funciones para insertar
@@ -293,9 +357,7 @@ def add_escuchas(request, id=0):
     msg     = None
     success = False  
     user = request.user
-    form = escucha_form() 
-    logger.error(request.method)
-    logger.error(user.groups)
+    form = escucha_form()
     if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists():
         logger.error(request.method)
         if request.method == 'POST': # si el usuario está enviando el formulario con datos
@@ -376,6 +438,11 @@ def delete_camapana_publicitaria (request, id=0):
     elif user.groups.filter(name='Cliente').exists():
         raise PermissionDenied
     return render(request, 'campanas.html', {'form': form, "msg" : msg, "success" : success })
+
+@login_required(login_url="/login/")
+def escuchas_campana(request, campana_id):
+    escuchas = escucha.objects.filter(campana_publicitaria_red_social__id=campana_id)
+    return render(request, "escuchas_empresa.html", {"escuchas":escuchas})
 
 #******************************
 # Nube de palabras

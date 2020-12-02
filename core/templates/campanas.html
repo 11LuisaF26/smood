@@ -38,9 +38,11 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <a href="/redes/save/" name="crear_red" class="btn btn-primary btn-block mb-4">Crear Escucha </a >
+                                <a href="/escucha/save/" name="crear_red" class="btn btn-primary btn-block mb-4">Crear Escucha </a >
                                 <br>
-                                <a href="/redes/campana" name="crear_red" class="btn btn-primary btn-block mb-4">Consultar Escuchas </a >                                
+                                <a href="{% url 'escuchas_campana' campana_publicitaria.id %}" name="consultar_escuchas" class="btn btn-primary btn-block mb-4">Consultar Escuchas </a>
+                                <br>
+                                <a href="/cuentas/" name="crear_red" class="btn btn-primary btn-block mb-4">Consultar Cuentas</a >
                             </div>
                             
                             <div class="modal-header">
