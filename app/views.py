@@ -256,7 +256,7 @@ def add_empresas(request, id=0):
                 form = empresa_form()
             else:
                 emp = empresa.objects.get(pk=id)
-                form = empresa_form(instance = emp)                
+                form = empresa_form(instance = emp)
             return render(request, 'crear_empresa.html', {'form': form, "msg" : msg, "success" : success })
         else:
             if id==0:
@@ -276,7 +276,10 @@ def add_camapana_publicitaria(request, id=0):
     msg     = None
     success = False  
     user = request.user
-    form = campana_publicitaria_form()   
+    form = campana_publicitaria_form()
+    ubication_form = ubicacion_form()
+    bussines_form = empresa_form()
+
     if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists():        
         if request.method == 'GET':
             if id==0:
@@ -284,7 +287,7 @@ def add_camapana_publicitaria(request, id=0):
             else:
                 emp = campana_publicitaria.objects.get(pk=id)
                 form = campana_publicitaria_form(instance = emp)                
-            return render(request, 'crear_campana_publicitaria.html', {'form': form, "msg" : msg, "success" : success })
+            return render(request, 'crear_campana_publicitaria.html', {'form': form, "msg" : msg, "success" : success, "ubication_form": ubication_form, "empresa_form": bussines_form})
         else:
             if id==0:
                 form = campana_publicitaria_form(request.POST)
@@ -292,14 +295,20 @@ def add_camapana_publicitaria(request, id=0):
                 emp = campana_publicitaria.objects.get(pk=id)
                 form = campana_publicitaria_form(request.POST, instance = emp)
 
+            if ubication_form.is_valid():
+                edit_ubication = ubication_form.save()
+
+            if bussines_form.is_valid():
+                edit_empresa = bussines_form.save()
+
             if form.is_valid():
                 edit_campana = form.save()
                 msg     = 'Campana Publicitaria guardada.'
                 success = True
-                return render(request, 'crear_campana_publicitaria.html', {'form': form, "msg" : msg, "success" : success })
+                return render(request, 'crear_campana_publicitaria.html', {'form': form, "msg" : msg, "success" : success , "ubication_form": ubication_form, "empresa_form": bussines_form})
     elif user.groups.filter(name='Cliente').exists():
         raise PermissionDenied
-    return render(request, 'crear_campana_publicitaria.html', {'form': form, "msg" : msg, "success" : success })
+    return render(request, 'crear_campana_publicitaria.html', {'form': form, "msg" : msg, "success" : success, "ubication_form": ubication_form, "empresa_form": bussines_form})
 
 @login_required(login_url="/login/")
 def add_red_social(request, id=0):
