@@ -32,13 +32,13 @@
             <div class="col-xl-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Crear Campaña Publicitaria</h5>                        
+                        <h3>Crear Campaña Publicitaría</h3>
                     </div>
                     <span class="card-body table-border-style">
                         {% if msg %}
                             {{ msg | safe }}
                         {% else %}
-                            Escribe la campaña publicitaria que deseas agregar
+                            <h5>Ingresa la siguiente información</h5>
                         {% endif %} 
                     </span>                   
                     
@@ -47,24 +47,11 @@
                             <form action="" method="post" role="form">
                                 {% csrf_token %}
                                 <div class="form-group">
-                                    <label><strong>Nombre de la campaña publicitaria *</strong></label>
-                                    <input type="text" class="form-control" id="nombre_campana" {{ form.nombre_campana }} </input>
+                                    <label><strong>Nombre*</strong></label>
+                                    <input required="true" type="text" class="form-control" id="nombre_campana" {{ form.nombre_campana }}</input>
                                 </div>
                                 <div class="form-group">
-                                    <label>Descripción</label>
-                                    <textarea type="text" class="form-control" id="descripcion_campana"
-                                        {{ form.descripcion_campana }} </textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label>Objetivo</label>
-                                    <input type="text" class="form-control" id="objetivo_campana" {{ form.objetivo_campana }} </input>    
-                                </div>
-                                <div class="form-group">
-                                    <label>Público</label>
-                                    <input type="text" class="form-control" id="publico_campana" {{ form.publico_campana }} </input>
-                                </div>
-                                <div class="form-group">
-                                    <label>Ubicación</label>
+                                    <label><strong>Ubicación</strong></label>
                                     <select type="text" class="form-control" id="ubicacion_campana" {{ form.ubicacion_campana }} </select>                                
                                     <div>
                                         </br>
@@ -74,17 +61,7 @@
                                 </br>
                                 </br>
                                 <div class="form-group">
-                                    <label>Presupuesto</label>
-                                    <input type="number" placeholder="$" class="form-control" id="presupuesto_campana" {{ form.presupuesto_campana }}
-                                    </input>    
-                                </div>
-                                <div class="form-group">
-                                    <label>Eficacia</label>
-                                    <input type="text" placeholder="%" class="form-control" id="eficacia_camapana" {{ form.eficacia_camapana }}
-                                    </input>    
-                                </div>
-                                <div class="form-group">
-                                    <label>Empresa</label>
+                                    <label><strong>Empresa</strong></label>
                                     <select type="text" class="form-control" id="empresa_campana" {{ form.empresa_campana }}</select>    
                                     <div>
                                         </br>
@@ -94,7 +71,30 @@
                                 </br>
                                 </br>
                                 <div class="form-group">
-                                    <label>Usuario</label>
+                                    <label><strong>Descripción</strong></label>
+                                    <textarea type="text" class="form-control" id="descripcion_campana"
+                                        {{ form.descripcion_campana }} </textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Objetivo</strong></label>
+                                    <input type="text" class="form-control" id="objetivo_campana" {{ form.objetivo_campana }} </input>    
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Público</strong></label>
+                                    <input type="text" class="form-control" id="publico_campana" {{ form.publico_campana }} </input>
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Presupuesto</strong></label>
+                                    <input type="number" placeholder="$" class="form-control" id="presupuesto_campana" {{ form.presupuesto_campana }}
+                                    </input>    
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Eficacia</strong></label>
+                                    <input type="text" placeholder="%" class="form-control" id="eficacia_camapana" {{ form.eficacia_camapana }}
+                                    </input>    
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Usuario</strong></label>
                                     <select type="text" class="form-control" id="usuario_campana" {{ form.usuario_campana }}
                                     </select>                            
                                 </div>                                
