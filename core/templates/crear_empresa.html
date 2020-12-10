@@ -33,51 +33,47 @@
             <div class="col-xl-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Crear empresa</h5>                        
+                        <h3>Crear empresa</h3>
                     </div>
                     <span class="card-body table-border-style">
                         {% if msg %}
                             {{ msg | safe }}
                         {% else %}
-                            Escribe la empresa que deseas agregar
+                            <h5>Ingresa la siguiente información</h5>
                         {% endif %} 
                     </span>                   
                     
                     {% if not success %}  
-                    <div class="card-body table-border-style">
-                        <form action="" method="post" role="form">
-                            {% csrf_token %}
-                            <div class="form-group">
-                                <label>NIT</label>
-                                <input type="text" class="form-control" id="NIT" {{ form.nit_empresa }} </input>
-                            </div>
-                            <div class="form-group">
-                                <label>Nombre</label>
-                                <input type="text" class="form-control" id="nombre_empresa" {{ form.nombre_empresa }}
-                                    </input>
+                        <div class="card-body table-border-style">
+                            <form action="" method="post" role="form">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label><strong>NIT*</strong></label>
+                                    <input type="text" required="true" class="form-control" id="NIT" {{ form.nit_empresa }} </input>
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Nombre*</strong></label>
+                                    <input type="text" required="true" class="form-control" id="nombre_empresa" {{ form.nombre_empresa }}</input>
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Estado Empresa</strong></label>
+                                    <select type="text" class="form-control" id="estado_empresa" {{ form.estado_empresa }}</select>
+                                </div>                          
 
-                            </div>
-                            <div class="form-group">
-                                <label>Estado Empresa</label>
-                                <select type="text" class="form-control" id="estado_empresa" {{ form.estado_empresa }}
-                                    </select>
-
-                            </div>                          
-
-                            <div class="form-group">
-                                <label>Usuarios</label>
-                                <select type="text" class="form-control" id="empresa_campana" {{ form.usuarios }} </select>                            
-                            </div>                                
-                            <button type="submit" name="crearempresa" class="btn btn-primary btn-block mb-4">Guardar</button>
-                        </form>
-                        {% endif %} 
-                    </div>
+                                <div class="form-group">
+                                    <label><strong>Usuarios</strong></label>
+                                    <select type="text" class="form-control" id="empresa_campana" {{ form.usuarios }} </select>                            
+                                </div>                                
+                                <button type="submit" name="crearempresa" class="btn btn-primary btn-block mb-4">Guardar</button>
+                            </form>
+                        </div>
+                    {% endif %} 
                 </div>
             </div>
             <!-- [ stiped-table ] end -->
         </div>
     </div>
-</section>>
+</section>
 
 {% endblock content %}
 
