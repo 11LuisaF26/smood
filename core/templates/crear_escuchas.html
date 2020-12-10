@@ -33,13 +33,13 @@
             <div class="col-xl-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Crear escuchas</h5>                        
+                        <h3>Crear escuchas</h3>
                     </div>
                     <span class="card-body table-border-style">
                         {% if msg %}
                             {{ msg | safe }}
                         {% else %}
-                            Escribe la escucha que quieres agregar
+                            <h5>Ingresa la siguiente información</h5>
                         {% endif %} 
                     </span>                   
                     
@@ -48,49 +48,49 @@
                         <form action="{% url 'crear_escucha' %}" method="post" role="form">
                             {% csrf_token %}
                             <div class="form-group">
-                                <label>Nombre de la escucha</label>
-                                <input type="text" class="form-control" id="nombre_red_social" {{ form.nombre_escucha }} </input>
+                                <label><strong>Nombre*</strong></label>
+                                <input type="text" required="true" class="form-control" id="nombre_red_social" {{ form.nombre_escucha }} </input>
                             </div>
                             <div class="form-group">
-                                <label>Usuario</label>
-                                <input type="text" class="form-control" id="nombre_red_social" {{ form.usuario_red_social }} </input>
+                                <label><strong>Usuario de búsqueda*</strong></label>
+                                <input type="text" required="true" class="form-control" id="nombre_red_social" {{ form.usuario_red_social }} </input>
                             </div>
 
                             <div class="form-group">
-                                <label>Fecha inicio</label>
+                                <label><strong>Fecha inicio</strong></label>
                                 <input type="date"  id="fecha_inicio_red_social" {{ form.fecha_inicio_red_social }} 
 
-                                <label> Fecha Final </label>
+                                <label><strong>Fecha Final</strong></label>
                                 <input type="date"  id="fecha_final_red_social" onchange="CompareDate()" {{ form.fecha_final_red_social }} 
                             </div>
                 
                             <div class="form-group">
-                                <label>Empresa</label>
+                                <label><strong>Empresa</strong></label>
                                 <select type="text" class="form-control" id="empresa" {{ form.empresa_red_social }} </select>
                             </div>
                             <div class="form-group">
-                                <label>Campaña</label>
+                                <label><strong>Campaña</strong></label>
                                 <select type="text" class="form-control" id="campana" {{ form.campana_publicitaria_red_social }} </input>
                             </div>
                             <div class="form-group">
-                                <label>Ubicación</label>
+                                <label><strong>Ubicación</strong></label>
                                 <select type="text" class="form-control" id="ubicacion" {{ form.ubicacion_red_social }} </input>
                             </div>
                             <div class="form-group">
-                                <label>Hashtags</label>
+                                <label><strong>Hashtags</strong></label>
                                 <select type="text" class="form-control" id="hashtaga" {{ form.hashtag_red_social }} </input>
                             </div>
                             <div class="form-group">
-                                <label>Redes</label>
+                                <label><strong>Redes</strong></label>
                                 <select type="text" class="form-control" id="redes" {{ form.red_social }} </input>
                             </div>
                             <div class="form-group">
-                                <label>Credenciales</label>
+                                <label><strong>Credenciales</strong></label>
                                 <select type="text" class="form-control" id="credenciales" {{ form.credenciales }} </input>
                             </div>
                             <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" id="es_competencia" {{ form.es_competencia }} </input>
-                                <label class="custom-control-label" for="es_competencia">Es competencia</label>
+                                <label class="custom-control-label" for="es_competencia"><strong>Es competencia</strong></label>
                             </div>
                             </br>
                             <button type="submit" name="crearredsocial" class="btn btn-primary btn-block mb-4">Crear escucha</button>
