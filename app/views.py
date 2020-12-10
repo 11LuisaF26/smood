@@ -256,7 +256,7 @@ def add_empresas(request, id=0):
                 form = empresa_form()
             else:
                 emp = empresa.objects.get(pk=id)
-                form = empresa_form(instance = emp)                
+                form = empresa_form(instance = emp)
             return render(request, 'crear_empresa.html', {'form': form, "msg" : msg, "success" : success })
         else:
             if id==0:
@@ -276,7 +276,10 @@ def add_camapana_publicitaria(request, id=0):
     msg     = None
     success = False  
     user = request.user
-    form = campana_publicitaria_form()   
+    form = campana_publicitaria_form()
+    ubication_form = ubicacion_form()
+    bussines_form = empresa_form()
+
     if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists():        
         if request.method == 'GET':
             if id==0:
@@ -284,7 +287,7 @@ def add_camapana_publicitaria(request, id=0):
             else:
                 emp = campana_publicitaria.objects.get(pk=id)
                 form = campana_publicitaria_form(instance = emp)                
-            return render(request, 'crear_campana_publicitaria.html', {'form': form, "msg" : msg, "success" : success })
+            return render(request, 'crear_campana_publicitaria.html', {'form': form, "msg" : msg, "success" : success, "ubication_form": ubication_form, "empresa_form": bussines_form})
         else:
             if id==0:
                 form = campana_publicitaria_form(request.POST)
@@ -292,14 +295,20 @@ def add_camapana_publicitaria(request, id=0):
                 emp = campana_publicitaria.objects.get(pk=id)
                 form = campana_publicitaria_form(request.POST, instance = emp)
 
+            if ubication_form.is_valid():
+                edit_ubication = ubication_form.save()
+
+            if bussines_form.is_valid():
+                edit_empresa = bussines_form.save()
+
             if form.is_valid():
                 edit_campana = form.save()
                 msg     = 'Campana Publicitaria guardada.'
                 success = True
-                return render(request, 'crear_campana_publicitaria.html', {'form': form, "msg" : msg, "success" : success })
+                return render(request, 'crear_campana_publicitaria.html', {'form': form, "msg" : msg, "success" : success , "ubication_form": ubication_form, "empresa_form": bussines_form})
     elif user.groups.filter(name='Cliente').exists():
         raise PermissionDenied
-    return render(request, 'crear_campana_publicitaria.html', {'form': form, "msg" : msg, "success" : success })
+    return render(request, 'crear_campana_publicitaria.html', {'form': form, "msg" : msg, "success" : success, "ubication_form": ubication_form, "empresa_form": bussines_form})
 
 @login_required(login_url="/login/")
 def add_red_social(request, id=0):
@@ -371,11 +380,17 @@ def add_escuchas(request, id=0):
     success = False  
     user = request.user
     form = escucha_form()
+    form_credential = credenciales_form()
+    hashtags_form = hashtag_form()
     if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists():
-        logger.error(request.method)
         if request.method == 'POST': # si el usuario está enviando el formulario con datos
-            logger.error("if method post")
             form = escucha_form(request.POST) # Bound form
+            if form_credential.is_valid():
+                edit_credential = form_credential.save()
+
+            if hashtags_form.is_valid():
+                edit_hashtag = hashtags_form.save()
+
             if form.is_valid():
                 new_escucha = form.save() # Guardar los datos en la base de datos
                 msg     = 'Escucha creada.'
@@ -386,7 +401,7 @@ def add_escuchas(request, id=0):
     elif user.groups.filter(name='Cliente').exists():
         raise PermissionDenied    
 
-    return render(request, 'crear_escuchas.html', {'form': form, "msg" : msg, "success" : success })
+    return render(request, 'crear_escuchas.html', {'form': form, "msg" : msg, "success" : success, 'form_credential': form_credential, 'hashtags_form': hashtags_form})
 
 @login_required(login_url="/login/")
 def delete_empresas (request, id=0):
@@ -456,6 +471,27 @@ def delete_camapana_publicitaria (request, id=0):
 def escuchas_campana(request, campana_id):
     escuchas = escucha.objects.filter(campana_publicitaria_red_social__id=campana_id)
     return render(request, "escuchas_empresa.html", {"escuchas":escuchas})
+
+@login_required(login_url="/login/")
+def add_credential(request):
+    msg     = None
+    success = False    
+    user = request.user   
+    form = credenciales_form()
+    if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists():        
+        if request.method == 'POST': # si el usuario está enviando el formulario con datos
+            form = credenciales_form(request.POST) # Bound form
+            if form.is_valid():
+                new_credential = form.save() # Guardar los datos en la base de datos
+                msg     = 'Credenciales guardadas.'
+                success = True
+                #return HttpResponseRedirect(reverse('redes_sociales'))
+        else:
+            form = credenciales_form() # Unbound form
+    elif user.groups.filter(name='Cliente').exists():
+        raise PermissionDenied
+
+    return render(request, 'crear_credenciales.html', {'form': form, "msg" : msg, "success" : success })  
 
 #******************************
 # Nube de palabras
