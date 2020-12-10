@@ -35,3 +35,8 @@ class hashtag_form(ModelForm):
     class Meta():
         model = hashtag
         fields = ('nombre_hastag',)
+
+class credenciales_form(ModelForm): 
+    class Meta():
+        model = escucha_credencial
+        fields = ('twitter_bearer_token', 'instagram_username', 'instagram_password', 'instagram_path',)
