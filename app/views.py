@@ -381,11 +381,15 @@ def add_escuchas(request, id=0):
     user = request.user
     form = escucha_form()
     form_credential = credenciales_form()
+    hashtags_form = hashtag_form()
     if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists():
         if request.method == 'POST': # si el usuario está enviando el formulario con datos
             form = escucha_form(request.POST) # Bound form
             if form_credential.is_valid():
                 edit_credential = form_credential.save()
+
+            if hashtags_form.is_valid():
+                edit_hashtag = hashtags_form.save()
 
             if form.is_valid():
                 new_escucha = form.save() # Guardar los datos en la base de datos
@@ -397,7 +401,7 @@ def add_escuchas(request, id=0):
     elif user.groups.filter(name='Cliente').exists():
         raise PermissionDenied    
 
-    return render(request, 'crear_escuchas.html', {'form': form, "msg" : msg, "success" : success, 'form_credential': form_credential})
+    return render(request, 'crear_escuchas.html', {'form': form, "msg" : msg, "success" : success, 'form_credential': form_credential, 'hashtags_form': hashtags_form})
 
 @login_required(login_url="/login/")
 def delete_empresas (request, id=0):

@@ -77,7 +77,13 @@
                                 <div class="form-group">
                                     <label><strong>Hashtags</strong></label>
                                     <select type="text" class="form-control" id="hashtaga" {{ form.hashtag_red_social }} </input>
+                                    <div>
+                                        </br>
+                                        <button type="button" class="btn  btn-icon btn-outline-primary" style="float: right;" data-toggle="modal" data-target="#hashtaghs_modal" >+ Agregar</button>
+                                    </div>
                                 </div>
+                                </br>
+                                </br>
                                 <div class="form-group">
                                     <label><strong>Redes</strong></label>
                                     <select type="text" class="form-control" id="redes" {{ form.red_social }} </input>
@@ -101,7 +107,7 @@
                             </form>
 
                             <!-- Modal -->
-                            <div class="modal fade" id="credenciales_modal" tabindex="-1" role="dialog" aria-labelledby="ubication_modal" aria-hidden="true">
+                            <div class="modal fade" id="credenciales_modal" tabindex="-1" role="dialog" aria-labelledby="credenciales_modal" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -135,6 +141,31 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="modal fade" id="hashtaghs_modal" tabindex="-1" role="dialog" aria-labelledby="hashtaghs_modal" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="hashtaghs_modal_label">Agregar hashtag</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{% url 'crear_hashtag' %}" method="post" role="form">
+                                                {% csrf_token %}                            
+                                                <div class="form-group">
+                                                    <label>Nombre</label>
+                                                    <input type="text" class="form-control" id="nombre_hastag" {{ hashtags_form.nombre_hastag }}</input>
+                                                </div>                     
+                                                <button type="submit" name="crearhashtag" class="btn btn-primary btn-block mb-4">Crear hashtag</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Fin Modals -->
                         </div>
                     {% endif %}
                 </div>
