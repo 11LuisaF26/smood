@@ -469,7 +469,85 @@ def delete_camapana_publicitaria (request, id=0):
 
 @login_required(login_url="/login/")
 def escuchas_campana(request, campana_id):
-    escuchas = escucha.objects.filter(campana_publicitaria_red_social__id=campana_id)
+    escuchas = []
+    escuchas = escucha.objects.filter(campana_publicitaria_red_social__id=campana_id).values()
+    for escucha_record in escuchas:
+        escucha_id = escucha_record['id']
+
+        search_user = escucha_record['usuario_red_social']
+        if search_user.startswith('@'):
+            search_user.replace(search_user[0], '')
+
+        escucha_hashtags = hashtag.objects.filter(escucha__id=escucha_record['id']).values()
+        hastags_ids_list = []
+        for escucha_hashtag in escucha_hashtags:
+            hashtag_id = escucha_hashtag['id']
+            hastags_ids_list.append(hashtag_id)
+
+        escucha_empresas = empresa.objects.filter(escucha__id=escucha_record['id']).values()
+        for escucha_empresa in escucha_empresas:
+            escucha_empresa_id = escucha_empresa['id']
+
+        escucha_campana_values = campana_publicitaria.objects.filter(escucha__id=escucha_record['id']).values()
+        for escucha_campana_value in escucha_campana_values:
+            campana_id = escucha_campana_value['id']
+
+        escucha_credenciales = escucha_credencial.objects.filter(escucha__id=escucha_record['id']).values()
+        for credencial in escucha_credenciales:
+            twitter_bearer_token = credencial['twitter_bearer_token']
+            instagram_user = credencial['instagram_username']
+            instagram_pass = credencial['instagram_password']
+            instagram_path = credencial['instagram_path']
+
+        redes_sociales = red_social.objects.filter(escucha__id=escucha_record['id']).values()
+        
+        list_redes_sociales_id = []
+        for red in redes_sociales:
+            id_red = red['id']
+            nombre_red = red['nombre_red_social']
+            
+            if nombre_red == "Facebook":
+                facebook_posts = get_facebook_post(
+                    nombre_pagina=search_user, 
+                    numero_paginas = 100,
+                    id_campana = campana_id,
+                    id_escucha = escucha_id,
+                    id_red = id_red
+                )
+            
+            
+            if nombre_red == "Twitter":
+                obtener_twitters_user(
+                    nombre_usuario=search_user, 
+                    bearer_token=twitter_bearer_token, 
+                    id_campana=campana_id, 
+                    id_escucha=escucha_id,
+                    id_red = id_red
+                )
+                for escucha_hashtag in escucha_hashtags:
+                    nombre_hashtag = escucha_hashtag['nombre_hastag']
+                    obtener_twitters_query(
+                        query=nombre_hashtag, 
+                        bearer_token=twitter_bearer_token, 
+                        id_campana=campana_id, 
+                        id_escucha=escucha_id,
+                        id_red = id_red
+                    )
+
+            if nombre_red == "Instagram":
+                search_accounts = search_accounts_by_username(
+                    nombre_pagina=search_user, 
+                    #empresa_id=empresa_id, 
+                    username=instagram_user, 
+                    password=instagram_pass, 
+                    path=instagram_path,
+                    hashtag_list = hastags_ids_list,
+                    id_campana=campana_id, 
+                    id_escucha=escucha_id,
+                    id_red = id_red
+                )
+            
+
     return render(request, "escuchas_empresa.html", {"escuchas":escuchas})
 
 @login_required(login_url="/login/")
