@@ -9,27 +9,32 @@
 
     <!-- [ Main Content ] start -->
     <section class="pcoded-main-container">
-        <div class="pcoded-content">
-            
-            
+        <div class="pcoded-content">    
             <!--Innit campaings-->
             <div class="row">
                 {% for campana_publicitaria in campanas_publicitarias %}
-                    <div class="col-sm-">
+                    <div class="col-sm-6">
                         <div class="card bg-primary text-white">
                             <div class="card-body bg-patern-white">
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <h5 class="text-white">{{campana_publicitaria.nombre_campana}}</h5>
-                                    </div>
+                                <div>
+                                    <h3 style=" text-align: center; color:white;">{{campana_publicitaria.nombre_campana}}</h3>
                                 </div>
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <h2 class="text-right text-white"><i class="feather icon-shopping-cart float-left"></i><span>{{campana_publicitaria.eficacia_camapana}}</span></h2>
-                                    </div>
-                                    <div class="col">
-
-                                    </div>
+                                </br>
+                                </br>
+                                <div>
+                                    <h5 style=" text-align: left; color:white;">Empresa: {{campana_publicitaria.empresa_campana}}</h5>
+                                    <h5 style=" text-align: left; color:white;">Eficacia: {{campana_publicitaria.eficacia_camapana}}</h5>
+                                    <h5 style=" text-align: left; color:white;">Objetiv: {{campana_publicitaria.objetivo_campana}}</h5>
+                                    <h5 style=" text-align: left; color:white;">Público: {{campana_publicitaria.publico_campana}}</h5>
+                                    <h5 style=" text-align: left; color:white;">Ubicación: {{campana_publicitaria.ubicacion_campana}}</h5>
+                                    <h5 style=" text-align: left; color:white;">Presupuesto: {{campana_publicitaria.presupuesto_campana}}</h5>
+                                </div>
+                                <div align="center">
+                                    </br>
+                                    <a href="/escucha/save" class="btn btn-success"><i class="feather mr-2 icon-plus-square"></i>Crear escucha</a>
+                                    <a href="{% url 'escuchas_campana' campana_publicitaria.id %}" class="btn btn-secondary"><i class="feather mr-2 icon-list"></i>Ver escuchas</a>
+                                    <a href="{% url 'editar_campana' campana_publicitaria.id %}" class="btn btn-warning"><i class="feather mr-2 icon-edit"></i>Editar</a>
+                                    <a href="{% url 'eliminar_campana' campana_publicitaria.id %}" class="btn btn-danger"><i class="feather mr-2 icon-delete"></i>Eliminar</a>
                                 </div>
                             </div>
                         </div>
