@@ -2,7 +2,7 @@
 from background_task import background
 from django.contrib.auth.models import User
 from facebook_scraper import get_posts
-# from igramscraper.instagram import Instagram
+from igramscraper.instagram import Instagram
 from app.models import *
 from requests.exceptions import HTTPError, ConnectionError, Timeout
 from . import twitter_conn
@@ -104,8 +104,8 @@ def obtener_twitters_query(query, bearer_token, id_campana, id_escucha, id_red):
                 if not data_red_escucha:
                     new_publication = data_red(
                         publicacion_id = data["id"], 
-                        publicacion_fecha = data["text"][:200],
-                        publicacion_texto = data["created_at"], 
+                        publicacion_fecha = data["created_at"],
+                        publicacion_texto = data["text"][:200], 
                         publicacion_likes = data["public_metrics"]["like_count"],
                         publicacion_comentarios = data["public_metrics"]["retweet_count"],
                         publicacion_compartidos = data["public_metrics"]["retweet_count"],
@@ -117,6 +117,7 @@ def obtener_twitters_query(query, bearer_token, id_campana, id_escucha, id_red):
                     )
                     new_publication.save()
 
+'''
 @background(schedule=5)
 def search_accounts_by_username(nombre_pagina, username, password, path, hashtag_list, id_campana, id_escucha, id_red):
     data_escucha = escucha.objects.get(id=id_escucha)
@@ -124,6 +125,8 @@ def search_accounts_by_username(nombre_pagina, username, password, path, hashtag
     data_red_social = red_social.objects.get(id=id_red)
     instagram = Instagram()
     instagram.with_credentials(username, password, path)
+
+
     try:
         instagram.login(True)
     except:
@@ -154,12 +157,11 @@ def search_accounts_by_username(nombre_pagina, username, password, path, hashtag
                         new_account.save()
             logger.error('Task get instagram accounts has finished succesfully')
     
-    '''
-    get_instagram_medias_by_user(username=username, password=password, path=path, id_campana=id_campana, id_escucha= id_escucha, id_red=id_red)
-    '''
-    get_instagram_medias_by_tag(username=username, password=password, path=path, list_hashtag_ids=hashtag_list, id_campana=id_campana, id_escucha= id_escucha, id_red=id_red)
     
-'''
+    #get_instagram_medias_by_user(username=username, password=password, path=path, id_campana=id_campana, id_escucha= id_escucha, id_red=id_red)
+    
+    #get_instagram_medias_by_tag(username=username, password=password, path=path, list_hashtag_ids=hashtag_list, id_campana=id_campana, id_escucha= id_escucha, id_red=id_red)
+
 @background(schedule=5)
 def get_instagram_medias_by_user(username, password, path, id_campana, id_escucha, id_red):
     data_escucha = escucha.objects.get(id=id_escucha)
@@ -195,8 +197,6 @@ def get_instagram_medias_by_user(username, password, path, id_campana, id_escuch
                     )
                     new_publication.save()
         logger.error('Task get instagram medias by username has finished succesfully')
-'''
-
 
 @background(schedule=5)
 def get_instagram_medias_by_tag(username, password, path, list_hashtag_ids, id_campana, id_escucha, id_red): 
@@ -244,3 +244,4 @@ def get_instagram_medias_by_tag(username, password, path, list_hashtag_ids, id_c
                             new_publication.save()
 
         logger.error('Task get instagram medias by tag has finished succesfully')
+'''

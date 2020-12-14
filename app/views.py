@@ -471,6 +471,7 @@ def delete_camapana_publicitaria (request, id=0):
 def escuchas_campana(request, campana_id):
     escuchas = []
     escuchas = escucha.objects.filter(campana_publicitaria_red_social__id=campana_id).values()
+
     for escucha_record in escuchas:
         escucha_id = escucha_record['id']
 
@@ -500,8 +501,7 @@ def escuchas_campana(request, campana_id):
             instagram_path = credencial['instagram_path']
 
         redes_sociales = red_social.objects.filter(escucha__id=escucha_record['id']).values()
-        
-        list_redes_sociales_id = []
+
         for red in redes_sociales:
             id_red = red['id']
             nombre_red = red['nombre_red_social']
@@ -514,7 +514,6 @@ def escuchas_campana(request, campana_id):
                     id_escucha = escucha_id,
                     id_red = id_red
                 )
-            
             
             if nombre_red == "Twitter":
                 obtener_twitters_user(
@@ -533,7 +532,7 @@ def escuchas_campana(request, campana_id):
                         id_escucha=escucha_id,
                         id_red = id_red
                     )
-
+            '''
             if nombre_red == "Instagram":
                 search_accounts = search_accounts_by_username(
                     nombre_pagina=search_user, 
@@ -546,7 +545,7 @@ def escuchas_campana(request, campana_id):
                     id_escucha=escucha_id,
                     id_red = id_red
                 )
-            
+            '''
 
     return render(request, "escuchas_empresa.html", {"escuchas":escuchas})
 
