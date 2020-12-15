@@ -26,7 +26,8 @@ logger = logging.getLogger(__name__)
 def index(request):
     context = {}
     user = request.user
-    if user.groups.filter(name='Administrador').exists():       
+    user_id = user.id
+    if user.groups.filter(name='Administrador').exists():
         try:
             return render(request, "index_admin.html")
         except template.TemplateDoesNotExist:
@@ -48,6 +49,7 @@ def index(request):
 
 
     if user.groups.filter(name='Cliente').exists():
+        empresa_user = empresa.objects.filter(usuarios__id=user_id).values()
         try:
             return render(request, "index_client.html")
         except template.TemplateDoesNotExist:
@@ -612,48 +614,25 @@ def add_credential(request):
 
     return render(request, 'crear_credenciales.html', {'form': form, "msg" : msg, "success" : success })  
 
-#******************************
-# Nube de palabras
-#******************************
-# def nube_de_palabras (text):    
+@login_required(login_url="/login/")
+def campanas_empresa(request):
+    context = {}
+    campanas = []
+    user = request.user
+    user_object = User.objects.get(pk=user.id)
+    empresa_user = empresa.objects.filter(usuarios=user_object).values()
+
+    logger.error(empresa_user)
+    for value in empresa_user:
+        empresa_id = value['id']
+    campanas = campana_publicitaria.objects.filter(empresa_campana__id=empresa_id).values()
+
+    try:
+        return render(request, "campanas_empresa.html", {'campanas':campanas})
+    except template.TemplateDoesNotExist:
+        html_template = loader.get_template( 'page-404.html' )
+        return HttpResponse(html_template.render(context, request))
+    except:
+        html_template = loader.get_template( 'page-500.html' )
+        return HttpResponse(html_template.render(context, request))    
     
-#         twitter_red_social = red_social.objects.get(nombre_red_social="Twitter")
-#         twitter_data_to_list = data_red.objects.filter(data_red_social = twitter_red_social).values('publicacion_texto')
-#         text = str(twitter_data_to_list)
-        
-#         stopwords = set(STOPWORDS)
-#         STOPLIST = set(stopwords.words('spanish'))        
-#         stopwords.add('RT')
-#         stopwords.add('publicacion_texto')
-#         stopwords.add("publicacion_texto'")
-#         stopwords.add('publicacion_texto RT')
-#         stopwords.add('una')
-        
-#         wordcloud = WordCloud(background_color='white', stopwords=Tok).generate(text)
-#         plt.imshow(wordcloud)
-#         plt.axis("off")
-#         #plt.show()
-#         image = io.BytesIO()
-#         plt.savefig(image, format='png')
-#         image.seek(0)  # rewind the data
-#         string = base64.b64encode(image.read())
-
-#         image_64 = 'data:image/png;base64,' + urllib.parse.quote(string)
-#         return image_64            
-#         # 
-#         # plt.imshow(wordcloud)
-#         # plt.axis("off")
-#         # s = plt.show()
-
-# def cloud_gen(request):
-#     twitter_red_social = red_social.objects.get(nombre_red_social="Twitter")
-#     twitter_data_to_list = data_red.objects.filter(data_red_social = twitter_red_social).values('publicacion_texto')
-#     texto = str(twitter_data_to_list)
-#     text = ''
-    
-#     for i in texto:
-#         if __name__ == '__main__':
-#             text += i.text
-
-#     wordcloud = nube_de_palabras(text)
-#     return render(request, "nube_de_palabras.html",{'wordcloud':wordcloud})

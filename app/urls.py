@@ -34,6 +34,7 @@ urlpatterns = [
     path('acercade/', views.acerca_de, name='acerca_de'),
     path('credenciales/save/', views.add_credential, name='guardar_credenciales'),
     path('escuchas/campana/<int:campana_id>', views.escuchas_campana, name='escuchas_campana'),
+    path('campanas/empresa/', views.campanas_empresa, name='campana_empresa'),
     path('nube/twitter', nube.cloud_gen_t, name='nube_de_palabras_twitter'),
     path('nube/facebook', nube.cloud_gen_fb, name='nube_de_palabras_fb'),
     re_path(r'^empresas/save/(?P<id>\w+)/$', views.add_empresas, name='editar_empresa'),
