@@ -47,11 +47,12 @@ def index(request):
             html_template = loader.get_template( 'page-500.html' )
             return HttpResponse(html_template.render(context, request))
 
-
     if user.groups.filter(name='Cliente').exists():
         empresa_user = empresa.objects.filter(usuarios__id=user_id).values()
+        for value in empresa_user:
+            empresa_id = value['id']
         try:
-            return render(request, "index_client.html")
+            return render(request, "index_client.html", {'empresa_id': empresa_id})
         except template.TemplateDoesNotExist:
             html_template = loader.get_template( 'page-404.html' )
             return HttpResponse(html_template.render(context, request))
@@ -615,12 +616,9 @@ def add_credential(request):
     return render(request, 'crear_credenciales.html', {'form': form, "msg" : msg, "success" : success })  
 
 @login_required(login_url="/login/")
-def campanas_empresa(request):
+def campanas_empresa(request, empresa_id):
     context = {}
-    campanas = []
-    user = request.user
-    user_object = User.objects.get(pk=user.id)
-    empresa_user = empresa.objects.filter(usuarios=user_object).values()
+    empresa_user = empresa.objects.filter(id=empresa_id).values()
 
     logger.error(empresa_user)
     for value in empresa_user:
