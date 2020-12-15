@@ -516,21 +516,31 @@ def escuchas_campana(request, campana_id):
                 )
             
             if nombre_red == "Twitter":
-                obtener_twitters_user(
-                    nombre_usuario=search_user, 
-                    bearer_token=twitter_bearer_token, 
-                    id_campana=campana_id, 
-                    id_escucha=escucha_id,
-                    id_red = id_red
-                )
+                
+                twitter_data = {
+                    'nombre_usuario':search_user, 
+                    'bearer_token':twitter_bearer_token, 
+                    'id_campana':campana_id, 
+                    'id_escucha':escucha_id,
+                    'id_red':id_red
+                }
+                
+                ## Tasks
+                obtener_account_user(data=twitter_data)
+                obtener_twitters_user(data=twitter_data)
+                
+
                 for escucha_hashtag in escucha_hashtags:
                     nombre_hashtag = escucha_hashtag['nombre_hastag']
+                    hashtag_data = {
+                        'query': nombre_hashtag,
+                        'bearer_token': twitter_bearer_token, 
+                        'id_campana': campana_id, 
+                        'id_escucha': escucha_id,
+                        'id_red': id_red
+                    }
                     obtener_twitters_query(
-                        query=nombre_hashtag, 
-                        bearer_token=twitter_bearer_token, 
-                        id_campana=campana_id, 
-                        id_escucha=escucha_id,
-                        id_red = id_red
+                        data = hashtag_data
                     )
             '''
             if nombre_red == "Instagram":
