@@ -24,7 +24,38 @@ logger = logging.getLogger(__name__)
 
 @login_required(login_url="/login/")
 def index(request):
-    return render(request, "index.html")
+    context = {}
+    user = request.user
+    if user.groups.filter(name='Administrador').exists():       
+        try:
+            return render(request, "index_admin.html")
+        except template.TemplateDoesNotExist:
+            html_template = loader.get_template( 'page-404.html' )
+            return HttpResponse(html_template.render(context, request))
+        except:
+            html_template = loader.get_template( 'page-500.html' )
+            return HttpResponse(html_template.render(context, request))
+    
+    if user.groups.filter(name='Publicista').exists():
+        try:
+            return render(request, "index_publicist.html")
+        except template.TemplateDoesNotExist:
+            html_template = loader.get_template( 'page-404.html' )
+            return HttpResponse(html_template.render(context, request))
+        except:
+            html_template = loader.get_template( 'page-500.html' )
+            return HttpResponse(html_template.render(context, request))
+
+
+    if user.groups.filter(name='Cliente').exists():
+        try:
+            return render(request, "index_client.html")
+        except template.TemplateDoesNotExist:
+            html_template = loader.get_template( 'page-404.html' )
+            return HttpResponse(html_template.render(context, request))
+        except:
+            html_template = loader.get_template( 'page-500.html' )
+            return HttpResponse(html_template.render(context, request))
 
 @login_required(login_url="/login/")
 def pages(request):
