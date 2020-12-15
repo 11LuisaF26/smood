@@ -542,6 +542,7 @@ def escuchas_campana(request, campana_id):
                     obtener_twitters_query(
                         data = hashtag_data
                     )
+            
             '''
             if nombre_red == "Instagram":
                 search_accounts = search_accounts_by_username(
