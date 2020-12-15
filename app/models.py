@@ -138,6 +138,12 @@ class data_red(models.Model):
 class cuentas_empresa(models.Model):
     identifier = models.CharField(null=True, max_length=60, verbose_name='Identificador')
     username = models.CharField(null=True, max_length=30, verbose_name='Username')
+    created_at = models.CharField(null=True, max_length=30, verbose_name='Creado en')
+    location = models.CharField(null=True, max_length=30, verbose_name='location')
+    followers_count = models.IntegerField(null=True, verbose_name='Followers count')
+    following_count = models.IntegerField(null=True, verbose_name='Following count')
+    tweet_count = models.IntegerField(null=True, verbose_name='Tweet count')
+    listed_count = models.IntegerField(null=True, verbose_name='Listed count')
     fullname = models.CharField(null=True, max_length=30, verbose_name='Fullname')
     profile_pic_url = models.CharField(null=True, max_length=500, verbose_name='Url foto perfil')
     data_red_escucha = models.ForeignKey(escucha, on_delete=models.CASCADE, null=True)

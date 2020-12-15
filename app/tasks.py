@@ -35,13 +35,57 @@ def get_facebook_post(nombre_pagina, numero_paginas, id_campana, id_escucha, id_
     logger.error('Task get facebook post completed succesfully')
     
 @background(schedule=5)
-def obtener_twitters_user(nombre_usuario, bearer_token, id_campana, id_escucha, id_red):
-    data_escucha = escucha.objects.get(id=id_escucha)
-    data_campana = campana_publicitaria.objects.get(id=id_campana)
-    data_red_social = red_social.objects.get(id=id_red)
-    conn = twitter_conn.TwitterConn(access_token=bearer_token)
+def obtener_account_user(data):
+    data_escucha = escucha.objects.get(id=data['id_escucha'])
+    data_campana = campana_publicitaria.objects.get(id=data['id_campana'])
+    data_red_social = red_social.objects.get(id=data['id_red'])
+    conn = twitter_conn.TwitterConn(access_token=data['bearer_token'])
     try:
-        response_user_tweets = conn.obtener_twiiter_user(nombre_usuario=nombre_usuario)
+        response_account_user = conn.obtener_cuenta_user(nombre_usuario=data['nombre_usuario'])
+        response_account_user.raise_for_status()
+    except (ConnectionError, TimeoutError) as e:
+        logger.error(str(e))
+        raise ValidationError("ConnectionError or TimeoutError")
+    except HTTPError as e:
+        logger.error(str(e))
+        raise ValidationError("HTTP Error")
+    except Exception as e:
+        logger.error(str(e))
+        raise ValidationError("Exception")
+    else:
+        content_response_user_account = response_account_user.content.decode("utf-8")
+        data_response_user_account = json.loads(content_response_user_account)
+        list_data = data_response_user_account["data"]
+
+        for data in list_data:
+            if data and data["id"]:
+                data_cuentas_empresa = cuentas_empresa.objects.filter(identifier=data["id"],data_red_escucha=data_escucha, data_red_campana=data_campana).values()
+                if not data_cuentas_empresa:
+                    new_cuenta = cuentas_empresa(
+                        identifier = data["id"],
+                        username = data["username"],
+                        fullname = data["name"],
+                        profile_pic_url = data["profile_image_url"],
+                        created_at = data["created_at"],
+                        location = data["location"],
+                        followers_count = data["public_metrics"]["followers_count"],
+                        following_count = data["public_metrics"]["following_count"],
+                        tweet_count = data["public_metrics"]["tweet_count"],
+                        listed_count = data["public_metrics"]["tweet_count"],
+                        data_red_escucha = data_escucha,
+                        data_red_campana = data_campana,
+                        data_red_social = data_red_social
+                    )
+                    new_cuenta.save()
+
+@background(schedule=5)
+def obtener_twitters_user(data):
+    data_escucha = escucha.objects.get(id=data['id_escucha'])
+    data_campana = campana_publicitaria.objects.get(id=data['id_campana'])
+    data_red_social = red_social.objects.get(id=data['id_red'])
+    conn = twitter_conn.TwitterConn(access_token=data['bearer_token'])
+    try:
+        response_user_tweets = conn.obtener_twiiter_user(nombre_usuario=data['nombre_usuario'])
         response_user_tweets.raise_for_status()
     except (ConnectionError, TimeoutError) as e:
         logger.error(str(e))
@@ -76,13 +120,13 @@ def obtener_twitters_user(nombre_usuario, bearer_token, id_campana, id_escucha, 
                     new_publication.save()
                 
 @background(schedule=5)
-def obtener_twitters_query(query, bearer_token, id_campana, id_escucha, id_red):
-    data_escucha = escucha.objects.get(id=id_escucha)
-    data_campana = campana_publicitaria.objects.get(id=id_campana)
-    data_red_social = red_social.objects.get(id=id_red)
-    conn = twitter_conn.TwitterConn(access_token=bearer_token)
+def obtener_twitters_query(data):
+    data_escucha = escucha.objects.get(id=data['id_escucha'])
+    data_campana = campana_publicitaria.objects.get(id=data['id_campana'])
+    data_red_social = red_social.objects.get(id=data['id_red'])
+    conn = twitter_conn.TwitterConn(access_token=data['bearer_token'])
     try:
-        response_query_tweets = conn.obtener_twiiter_query(query=query)
+        response_query_tweets = conn.obtener_twiiter_query(query=data['query'])
         response_query_tweets.raise_for_status()
     except (ConnectionError, TimeoutError) as e:
         logger.error(str(e))
