@@ -304,6 +304,12 @@ def add_empresas(request, id=0):
                 success = True
                 return render(request, 'crear_empresa.html', {'form': form, "msg" : msg, "success" : success })
         return render(request, 'crear_empresa.html', {'form': form, "msg" : msg, "success" : success }) 
+    else:
+        if request.method == 'GET':
+            if id!=0:
+                emp = empresa.objects.get(pk=id)
+                form = empresa_form(instance = emp)
+                return render(request, 'crear_empresa.html', {'form': form, "msg" : msg, "success" : success })
 
 @login_required(login_url="/login/")
 def add_camapana_publicitaria(request, id=0):
