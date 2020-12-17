@@ -277,24 +277,49 @@
     </script>
 
     <script>
-        new Chart(document.getElementById("bar-chart"), {
-            type: 'bar',
-            data: {
-            labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
-            datasets: [
-                {
-                label: "Population (millions)",
-                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-                data: [2478,5267,734,784,433]
-                }
-            ]
-            },
+        var chartData = {
+            labels: ['Cantidad de seguidores', 'Cantidad seguidos', '2017-05-31'],
+            datasets: [{
+                label: "Amazon",
+                backgroundColor: "#66FEFF",
+                data: [7, 8, 3]
+            }, {
+                label: "Mercadolibre",
+                backgroundColor: "#5D79E8",
+                data: [0, 9, 7]
+            }, {
+                label: "Ebay",
+                backgroundColor: "#73B4FF",
+                data: [0, 10, 12]
+            }]
+        };
+
+        var canvas = document.getElementById('bar-chart');
+        var myBarChart = new Chart(canvas, {
+            type: "bar",
+            data: chartData,
             options: {
-            legend: { display: false },
-            title: {
-                display: true,
-                text: 'Predicted world population (millions) in 2050'
-            }
+                scales: {
+                    xAxes: [{
+                        gridLines: {
+                            color: "#ffffff"
+                        },
+                        ticks: {
+                            fontColor: "#ffffff"
+                        },
+                        scaleFontSize: 80
+                    }],
+
+                    yAxes: [{
+                        gridLines: {
+                            color: "#ffffff"
+                        },
+                        ticks: {
+                            fontColor: "#ffffff",
+                        },
+                        scaleFontSize: 80
+                    }]
+                }
             }
         });
     </script>
