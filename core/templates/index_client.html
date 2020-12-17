@@ -20,6 +20,10 @@
     <meta name="description" content="" />
     <meta name="keywords" content="">
     <meta name="author" content="Codedthemes" />
+    <link rel="stylesheet" href="/static/assets/css/plugins/Chart.min.css">
+    <script src="/static/assets/js/chart_js/Chart.bundle.min.js"></script>
+    <script src="/static/assets/js/chart_js/Chart.min.js"></script>
+
     <!-- Favicon icon -->
     <link rel="icon" href="/static/assets/images/favicon.ico" type="image/x-icon">
 
@@ -207,18 +211,20 @@
                                             <h5 style="color:#ffffff;">Horizontal layout</h5>
                                         </div>
                                         <div class="card-body">
+                                            <div class="col-md-6">
+                                                <canvas id="bar-chart" width="600 " height="400"></canvas>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- [ horizontal-layout ] end -->
                             </div>
-                            <!-- [ Main Content ] end -->
-                            <!-- [ Main Content ] start -->
                             <div class="row">
                                 <div class="col-md-6">
+                                    
                                 </div>
                             </div>
-                            <!-- [ Main Content ] end -->
+                            
                         </div>
                     </div>
                 </div>
@@ -270,7 +276,31 @@
         });
     </script>
 
+    <script>
+        new Chart(document.getElementById("bar-chart"), {
+            type: 'bar',
+            data: {
+            labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+            datasets: [
+                {
+                label: "Population (millions)",
+                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                data: [2478,5267,734,784,433]
+                }
+            ]
+            },
+            options: {
+            legend: { display: false },
+            title: {
+                display: true,
+                text: 'Predicted world population (millions) in 2050'
+            }
+            }
+        });
+    </script>
+
     <script src="/static/assets/js/analytics.js"></script>
 
+    
 </body>
 </html>
