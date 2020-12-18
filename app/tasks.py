@@ -39,6 +39,7 @@ def obtener_account_user(data):
     data_escucha = escucha.objects.get(id=data['id_escucha'])
     data_campana = campana_publicitaria.objects.get(id=data['id_campana'])
     data_red_social = red_social.objects.get(id=data['id_red'])
+    logger.error(data['nombre_usuario'])
     conn = twitter_conn.TwitterConn(access_token=data['bearer_token'])
     try:
         response_account_user = conn.obtener_cuenta_user(nombre_usuario=data['nombre_usuario'])
@@ -59,7 +60,12 @@ def obtener_account_user(data):
 
         for data in list_data:
             if data and data["id"]:
-                data_cuentas_empresa = cuentas_empresa.objects.filter(identifier=data["id"],data_red_escucha=data_escucha, data_red_campana=data_campana).values()
+                data_cuentas_empresa = cuentas_empresa.objects.filter(identifier=data["id"],data_red_escucha=data_escucha, data_red_campana=data_campana)
+                if data_cuentas_empresa:
+                    data_cuentas_empresa.followers_count = data["public_metrics"]["followers_count"]
+                    data_cuentas_empresa.following_count = data["public_metrics"]["following_count"]
+                    data_cuentas_empresa.tweet_count = data["public_metrics"]["tweet_count"]
+
                 if not data_cuentas_empresa:
                     new_cuenta = cuentas_empresa(
                         identifier = data["id"],

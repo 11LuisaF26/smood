@@ -19,6 +19,8 @@ from .models import *
 from .forms import *
 from .tasks import *
 from datetime import date
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 import logging
 logger = logging.getLogger(__name__)
 
@@ -49,10 +51,41 @@ def index(request):
 
     if user.groups.filter(name='Cliente').exists():
         empresa_user = empresa.objects.filter(usuarios__id=user_id).values()
-        for value in empresa_user:
-            empresa_id = value['id']
+        if empresa_user:
+            for value in empresa_user:
+                empresa_id = value['id']
+        
+        campanas_empresa = campana_publicitaria.objects.filter(empresa_campana__id=empresa_id).values()
+        if campanas_empresa:
+            for campana_empresa in campanas_empresa:
+                cuenta_campana = cuentas_empresa.objects.filter(data_red_campana__id=campana_empresa['id']).values()
+                if cuenta_campana:
+                    datasets = []
+                    for cuenta in cuenta_campana:
+                        username = cuenta['username']
+                        created_at = cuenta['created_at']
+                        date_time_created_at = datetime.strptime(created_at, '%Y-%m-%dT%H:%M:%S.%fZ')
+                        now = datetime.now()
+                        time_difference = relativedelta(date_time_created_at, now)
+                        years = time_difference.years  
+                        followers_count = cuenta['followers_count']
+                        following_count = cuenta['following_count']
+                        post_count = cuenta['tweet_count']
+                        
+                        dataset = {
+                            'label': username,
+                            'backgroundColor': "#66FEFF",
+                            'data': [years, followers_count, following_count, post_count]
+                        }
+                        datasets.append(dataset)
+                    
+                    chart_data = {
+                        'labels': ['Antigüedad en la red', 'Seguidores', 'Seguidos', 'Publicaciones'],
+                        'datasets': datasets
+                    }
+                    
         try:
-            return render(request, "index_client.html", {'empresa_id': empresa_id})
+            return render(request, "index_client.html", {'empresa_id': empresa_id, 'chart_data': chart_data})
         except template.TemplateDoesNotExist:
             html_template = loader.get_template( 'page-404.html' )
             return HttpResponse(html_template.render(context, request))

@@ -277,27 +277,11 @@
     </script>
 
     <script>
-        var chartData = {
-            labels: ['Cantidad de seguidores', 'Cantidad seguidos', '2017-05-31'],
-            datasets: [{
-                label: "Amazon",
-                backgroundColor: "#66FEFF",
-                data: [7, 8, 3]
-            }, {
-                label: "Mercadolibre",
-                backgroundColor: "#5D79E8",
-                data: [0, 9, 7]
-            }, {
-                label: "Ebay",
-                backgroundColor: "#73B4FF",
-                data: [0, 10, 12]
-            }]
-        };
 
         var canvas = document.getElementById('bar-chart');
         var myBarChart = new Chart(canvas, {
             type: "bar",
-            data: chartData,
+            data: {{ chart_data|safe }},
             options: {
                 scales: {
                     xAxes: [{
