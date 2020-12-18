@@ -3,75 +3,174 @@
 {% block title %} Acerca de {% endblock %}
 
 <!-- Specific CSS goes HERE -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+{% endblock stylesheets %}
 
 {% block content %}
 <!-- [ Main Content ] start -->
 <section class="pcoded-main-container">
     <div class="pcoded-content">
         <!-- [ breadcrumb ] start -->
-        <div class="page-header">
-            <div class="page-block">
-                <div class="row align-items-center">
-                    <div class="col-md-12">
-                        <div class="page-header-title">
-                            <h5 class="m-b-10">Acerca de</h5>
+        <div class="row">
+            <!-- [ stiped-table ] start -->
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body" style="background-image: linear-gradient(to bottom,#ffffff80, #00bcd4D9);"
+                        align="center">
+                        <h1 style="color:#001233;">S-mood</h1>
+                        <h4 style="color:#ffffff;">Software de planeación estratégica</h4>
+                    </div>
+                    <div class="card-body" style="background-image: linear-gradient(to right, #001233, #00bcd4D9);">
+                        <div class="row">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-6 align-self-center">
+                                        <p style="color:#ffffff;font-size: 1rem; text-align: justify;">Al ser el
+                                            resultado de la fusión de la investigación de mercados y la planeación
+                                            estratégica publicitaria, se propone el nombre S-mood para el software.
+                                            Para llegar a él se parte de las dos palabras “Semiotic” y “Model”, pero se
+                                            realizan combinaciones de términos como La S de semiótica y se le agrega una
+                                            “o” a la palabra “model” con lo cual se gana sonoridad (dinamismo sonoro),
+                                            pero además se agrega la significación de Mood del “humor” como estado de
+                                            animo. Al final, la combinación implica el estudio del estado de ánimo, los
+                                            comportamientos de las personas y las estrategias que de allí se pueden
+                                            generar para resolver casos de Publicidad y de Marketing, el cual es el
+                                            objetivo principal de la Investigación y del Software.
+                                        </p>
+                                    </div>
+                                    <div class="col-sm-6 align-self-center" align="center">
+                                        <img src="/static/assets/images/3logo.png" width="300" height="300">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/ "><i class="feather icon-home"></i></a></li>                            
-                            <li class="breadcrumb-item"><a href="#!">Acerca de </a></li>
-                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="card">
+            <div div class="card-body" style="background-image: linear-gradient(to bottom,#ffffff80, #00bcd4D9);"
+                align="center">
+                <h1 class="animated fadeInLeft" style="border: none; box-shadow: none;">Nuestro Equipo</h1>
+            </div>
+            <div class="card-body" style="background-image: linear-gradient(to right, #001233, #00bcd4D9);">
+                <div class="row">
+                    <div class="container">
+                        <div class="row blog">
+                            <div class="col-md-12">
+                                <div id="blogCarousel" class="carousel slide" data-ride="carousel">
+
+                                    <!-- Carousel items -->
+                                    <div class="carousel-inner">
+
+                                        <div class="carousel-item active">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <a href="#">
+                                                        <img src="/static/assets/images/Vladimir.jpg" alt="Image"
+                                                            style="max-width:100%;"width="250" height="230">                                                            
+                                                    </a>
+                                                    <h4 style="color: white;" align="center">Vladimir Sánchez</h4>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <a href="#">
+                                                        <img src="/static/assets/images/Catherine.jpg" alt="Image"
+                                                            style="max-width:100%;" width="250" height="230">
+                                                    </a>
+                                                    <h4 style="color: white;" align="center">Catherine Suárez</h4>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <a href="#">
+                                                        <img src="/static/assets/images/Olmer.jpg" alt="Image"
+                                                            style="max-width:100%;" width="250" height="230">
+                                                    </a>                                                    
+                                                    <h4 style="color: white;" align="center">Olmer García</h4>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <a href="#">
+                                                        <img src="/static/assets/images/Jairo.jpg" alt="Image"
+                                                            style="max-width:100%;"width="250" height="230">
+                                                    </a>
+                                                    <h4 style="color: white;" align="center">Jairo Sojo</h4>
+                                                </div>
+                                            </div>
+                                            <!--.row-->
+                                        </div>
+                                        <!--.item-->
+
+                                        <div class="carousel-item">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <a href="#">
+                                                        <img src="http://placehold.it/250x250" alt="Image"
+                                                            style="max-width:100%;">
+                                                    </a>
+                                                    <h4 style="color: white;" align="center">Victor Castañeda</h4>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <a href="#">
+                                                        <img src="http://placehold.it/250x250" alt="Image"
+                                                            style="max-width:100%;">
+                                                    </a>
+                                                    <h4 style="color: white;" align="center">Luisa Rodriguez</h4>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <a href="#">
+                                                        <img src="http://placehold.it/250x250" alt="Image"
+                                                            style="max-width:100%;">
+                                                    </a>
+                                                    <h4 style="color: white;" align="center">Isabel Enriquez</h4>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <a href="#">
+                                                        <img src="http://placehold.it/250x250" alt="Image"
+                                                            style="max-width:100%;">
+                                                    </a>
+                                                    <h4 style="color: white;" align="center">Gabriela Andrade</h4>
+                                                </div>
+                                            </div>
+                                            <!--.row-->
+                                        </div>
+                                        <!--.item-->
+
+                                    </div>
+                                    <br>
+                                    <ol class="carousel-indicators">
+                                        <li data-target="#blogCarousel" data-slide-to="0" class="active"></li>
+                                        <li data-target="#blogCarousel" data-slide-to="1"></li>
+                                    </ol>
+                                    </br>
+                                    <!--.carousel-inner-->
+                                </div>
+                                <!--.Carousel-->
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <!-- [ stiped-table ] start -->
-            <div class="col-xl-12">
-                <div class="card" >
-                    <div class="card-body" style="background-color:#73b4ff;" align="center">
-                        <h1 style="color:#001233;">S-mood</h1>
-                        <h4 style="color:#ffffff;">Software de planeación estratégica</h4>
-                    </div>
-                    <div class="card-body" style="background-color:#001233;">
-                        <div class="row">
-                            <div align="center">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-sm-4 align-self-center">
-                                        </div>
-                                        <div class="col-sm-4 align-self-center">
-                                            <!--img src="/static/assets/images/utadeo.png" alt="" class="utadeo"--> 
-                                            </br>
-                                            <p style="color:#ffffff;font-size: 1rem;">Al ser el resultado de la fusión de la investigación de mercados y la planeación estratégica publicitaria, se propone el nombre S-mood para el software.  
-                                                Para llegar a él se parte de las dos palabras “Semiotic” y “Model”, pero se realizan  combinaciones de términos como  La S de semiótica y se le agrega una “o” a la palabra “model” con lo cual se gana sonoridad (dinamismo sonoro), pero además se agrega la significación de Mood del “humor” como estado de animo.  Al final, la combinación implica el estudio del estado de ánimo, los comportamientos de las personas y las estrategias que de allí se pueden generar para resolver casos de Publicidad y de Marketing, el cual es el objetivo principal de la Investigación y del Software.
-                                            </p>
-                                        </div>
-                                        <div class="col-sm-4 align-self-center">
-                                        </div>
-                                    </div>
-                                </div>
-                        </div>
-                    </br>    
-                    </div>
-                    </div>
-                    <div class="card-footer" style="background-color:#ffffff;">
-                    </div>
-                </div>
-            </div>    
-        </div>
-            <!-- [ stiped-table ] end -->
     </div>
 </section>>
 
+
+
 {% endblock content %}
-    
+
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
-    
+<script>
+    $('#blogCarousel').carousel({
+        interval: 5000
+    });
+</script>
 <!-- Apex Chart -->
 <script src="/static/assets/js/plugins/apexcharts.min.js"></script>
 <!-- custom-chart js -->
 <script src="/static/assets/js/pages/dashboard-main.js"></script>
-    
-{% endblock javascripts %}        
+
+{% endblock javascripts %}
