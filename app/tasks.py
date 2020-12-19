@@ -71,15 +71,18 @@ def obtener_account_user(data):
                     except:
                         location = ""
 
-                    if data['entities']:
-                        if data['entities']['url']:
-                            for entity in data['entities']['url']['urls']:
-                                display_url = entity['display_url']
-                    else:
-                        if data['url']:
-                            display_url = data['url']
-                        else:
-                            display_url = ""
+                
+                    try:
+                        etities = data['entities']['url']
+                        for entity in etities['urls']:
+                            display_url = entity['display_url']
+                    except:
+                        display_url=""
+                    
+                    try:
+                        display_url = data['url']
+                    except:
+                        display_url = ""
 
 
                     new_cuenta = cuentas_empresa(
