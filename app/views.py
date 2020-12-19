@@ -19,12 +19,83 @@ from .models import *
 from .forms import *
 from .tasks import *
 from datetime import date
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
+from random import randint
 import logging
 logger = logging.getLogger(__name__)
 
 @login_required(login_url="/login/")
 def index(request):
-    return render(request, "index.html")
+    context = {}
+    user = request.user
+    user_id = user.id
+    if user.groups.filter(name='Administrador').exists():
+        try:
+            return render(request, "index_admin.html")
+        except template.TemplateDoesNotExist:
+            html_template = loader.get_template( 'page-404.html' )
+            return HttpResponse(html_template.render(context, request))
+        except:
+            html_template = loader.get_template( 'page-500.html' )
+            return HttpResponse(html_template.render(context, request))
+    
+    if user.groups.filter(name='Publicista').exists():
+        try:
+            return render(request, "index_publicist.html")
+        except template.TemplateDoesNotExist:
+            html_template = loader.get_template( 'page-404.html' )
+            return HttpResponse(html_template.render(context, request))
+        except:
+            html_template = loader.get_template( 'page-500.html' )
+            return HttpResponse(html_template.render(context, request))
+
+    if user.groups.filter(name='Cliente').exists():
+        empresa_user = empresa.objects.filter(usuarios__id=user_id).values()
+        if empresa_user:
+            for value in empresa_user:
+                empresa_id = value['id']
+        
+        campanas_empresa = campana_publicitaria.objects.filter(empresa_campana__id=empresa_id).values()
+        if campanas_empresa:
+            for campana_empresa in campanas_empresa:
+                cuenta_campana = cuentas_empresa.objects.filter(data_red_campana__id=campana_empresa['id']).values()
+                if cuenta_campana:
+                    colors = ['#59A8FF', '#51C0E8', '#66FEFF', '#51E8BD', '#59FFA1']
+                    usernames = []
+                    background_colors = []
+                    values = []
+                    for cuenta in cuenta_campana:
+                        index_color = randint(0,len(colors)-1)
+                        background_colors.append(colors[index_color])
+
+                        username = cuenta['username']
+                        followers_count = cuenta['followers_count']
+                        
+                        usernames.append(username)
+                        values.append(followers_count)
+                        
+
+                    dataset_followers_twit =  {
+                        'labels': usernames,
+                        'datasets': [
+                            {
+                                'label': 'Seguidores en twitter',
+                                'backgroundColor': background_colors,
+                                'data': values
+                            }
+                        ]
+                    }
+                        
+                    
+        try:
+            return render(request, "index_client.html", {'empresa_id': empresa_id, 'data_followers_twit': dataset_followers_twit})
+        except template.TemplateDoesNotExist:
+            html_template = loader.get_template( 'page-404.html' )
+            return HttpResponse(html_template.render(context, request))
+        except:
+            html_template = loader.get_template( 'page-500.html' )
+            return HttpResponse(html_template.render(context, request))
 
 @login_required(login_url="/login/")
 def pages(request):
@@ -241,6 +312,104 @@ def cuentas(request):
         cuentas = cuentas_empresa.objects.all()
         return render(request, "cuentas.html", {"cuentas":cuentas})
 
+@login_required(login_url="/login/")
+def escuchas_campana(request, campana_id):
+    today = date.today()
+    escuchas = []
+    escuchas = escucha.objects.filter(campana_publicitaria_red_social__id=campana_id).values()
+
+    for escucha_record in escuchas:
+        date_start = escucha_record['fecha_inicio_red_social']
+        data_finish = escucha_record['fecha_final_red_social']
+        
+        if data_finish >= today:
+            escucha_id = escucha_record['id']
+
+            search_user = escucha_record['usuario_red_social']
+            if search_user.startswith('@'):
+                search_user.replace(search_user[0], '')
+
+            escucha_hashtags = hashtag.objects.filter(escucha__id=escucha_record['id']).values()
+            hastags_ids_list = []
+            for escucha_hashtag in escucha_hashtags:
+                hashtag_id = escucha_hashtag['id']
+                hastags_ids_list.append(hashtag_id)
+
+            escucha_empresas = empresa.objects.filter(escucha__id=escucha_record['id']).values()
+            for escucha_empresa in escucha_empresas:
+                escucha_empresa_id = escucha_empresa['id']
+
+            escucha_campana_values = campana_publicitaria.objects.filter(escucha__id=escucha_record['id']).values()
+            for escucha_campana_value in escucha_campana_values:
+                campana_id = escucha_campana_value['id']
+
+            escucha_credenciales = escucha_credencial.objects.filter(escucha__id=escucha_record['id']).values()
+            for credencial in escucha_credenciales:
+                twitter_bearer_token = credencial['twitter_bearer_token']
+                instagram_user = credencial['instagram_username']
+                instagram_pass = credencial['instagram_password']
+                instagram_path = credencial['instagram_path']
+
+            redes_sociales = red_social.objects.filter(escucha__id=escucha_record['id']).values()
+
+            for red in redes_sociales:
+                id_red = red['id']
+                nombre_red = red['nombre_red_social']
+                
+                if nombre_red == "Facebook":
+                    facebook_posts = get_facebook_post(
+                        nombre_pagina=search_user, 
+                        numero_paginas = 100,
+                        id_campana = campana_id,
+                        id_escucha = escucha_id,
+                        id_red = id_red
+                    )
+                
+                if nombre_red == "Twitter":
+                    
+                    twitter_data = {
+                        'nombre_usuario':search_user, 
+                        'bearer_token':twitter_bearer_token, 
+                        'id_campana':campana_id, 
+                        'id_escucha':escucha_id,
+                        'id_red':id_red
+                    }
+                    
+                    ## Tasks
+                    obtener_account_user(data=twitter_data)
+                    obtener_twitters_user(data=twitter_data)
+                    
+
+                    for escucha_hashtag in escucha_hashtags:
+                        nombre_hashtag = escucha_hashtag['nombre_hastag']
+                        hashtag_data = {
+                            'query': nombre_hashtag,
+                            'bearer_token': twitter_bearer_token, 
+                            'id_campana': campana_id, 
+                            'id_escucha': escucha_id,
+                            'id_red': id_red
+                        }
+                        obtener_twitters_query(
+                            data = hashtag_data
+                        )
+                
+                '''
+                if nombre_red == "Instagram":
+                    search_accounts = search_accounts_by_username(
+                        nombre_pagina=search_user, 
+                        #empresa_id=empresa_id, 
+                        username=instagram_user, 
+                        password=instagram_pass, 
+                        path=instagram_path,
+                        hashtag_list = hastags_ids_list,
+                        id_campana=campana_id, 
+                        id_escucha=escucha_id,
+                        id_red = id_red
+                    )
+                '''
+
+    return render(request, "escuchas_empresa.html", {"escuchas":escuchas})
+
 #******************************
 # Funciones para insertar
 #******************************
@@ -270,6 +439,12 @@ def add_empresas(request, id=0):
                 success = True
                 return render(request, 'crear_empresa.html', {'form': form, "msg" : msg, "success" : success })
         return render(request, 'crear_empresa.html', {'form': form, "msg" : msg, "success" : success }) 
+    else:
+        if request.method == 'GET':
+            if id!=0:
+                emp = empresa.objects.get(pk=id)
+                form = empresa_form(instance = emp)
+                return render(request, 'crear_empresa.html', {'form': form, "msg" : msg, "success" : success })
 
 @login_required(login_url="/login/")
 def add_camapana_publicitaria(request, id=0):
@@ -467,97 +642,6 @@ def delete_camapana_publicitaria (request, id=0):
         raise PermissionDenied
     return render(request, 'campanas.html', {'form': form, "msg" : msg, "success" : success })
 
-@login_required(login_url="/login/")
-def escuchas_campana(request, campana_id):
-    escuchas = []
-    escuchas = escucha.objects.filter(campana_publicitaria_red_social__id=campana_id).values()
-
-    for escucha_record in escuchas:
-        escucha_id = escucha_record['id']
-
-        search_user = escucha_record['usuario_red_social']
-        if search_user.startswith('@'):
-            search_user.replace(search_user[0], '')
-
-        escucha_hashtags = hashtag.objects.filter(escucha__id=escucha_record['id']).values()
-        hastags_ids_list = []
-        for escucha_hashtag in escucha_hashtags:
-            hashtag_id = escucha_hashtag['id']
-            hastags_ids_list.append(hashtag_id)
-
-        escucha_empresas = empresa.objects.filter(escucha__id=escucha_record['id']).values()
-        for escucha_empresa in escucha_empresas:
-            escucha_empresa_id = escucha_empresa['id']
-
-        escucha_campana_values = campana_publicitaria.objects.filter(escucha__id=escucha_record['id']).values()
-        for escucha_campana_value in escucha_campana_values:
-            campana_id = escucha_campana_value['id']
-
-        escucha_credenciales = escucha_credencial.objects.filter(escucha__id=escucha_record['id']).values()
-        for credencial in escucha_credenciales:
-            twitter_bearer_token = credencial['twitter_bearer_token']
-            instagram_user = credencial['instagram_username']
-            instagram_pass = credencial['instagram_password']
-            instagram_path = credencial['instagram_path']
-
-        redes_sociales = red_social.objects.filter(escucha__id=escucha_record['id']).values()
-
-        for red in redes_sociales:
-            id_red = red['id']
-            nombre_red = red['nombre_red_social']
-            
-            if nombre_red == "Facebook":
-                facebook_posts = get_facebook_post(
-                    nombre_pagina=search_user, 
-                    numero_paginas = 100,
-                    id_campana = campana_id,
-                    id_escucha = escucha_id,
-                    id_red = id_red
-                )
-            
-            if nombre_red == "Twitter":
-                
-                twitter_data = {
-                    'nombre_usuario':search_user, 
-                    'bearer_token':twitter_bearer_token, 
-                    'id_campana':campana_id, 
-                    'id_escucha':escucha_id,
-                    'id_red':id_red
-                }
-                
-                ## Tasks
-                obtener_account_user(data=twitter_data)
-                obtener_twitters_user(data=twitter_data)
-                
-
-                for escucha_hashtag in escucha_hashtags:
-                    nombre_hashtag = escucha_hashtag['nombre_hastag']
-                    hashtag_data = {
-                        'query': nombre_hashtag,
-                        'bearer_token': twitter_bearer_token, 
-                        'id_campana': campana_id, 
-                        'id_escucha': escucha_id,
-                        'id_red': id_red
-                    }
-                    obtener_twitters_query(
-                        data = hashtag_data
-                    )
-            '''
-            if nombre_red == "Instagram":
-                search_accounts = search_accounts_by_username(
-                    nombre_pagina=search_user, 
-                    #empresa_id=empresa_id, 
-                    username=instagram_user, 
-                    password=instagram_pass, 
-                    path=instagram_path,
-                    hashtag_list = hastags_ids_list,
-                    id_campana=campana_id, 
-                    id_escucha=escucha_id,
-                    id_red = id_red
-                )
-            '''
-
-    return render(request, "escuchas_empresa.html", {"escuchas":escuchas})
 
 @login_required(login_url="/login/")
 def add_credential(request):
@@ -580,48 +664,22 @@ def add_credential(request):
 
     return render(request, 'crear_credenciales.html', {'form': form, "msg" : msg, "success" : success })  
 
-#******************************
-# Nube de palabras
-#******************************
-# def nube_de_palabras (text):    
+@login_required(login_url="/login/")
+def campanas_empresa(request, empresa_id):
+    context = {}
+    empresa_user = empresa.objects.filter(id=empresa_id).values()
+
+    logger.error(empresa_user)
+    for value in empresa_user:
+        empresa_id = value['id']
+    campanas = campana_publicitaria.objects.filter(empresa_campana__id=empresa_id).values()
+
+    try:
+        return render(request, "campanas_empresa.html", {'campanas':campanas})
+    except template.TemplateDoesNotExist:
+        html_template = loader.get_template( 'page-404.html' )
+        return HttpResponse(html_template.render(context, request))
+    except:
+        html_template = loader.get_template( 'page-500.html' )
+        return HttpResponse(html_template.render(context, request))    
     
-#         twitter_red_social = red_social.objects.get(nombre_red_social="Twitter")
-#         twitter_data_to_list = data_red.objects.filter(data_red_social = twitter_red_social).values('publicacion_texto')
-#         text = str(twitter_data_to_list)
-        
-#         stopwords = set(STOPWORDS)
-#         STOPLIST = set(stopwords.words('spanish'))        
-#         stopwords.add('RT')
-#         stopwords.add('publicacion_texto')
-#         stopwords.add("publicacion_texto'")
-#         stopwords.add('publicacion_texto RT')
-#         stopwords.add('una')
-        
-#         wordcloud = WordCloud(background_color='white', stopwords=Tok).generate(text)
-#         plt.imshow(wordcloud)
-#         plt.axis("off")
-#         #plt.show()
-#         image = io.BytesIO()
-#         plt.savefig(image, format='png')
-#         image.seek(0)  # rewind the data
-#         string = base64.b64encode(image.read())
-
-#         image_64 = 'data:image/png;base64,' + urllib.parse.quote(string)
-#         return image_64            
-#         # 
-#         # plt.imshow(wordcloud)
-#         # plt.axis("off")
-#         # s = plt.show()
-
-# def cloud_gen(request):
-#     twitter_red_social = red_social.objects.get(nombre_red_social="Twitter")
-#     twitter_data_to_list = data_red.objects.filter(data_red_social = twitter_red_social).values('publicacion_texto')
-#     texto = str(twitter_data_to_list)
-#     text = ''
-    
-#     for i in texto:
-#         if __name__ == '__main__':
-#             text += i.text
-
-#     wordcloud = nube_de_palabras(text)
-#     return render(request, "nube_de_palabras.html",{'wordcloud':wordcloud})
