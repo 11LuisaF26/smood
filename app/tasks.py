@@ -39,7 +39,6 @@ def obtener_account_user(data):
     data_escucha = escucha.objects.get(id=data['id_escucha'])
     data_campana = campana_publicitaria.objects.get(id=data['id_campana'])
     data_red_social = red_social.objects.get(id=data['id_red'])
-    logger.error(data['nombre_usuario'])
     conn = twitter_conn.TwitterConn(access_token=data['bearer_token'])
     try:
         response_account_user = conn.obtener_cuenta_user(nombre_usuario=data['nombre_usuario'])
@@ -56,8 +55,7 @@ def obtener_account_user(data):
     else:
         content_response_user_account = response_account_user.content.decode("utf-8")
         data_response_user_account = json.loads(content_response_user_account)
-        list_data = data_response_user_account["data"]
-
+        list_data = data_response_user_account["data"]        
         for data in list_data:
             if data and data["id"]:
                 data_cuentas_empresa = cuentas_empresa.objects.filter(identifier=data["id"],data_red_escucha=data_escucha, data_red_campana=data_campana)
@@ -67,17 +65,34 @@ def obtener_account_user(data):
                     data_cuentas_empresa.tweet_count = data["public_metrics"]["tweet_count"]
 
                 if not data_cuentas_empresa:
+                    if data["location"]:
+                        location = data["location"]
+                    else:
+                        location = ""
+
+                    if data['entities']:
+                        if data['entities']['url']:
+                            for entity in data['entities']['url']['urls']:
+                                display_url = entity['display_url']
+                    else:
+                        if data['url']:
+                            display_url = data['url']
+                        else:
+                            display_url = ""
+
+
                     new_cuenta = cuentas_empresa(
                         identifier = data["id"],
                         username = data["username"],
                         fullname = data["name"],
                         profile_pic_url = data["profile_image_url"],
                         created_at = data["created_at"],
-                        location = data["location"],
+                        location = location,
                         followers_count = data["public_metrics"]["followers_count"],
                         following_count = data["public_metrics"]["following_count"],
-                        tweet_count = data["public_metrics"]["tweet_count"],
+                        post_count = data["public_metrics"]["tweet_count"],
                         listed_count = data["public_metrics"]["tweet_count"],
+                        web_site = display_url,
                         data_red_escucha = data_escucha,
                         data_red_campana = data_campana,
                         data_red_social = data_red_social
