@@ -5,3 +5,4 @@ campanas_publicitarias/__pycache__/
 campanas_publicitarias/__pycache__/migrations/
 core/__pycache__/
 env
+db.sqlite3
