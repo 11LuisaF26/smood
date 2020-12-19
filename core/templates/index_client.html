@@ -212,7 +212,7 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="col-md-6">
-                                                <canvas id="bar-chart" width="600 " height="400"></canvas>
+                                                <canvas id="folowers_twit" width="600 " height="400"></canvas>
                                             </div>
                                         </div>
                                     </div>
@@ -278,10 +278,10 @@
 
     <script>
 
-        var canvas = document.getElementById('bar-chart');
+        var canvas = document.getElementById('folowers_twit');
         var myBarChart = new Chart(canvas, {
             type: "bar",
-            data: {{ chart_data|safe }},
+            data: {{ data_followers_twit|safe }},
             options: {
                 scales: {
                     xAxes: [{

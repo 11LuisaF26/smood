@@ -21,6 +21,7 @@ from .tasks import *
 from datetime import date
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+from random import randint
 import logging
 logger = logging.getLogger(__name__)
 
@@ -60,32 +61,35 @@ def index(request):
             for campana_empresa in campanas_empresa:
                 cuenta_campana = cuentas_empresa.objects.filter(data_red_campana__id=campana_empresa['id']).values()
                 if cuenta_campana:
-                    datasets = []
+                    colors = ['#59A8FF', '#51C0E8', '#66FEFF', '#51E8BD', '#59FFA1']
+                    usernames = []
+                    background_colors = []
+                    values = []
                     for cuenta in cuenta_campana:
+                        index_color = randint(0,len(colors)-1)
+                        background_colors.append(colors[index_color])
+
                         username = cuenta['username']
-                        created_at = cuenta['created_at']
-                        date_time_created_at = datetime.strptime(created_at, '%Y-%m-%dT%H:%M:%S.%fZ')
-                        now = datetime.now()
-                        time_difference = relativedelta(date_time_created_at, now)
-                        years = time_difference.years  
                         followers_count = cuenta['followers_count']
-                        following_count = cuenta['following_count']
-                        post_count = cuenta['tweet_count']
                         
-                        dataset = {
-                            'label': username,
-                            'backgroundColor': "#66FEFF",
-                            'data': [years, followers_count, following_count, post_count]
-                        }
-                        datasets.append(dataset)
-                    
-                    chart_data = {
-                        'labels': ['Antigüedad en la red', 'Seguidores', 'Seguidos', 'Publicaciones'],
-                        'datasets': datasets
+                        usernames.append(username)
+                        values.append(followers_count)
+                        
+
+                    dataset_followers_twit =  {
+                        'labels': usernames,
+                        'datasets': [
+                            {
+                                'label': 'Seguidores en twitter',
+                                'backgroundColor': background_colors,
+                                'data': values
+                            }
+                        ]
                     }
+                        
                     
         try:
-            return render(request, "index_client.html", {'empresa_id': empresa_id, 'chart_data': chart_data})
+            return render(request, "index_client.html", {'empresa_id': empresa_id, 'data_followers_twit': dataset_followers_twit})
         except template.TemplateDoesNotExist:
             html_template = loader.get_template( 'page-404.html' )
             return HttpResponse(html_template.render(context, request))
