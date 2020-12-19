@@ -21,8 +21,8 @@ def get_facebook_post(nombre_pagina, numero_paginas, id_campana, id_escucha, id_
             if not data_red_escucha:
                 new_publication = data_red(
                     publicacion_id = publicacion["post_id"], 
-                    publicacion_fecha = publicacion["post_text"][:200],
-                    publicacion_texto = publicacion["time"], 
+                    publicacion_fecha = publicacion["time"],
+                    publicacion_texto = publicacion["post_text"][:200], 
                     publicacion_likes = publicacion["likes"],
                     publicacion_comentarios = publicacion["comments"],
                     publicacion_compartidos = publicacion["shares"],
@@ -65,9 +65,10 @@ def obtener_account_user(data):
                     data_cuentas_empresa.tweet_count = data["public_metrics"]["tweet_count"]
 
                 if not data_cuentas_empresa:
-                    if data["location"]:
+                    location = ""
+                    try:
                         location = data["location"]
-                    else:
+                    except:
                         location = ""
 
                     if data['entities']:
