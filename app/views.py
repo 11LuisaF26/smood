@@ -92,12 +92,12 @@ def index(request):
                         
                     
         try:
-            return render(request, "index_client.html", {'empresa_id': empresa_id, 'data_followers_twit': dataset_followers_twit})
+            return render(request, "index_client.html", {'empresa_id_id': empresa_id, 'data_followers_twit': dataset_followers_twit})
         except template.TemplateDoesNotExist:
             html_template = loader.get_template( 'page-404.html' )
             return HttpResponse(html_template.render(context, request))
         except:
-            html_template = loader.get_template( 'page-500.html' )
+            html_template = loader.get_template( 'horizontal-page-500.html' )
             return HttpResponse(html_template.render(context, request))
 
 @login_required(login_url="/login/")
