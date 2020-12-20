@@ -121,297 +121,259 @@ def pages(request):
         html_template = loader.get_template( 'page-500.html' )
         return HttpResponse(html_template.render(context, request))
 
-#******************************
-# Acerca de
-#******************************
 @login_required(login_url="/login/")
 def acerca_de(request):
-    return render(request, "acerca_de.html")
-
-
-#******************************
-# Funciones para listar
-#******************************
+    context = {}
+    user = request.user
+    if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists():
+        try:
+            return render(request, "acerca_de.html")
+        except template.TemplateDoesNotExist:
+            html_template = loader.get_template( 'page-404.html' )
+            return HttpResponse(html_template.render(context, request))
+        except:
+            html_template = loader.get_template( 'page-500.html' )
+            return HttpResponse(html_template.render(context, request))
+    else:
+        html_template = loader.get_template( 'page-403.html' )
+        return HttpResponse(html_template.render(context, request))
 
 @login_required(login_url="/login/")
 def empresas(request):        
+    context = {}
     user = request.user
-    if user.groups.filter(name='Administrador').exists():       
+    if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists():
         empresas_to_list = empresa.objects.all()
-    else:   
-        empresas_to_list = empresa.objects.filter(usuarios = request.user)
-    return render(request, "empresas.html", {"empresas":empresas_to_list})
+        try:
+            return render(request, "empresas.html",{"empresas":empresas_to_list})
+        except template.TemplateDoesNotExist:
+            html_template = loader.get_template( 'page-404.html' )
+            return HttpResponse(html_template.render(context, request))
+        except:
+            html_template = loader.get_template( 'page-500.html' )
+            return HttpResponse(html_template.render(context, request))
+    else:
+        html_template = loader.get_template( 'page-403.html' )
+        return HttpResponse(html_template.render(context, request))
 
 @login_required(login_url="/login/")
 def campanas_publicitarias(request):
+    context = {}
     user = request.user
-    if user.groups.filter(name='Administrador').exists():       
+    if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists():
         campanas_publicitarias_to_list = campana_publicitaria.objects.all()
-        for campana_publicitaria_to_list in campanas_publicitarias_to_list:
-            campana_id = campana_publicitaria_to_list.id
-            try:
-                escucha_campana_values = escucha.objects.filter(campana_publicitaria_red_social__id=campana_id).values()
-                continue
-            except:
-                logger.error("No hay escuchas relacionadas con esta campaña")
-            else:
-                count_official_escucha = 0
-                count_competition_escucha = 0
-                for value in escucha_campana_values:
-                    escucha_id = value['id']
-                    type_escucha = value['es_competencia']
-                    if type_escucha == False or type_escucha == 0:
-                        count_official_escucha += 1
-                        try:
-                            account_escucha_campana_values = cuentas_empresa.objects.filter(escucha__id=escucha_id).values()
-                            continue
-                        except:
-                            logger.error("No hay cuentas para esta escucha")
-                        else:
-                            official_account_count = 0
-                            for account_value in account_escucha_campana_values:
-                                official_account_count += 1
-                                account_id = account_value['id']
-                        #data_escucha_campana_values = data_red.objects.filter(campana_publicitaria_red_social__id=campana_id).values()
-                
-                    else:
-                        count_competition_escucha += 1
-                        try:
-                            account_escucha_campana_values = cuentas_empresa.objects.filter(escucha__id=escucha_id).values()
-                            continue
-                        except:
-                            logger.error("No hay cuentas para esta escucha")
-                        else:
-                            unofficial_account_count = 0
-                            for account_value in account_escucha_campana_values:
-                                unofficial_account_count += 1
-                                account_id = account_value['id']
-
-                official_info_dict = {
-                    'official_escucha_number': count_official_escucha,
-                    'official_account_number': official_account_count
-                }
-
-                unofficial_info_dict = {
-                    'unofficial_escucha_number': count_competition_escucha,
-                    'unofficial_account_number': unofficial_account_count
-                }
-                logger.error(official_info_dict)
-                logger.error(unofficial_info_dict)
+        try:
+            return render(request, "campanas.html",{"campanas_publicitarias":campanas_publicitarias_to_list})
+        except template.TemplateDoesNotExist:
+            html_template = loader.get_template( 'page-404.html' )
+            return HttpResponse(html_template.render(context, request))
+        except:
+            html_template = loader.get_template( 'page-500.html' )
+            return HttpResponse(html_template.render(context, request))
     else:
-        empresas = empresa.objects.filter(usuarios = request.user)
-        campanas_publicitarias_to_list = campana_publicitaria.objects.filter(empresa_campana__in = empresas)
-    
-    return render(request, "campanas.html", {"campanas_publicitarias":campanas_publicitarias_to_list})
+        html_template = loader.get_template( 'page-403.html' )
+        return HttpResponse(html_template.render(context, request))
 
 @login_required(login_url="/login/")
 def redes_sociales(request):
-    redes_sociales_to_list = red_social.objects.all()
-    return render(request, "redes_sociales.html", {"redes_sociales":redes_sociales_to_list})
-
-@login_required(login_url="/login/")
-def escuchas(request):
-    escuchas_to_list = []
-    escuchas_to_list = escucha.objects.all().values()
-    for escucha_record in escuchas_to_list:
-        escucha_id = escucha_record['id']
-
-        search_user = escucha_record['usuario_red_social']
-        if search_user.startswith('@'):
-            search_user.replace(search_user[0], '')
-
-        escucha_hashtags = hashtag.objects.filter(escucha__id=escucha_record['id']).values()
-        hastags_ids_list = []
-        for escucha_hashtag in escucha_hashtags:
-            hashtag_id = escucha_hashtag['id']
-            hastags_ids_list.append(hashtag_id)
-
-        escucha_empresas = empresa.objects.filter(escucha__id=escucha_record['id']).values()
-        for escucha_empresa in escucha_empresas:
-            escucha_empresa_id = escucha_empresa['id']
-
-        escucha_campana_values = campana_publicitaria.objects.filter(escucha__id=escucha_record['id']).values()
-        for escucha_campana_value in escucha_campana_values:
-            campana_id = escucha_campana_value['id']
-
-        escucha_credenciales = escucha_credencial.objects.filter(escucha__id=escucha_record['id']).values()
-        for credencial in escucha_credenciales:
-            twitter_bearer_token = credencial['twitter_bearer_token']
-            instagram_user = credencial['instagram_username']
-            instagram_pass = credencial['instagram_password']
-            instagram_path = credencial['instagram_path']
-
-        redes_sociales = red_social.objects.filter(escucha__id=escucha_record['id']).values()
-        
-        list_redes_sociales_id = []
-        for red in redes_sociales:
-            id_red = red['id']
-            nombre_red = red['nombre_red_social']
-            
-            if nombre_red == "Facebook":
-                facebook_posts = get_facebook_post(
-                    nombre_pagina=search_user, 
-                    numero_paginas = 100,
-                    id_campana = campana_id,
-                    id_escucha = escucha_id,
-                    id_red = id_red
-                )
-            
-            
-            if nombre_red == "Twitter":
-                obtener_twitters_user(
-                    nombre_usuario=search_user, 
-                    bearer_token=twitter_bearer_token, 
-                    id_campana=campana_id, 
-                    id_escucha=escucha_id,
-                    id_red = id_red
-                )
-                for escucha_hashtag in escucha_hashtags:
-                    nombre_hashtag = escucha_hashtag['nombre_hastag']
-                    obtener_twitters_query(
-                        query=nombre_hashtag, 
-                        bearer_token=twitter_bearer_token, 
-                        id_campana=campana_id, 
-                        id_escucha=escucha_id,
-                        id_red = id_red
-                    )
-
-            if nombre_red == "Instagram":
-                search_accounts = search_accounts_by_username(
-                    nombre_pagina=search_user, 
-                    #empresa_id=empresa_id, 
-                    username=instagram_user, 
-                    password=instagram_pass, 
-                    path=instagram_path,
-                    hashtag_list = hastags_ids_list,
-                    id_campana=campana_id, 
-                    id_escucha=escucha_id,
-                    id_red = id_red
-                )
-            
-    return render(request, "escuchas.html", {"escuchas":escuchas_to_list})
+    context = {}
+    user = request.user
+    if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists():
+        redes_sociales_to_list = red_social.objects.all()
+        try:
+            return render(request, "redes_sociales.html", {"redes_sociales":redes_sociales_to_list})
+        except template.TemplateDoesNotExist:
+            html_template = loader.get_template( 'page-404.html' )
+            return HttpResponse(html_template.render(context, request))
+        except:
+            html_template = loader.get_template( 'page-500.html' )
+            return HttpResponse(html_template.render(context, request))
+    else:
+        html_template = loader.get_template( 'page-403.html' )
+        return HttpResponse(html_template.render(context, request))
 
 @login_required(login_url="/login/")
 def ubicaciones(request):    
-    ubicaciones = ubicacion.objects.all()
-    return render(request, "ubicaciones.html", {"ubicaciones":ubicaciones})
+    context = {}
+    user = request.user
+    if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists():
+        ubicaciones = ubicacion.objects.all()
+        try:
+            return render(request, "ubicaciones.html", {"ubicaciones":ubicaciones})
+        except template.TemplateDoesNotExist:
+            html_template = loader.get_template( 'page-404.html' )
+            return HttpResponse(html_template.render(context, request))
+        except:
+            html_template = loader.get_template( 'page-500.html' )
+            return HttpResponse(html_template.render(context, request))
+    else:
+        html_template = loader.get_template( 'page-403.html' )
+        return HttpResponse(html_template.render(context, request))
 
 @login_required(login_url="/login/")
 def hashtags(request):    
-    hashtags = hashtag.objects.all()
-    return render(request, "hashtags.html", {"hashtags":hashtags})
+    context = {}
+    user = request.user
+    if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists():
+        hashtags = hashtag.objects.all()
+        try:
+            return render(request, "hashtags.html", {"hashtags":hashtags})
+        except template.TemplateDoesNotExist:
+            html_template = loader.get_template( 'page-404.html' )
+            return HttpResponse(html_template.render(context, request))
+        except:
+            html_template = loader.get_template( 'page-500.html' )
+            return HttpResponse(html_template.render(context, request))
+    else:
+        html_template = loader.get_template( 'page-403.html' )
+        return HttpResponse(html_template.render(context, request))
 
 @login_required(login_url="/login/")
 def redes_data(request):        
     user = request.user
-    if user.groups.filter(name='Administrador').exists():       
+    context = {}
+    if user.groups.filter(name='Administrador').exists():
         data_redes = data_red.objects.all()
-        return render(request, "redes_data.html", {"redes_data":data_redes})
-
+        try:
+            return render(request, "redes_data.html", {"redes_data":data_redes})
+        except template.TemplateDoesNotExist:
+            html_template = loader.get_template( 'page-404.html' )
+            return HttpResponse(html_template.render(context, request))
+        except:
+            html_template = loader.get_template( 'page-500.html' )
+            return HttpResponse(html_template.render(context, request))
+    else:
+        html_template = loader.get_template( 'page-403.html' )
+        return HttpResponse(html_template.render(context, request))
+        
 @login_required(login_url="/login/")
 def cuentas(request):        
     user = request.user
-    if user.groups.filter(name='Administrador').exists():       
+    context = {}
+    if user.groups.filter(name='Administrador').exists():
         cuentas = cuentas_empresa.objects.all()
-        return render(request, "cuentas.html", {"cuentas":cuentas})
+        try:
+            return render(request, "cuentas.html", {"cuentas":cuentas})
+        except template.TemplateDoesNotExist:
+            html_template = loader.get_template( 'page-404.html' )
+            return HttpResponse(html_template.render(context, request))
+        except:
+            html_template = loader.get_template( 'page-500.html' )
+            return HttpResponse(html_template.render(context, request))
+    else:
+        html_template = loader.get_template( 'page-403.html' )
+        return HttpResponse(html_template.render(context, request))
 
 @login_required(login_url="/login/")
 def escuchas_campana(request, campana_id):
-    today = date.today()
-    escuchas = []
-    escuchas = escucha.objects.filter(campana_publicitaria_red_social__id=campana_id).values()
+    user = request.user
+    context = {}
+    if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists():
+        today = date.today()
+        escuchas = []
+        escuchas = escucha.objects.filter(campana_publicitaria_red_social__id=campana_id).values()
 
-    for escucha_record in escuchas:
-        date_start = escucha_record['fecha_inicio_red_social']
-        data_finish = escucha_record['fecha_final_red_social']
-        
-        if data_finish >= today:
-            escucha_id = escucha_record['id']
+        for escucha_record in escuchas:
+            date_start = escucha_record['fecha_inicio_red_social']
+            data_finish = escucha_record['fecha_final_red_social']
+            
+            if data_finish >= today:
+                escucha_id = escucha_record['id']
 
-            search_user = escucha_record['usuario_red_social']
-            if search_user.startswith('@'):
-                search_user.replace(search_user[0], '')
+                search_user = escucha_record['usuario_red_social']
+                if search_user.startswith('@'):
+                    search_user.replace(search_user[0], '')
 
-            escucha_hashtags = hashtag.objects.filter(escucha__id=escucha_record['id']).values()
-            hastags_ids_list = []
-            for escucha_hashtag in escucha_hashtags:
-                hashtag_id = escucha_hashtag['id']
-                hastags_ids_list.append(hashtag_id)
+                escucha_hashtags = hashtag.objects.filter(escucha__id=escucha_record['id']).values()
+                hastags_ids_list = []
+                for escucha_hashtag in escucha_hashtags:
+                    hashtag_id = escucha_hashtag['id']
+                    hastags_ids_list.append(hashtag_id)
 
-            escucha_empresas = empresa.objects.filter(escucha__id=escucha_record['id']).values()
-            for escucha_empresa in escucha_empresas:
-                escucha_empresa_id = escucha_empresa['id']
+                escucha_empresas = empresa.objects.filter(escucha__id=escucha_record['id']).values()
+                for escucha_empresa in escucha_empresas:
+                    escucha_empresa_id = escucha_empresa['id']
 
-            escucha_campana_values = campana_publicitaria.objects.filter(escucha__id=escucha_record['id']).values()
-            for escucha_campana_value in escucha_campana_values:
-                campana_id = escucha_campana_value['id']
+                escucha_campana_values = campana_publicitaria.objects.filter(escucha__id=escucha_record['id']).values()
+                for escucha_campana_value in escucha_campana_values:
+                    campana_id = escucha_campana_value['id']
 
-            escucha_credenciales = escucha_credencial.objects.filter(escucha__id=escucha_record['id']).values()
-            for credencial in escucha_credenciales:
-                twitter_bearer_token = credencial['twitter_bearer_token']
-                instagram_user = credencial['instagram_username']
-                instagram_pass = credencial['instagram_password']
-                instagram_path = credencial['instagram_path']
+                escucha_credenciales = escucha_credencial.objects.filter(escucha__id=escucha_record['id']).values()
+                for credencial in escucha_credenciales:
+                    twitter_bearer_token = credencial['twitter_bearer_token']
+                    instagram_user = credencial['instagram_username']
+                    instagram_pass = credencial['instagram_password']
+                    instagram_path = credencial['instagram_path']
 
-            redes_sociales = red_social.objects.filter(escucha__id=escucha_record['id']).values()
+                redes_sociales = red_social.objects.filter(escucha__id=escucha_record['id']).values()
 
-            for red in redes_sociales:
-                id_red = red['id']
-                nombre_red = red['nombre_red_social']
-                
-                if nombre_red == "Facebook":
-                    facebook_posts = get_facebook_post(
-                        nombre_pagina=search_user, 
-                        numero_paginas = 100,
-                        id_campana = campana_id,
-                        id_escucha = escucha_id,
-                        id_red = id_red
-                    )
-                
-                if nombre_red == "Twitter":
+                for red in redes_sociales:
+                    id_red = red['id']
+                    nombre_red = red['nombre_red_social']
                     
-                    twitter_data = {
-                        'nombre_usuario':search_user, 
-                        'bearer_token':twitter_bearer_token, 
-                        'id_campana':campana_id, 
-                        'id_escucha':escucha_id,
-                        'id_red':id_red
-                    }
-                    
-                    ## Tasks
-                    obtener_account_user(data=twitter_data)
-                    obtener_twitters_user(data=twitter_data)
-                    
-
-                    for escucha_hashtag in escucha_hashtags:
-                        nombre_hashtag = escucha_hashtag['nombre_hastag']
-                        hashtag_data = {
-                            'query': nombre_hashtag,
-                            'bearer_token': twitter_bearer_token, 
-                            'id_campana': campana_id, 
-                            'id_escucha': escucha_id,
-                            'id_red': id_red
-                        }
-                        obtener_twitters_query(
-                            data = hashtag_data
+                    if nombre_red == "Facebook":
+                        facebook_posts = get_facebook_post(
+                            nombre_pagina=search_user, 
+                            numero_paginas = 100,
+                            id_campana = campana_id,
+                            id_escucha = escucha_id,
+                            id_red = id_red
                         )
-                
-                '''
-                if nombre_red == "Instagram":
-                    search_accounts = search_accounts_by_username(
-                        nombre_pagina=search_user, 
-                        #empresa_id=empresa_id, 
-                        username=instagram_user, 
-                        password=instagram_pass, 
-                        path=instagram_path,
-                        hashtag_list = hastags_ids_list,
-                        id_campana=campana_id, 
-                        id_escucha=escucha_id,
-                        id_red = id_red
-                    )
-                '''
+                    
+                    if nombre_red == "Twitter":
+                        
+                        twitter_data = {
+                            'nombre_usuario':search_user, 
+                            'bearer_token':twitter_bearer_token, 
+                            'id_campana':campana_id, 
+                            'id_escucha':escucha_id,
+                            'id_red':id_red
+                        }
+                        
+                        ## Tasks
+                        obtener_account_user(data=twitter_data)
+                        obtener_twitters_user(data=twitter_data)
+                        
 
-    return render(request, "escuchas_empresa.html", {"escuchas":escuchas})
+                        for escucha_hashtag in escucha_hashtags:
+                            nombre_hashtag = escucha_hashtag['nombre_hastag']
+                            hashtag_data = {
+                                'query': nombre_hashtag,
+                                'bearer_token': twitter_bearer_token, 
+                                'id_campana': campana_id, 
+                                'id_escucha': escucha_id,
+                                'id_red': id_red
+                            }
+                            obtener_twitters_query(
+                                data = hashtag_data
+                            )
+                    
+                    '''
+                    if nombre_red == "Instagram":
+                        search_accounts = search_accounts_by_username(
+                            nombre_pagina=search_user, 
+                            #empresa_id=empresa_id, 
+                            username=instagram_user, 
+                            password=instagram_pass, 
+                            path=instagram_path,
+                            hashtag_list = hastags_ids_list,
+                            id_campana=campana_id, 
+                            id_escucha=escucha_id,
+                            id_red = id_red
+                        )
+                    '''
+
+        try:
+            return render(request, "escuchas_empresa.html", {"escuchas":escuchas})
+        except template.TemplateDoesNotExist:
+            html_template = loader.get_template( 'page-404.html' )
+            return HttpResponse(html_template.render(context, request))
+        except:
+            html_template = loader.get_template( 'page-500.html' )
+            return HttpResponse(html_template.render(context, request))
+    else:
+        html_template = loader.get_template( 'page-403.html' )
+        return HttpResponse(html_template.render(context, request))
 
 #******************************
 # Funciones para insertar
@@ -644,7 +606,6 @@ def delete_camapana_publicitaria (request, id=0):
     elif user.groups.filter(name='Cliente').exists():
         raise PermissionDenied
     return render(request, 'campanas.html', {'form': form, "msg" : msg, "success" : success })
-
 
 @login_required(login_url="/login/")
 def add_credential(request):

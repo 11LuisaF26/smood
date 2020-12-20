@@ -28,7 +28,6 @@ urlpatterns = [
     path('ubicacion/save/', views.ubicaciones,  name='ubicaciones'),
     path('hashtag/', views.add_hashtag, name='crear_hashtag'),
     path('hashtag/save/', views.hashtags, name='hashtags'),
-    path('escuchas/', views.escuchas,  name='escuchas'),
     path('escucha/save/', views.add_escuchas,  name='crear_escucha'),
     path('cuentas/', views.cuentas,  name='cuentas'),
     path('acercade/', views.acerca_de, name='acerca_de'),
