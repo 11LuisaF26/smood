@@ -51,6 +51,9 @@ def index(request):
             return HttpResponse(html_template.render(context, request))
 
     if user.groups.filter(name='Cliente').exists():
+        empresa_id = 0
+        dataset_followers_twit = {}
+
         empresa_user = empresa.objects.filter(usuarios__id=user_id).values()
         if empresa_user:
             for value in empresa_user:
@@ -667,12 +670,14 @@ def add_credential(request):
 @login_required(login_url="/login/")
 def campanas_empresa(request, empresa_id):
     context = {}
-    empresa_user = empresa.objects.filter(id=empresa_id).values()
+    campanas = []
 
-    logger.error(empresa_user)
-    for value in empresa_user:
-        empresa_id = value['id']
-    campanas = campana_publicitaria.objects.filter(empresa_campana__id=empresa_id).values()
+    if empresa_id !=0:
+        empresa_user = empresa.objects.filter(id=empresa_id).values()
+
+        for value in empresa_user:
+            empresa_id = value['id']
+        campanas = campana_publicitaria.objects.filter(empresa_campana__id=empresa_id).values()
 
     try:
         return render(request, "campanas_empresa.html", {'campanas':campanas})
