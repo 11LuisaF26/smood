@@ -34,20 +34,20 @@ def index(request):
         try:
             return render(request, "index_admin.html")
         except template.TemplateDoesNotExist:
-            html_template = loader.get_template( 'page-404.html' )
+            html_template = loader.get_template( 'horizontal-page-404.html' )
             return HttpResponse(html_template.render(context, request))
         except:
-            html_template = loader.get_template( 'page-500.html' )
+            html_template = loader.get_template( 'horizontal-page-500.html' )
             return HttpResponse(html_template.render(context, request))
     
     if user.groups.filter(name='Publicista').exists():
         try:
             return render(request, "index_publicist.html")
         except template.TemplateDoesNotExist:
-            html_template = loader.get_template( 'page-404.html' )
+            html_template = loader.get_template( 'horizontal-page-404.html' )
             return HttpResponse(html_template.render(context, request))
         except:
-            html_template = loader.get_template( 'page-500.html' )
+            html_template = loader.get_template( 'horizontal-page-500.html' )
             return HttpResponse(html_template.render(context, request))
 
     if user.groups.filter(name='Cliente').exists():
