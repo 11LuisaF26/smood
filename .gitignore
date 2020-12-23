@@ -1,7 +1,7 @@
 app/__pycache__/
 app/migrations/__pycache__/
 authentication/__pycache__/
-campanas_publicitarias/__pycache__/
+campanas_publicitarias/__pycache__e/
 campanas_publicitarias/__pycache__/migrations/
 core/__pycache__/
 env
