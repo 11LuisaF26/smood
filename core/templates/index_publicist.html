@@ -14,6 +14,9 @@
     <meta name="description" content="" />
     <meta name="keywords" content="">
     <meta name="author" content="Utadeo" />
+    <link rel="stylesheet" href="/static/assets/css/plugins/Chart.min.css">
+    <script src="/static/assets/js/chart_js/Chart.bundle.min.js"></script>
+    <script src="/static/assets/js/chart_js/Chart.min.js"></script>
     <!-- Favicon icon -->
     <link rel="icon" href="/static/assets/images/favicon.ico" type="image/x-icon">
 
@@ -195,11 +198,21 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- [ stiped-table ] end -->
+                                <div class="col-xl-4">
+                                    <div class="card">
+                                        <div class="card-body table-border-style">
+                                            <canvas id="pie-chart" width="600 " height="400"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
 
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-xl-12">
+                                    <div class="card">
+                                        <h3>Hola mundo</h3>
+                                    </div>
                                 </div>
                             </div>
                             <!-- [ Main Content ] end -->
@@ -251,6 +264,26 @@
                 MenuTrigger: 'hover',
                 SubMenuTrigger: 'hover',
             });
+        });
+    </script>
+
+    <script>
+        new Chart(document.getElementById("pie-chart"), {
+            type: 'pie',
+            data: {
+            labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+            datasets: [{
+                label: "Population (millions)",
+                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                data: [2478,5267,734,784,433]
+            }]
+            },
+            options: {
+            title: {
+                display: true,
+                text: 'Predicted world population (millions) in 2050'
+            }
+            }
         });
     </script>
 

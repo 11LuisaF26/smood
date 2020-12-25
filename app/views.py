@@ -48,9 +48,9 @@ def index(request):
                     .order_by('-post_count')
                     .values_list('post_count', 'username')
                     .distinct()).values()[:4]
-                    
+
         for idx, value in enumerate(top_post):
-            campana_id = value['id']
+            campana_id = value['data_red_campana_id']
             post_account = value['post_count']
             campana = campana_publicitaria.objects.filter(id=campana_id).values()
             for campana_value in campana:
