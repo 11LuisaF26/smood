@@ -41,8 +41,30 @@ def index(request):
             return HttpResponse(html_template.render(context, request))
     
     if user.groups.filter(name='Publicista').exists():
+        datas = []
+        colors = ['bg-c-blue', 'bg-c-green', 'bg-c-yellow', 'bg-c-red']
+        empresas_to_list = empresa.objects.all()
+        top_post = (cuentas_empresa.objects
+                    .order_by('-post_count')
+                    .values_list('post_count', 'username')
+                    .distinct()).values()[:4]
+                    
+        for idx, value in enumerate(top_post):
+            campana_id = value['id']
+            post_account = value['post_count']
+            campana = campana_publicitaria.objects.filter(id=campana_id).values()
+            for campana_value in campana:
+                campana_name = campana_value['nombre_campana']
+
+            data = {
+                'campana_name': campana_name,
+                'post_account':post_account,
+                'color': colors[idx]
+            }
+
+            datas.append(data)
         try:
-            return render(request, "index_publicist.html")
+            return render(request, "index_publicist.html", {"empresas":empresas_to_list, 'datas': datas})
         except template.TemplateDoesNotExist:
             html_template = loader.get_template( 'horizontal-page-404.html' )
             return HttpResponse(html_template.render(context, request))
