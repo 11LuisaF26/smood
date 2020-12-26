@@ -25,6 +25,7 @@ from random import randint
 import logging
 logger = logging.getLogger(__name__)
 
+
 @login_required(login_url="/login/")
 def index(request):
     context = {}
@@ -41,9 +42,9 @@ def index(request):
             return HttpResponse(html_template.render(context, request))
     
     if user.groups.filter(name='Publicista').exists():
+        # Data for the cards
         datas = []
         colors = ['bg-c-blue', 'bg-c-green', 'bg-c-yellow', 'bg-c-red']
-        empresas_to_list = empresa.objects.all()
         top_post = (cuentas_empresa.objects
                     .order_by('-post_count')
                     .values_list('post_count', 'username')
@@ -63,8 +64,55 @@ def index(request):
             }
 
             datas.append(data)
+
+        #Data for the table
+        empresas_to_list = empresa.objects.all()
+
+        #Data for the chart
+        esuchas_store = escucha.objects.all()
+        list_escuchas = []
+        dict_f = {}
+        for escucha_store in esuchas_store:
+            escucha_data_store = data_red.objects.filter(data_red_escucha__id=escucha_store.id).count()
+            list_escuchas.append(escucha_data_store)
+            dict_f[escucha_store.nombre_escucha]=escucha_data_store
+
+        values_list=list(dict_f.values())
+        new_values = list(dict_f.values())
+        key_list = list(dict_f.keys())
+
+
+        final_list = []
+        for i in range(0, 3):
+            max1 = 0
+            for j in range(len(values_list)):
+                if values_list[j] > max1:
+                    max1 = values_list[j]
+                    
+            values_list.remove(max1)
+            final_list.append(max1)
+        
+        labels=[]
+        for item in final_list:
+            position = new_values.index(item)
+            labels.append(key_list[position])
+
+        
+        data = {
+            'labels': labels,
+            'datasets': [
+                {
+                    'label': "Escuchas con más datos",
+                    'backgroundColor': ["#3e95cd", "#0047CC", "#172A4D", "#002D80", "#001233", "#73b4ff"],
+                    'data': final_list
+                }
+            ]
+        }
+
+        logger.error(data)
+
         try:
-            return render(request, "index_publicist.html", {"empresas":empresas_to_list, 'datas': datas})
+            return render(request, "index_publicist.html", {"empresas":empresas_to_list, 'datas': datas, 'pie_chart': data})
         except template.TemplateDoesNotExist:
             html_template = loader.get_template( 'horizontal-page-404.html' )
             return HttpResponse(html_template.render(context, request))
