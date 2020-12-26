@@ -73,17 +73,17 @@ def index(request):
                         background_colors.append(colors[index_color])
 
                         username = cuenta['username']
-                        followers_count = cuenta['followers_count']
+                        post_count = cuenta['post_count']
                         
                         usernames.append(username)
-                        values.append(followers_count)
+                        values.append(post_count)
                         
 
                     dataset_followers_twit =  {
                         'labels': usernames,
                         'datasets': [
                             {
-                                'label': 'Seguidores en twitter',
+                                'label': 'Número de publicaciones',
                                 'backgroundColor': background_colors,
                                 'data': values
                             }
@@ -640,8 +640,40 @@ def campanas_empresa(request, empresa_id):
             empresa_id = value['id']
         campanas = campana_publicitaria.objects.filter(empresa_campana__id=empresa_id).values()
 
+        cuentas = []
+        for campana_value in campanas:
+            cuentas_campana = cuentas_empresa.objects.filter(data_red_campana__id=campana_value['id']).values()
+            for cuentas_value in cuentas_campana:
+                account = cuentas_value['username']
+                followers = cuentas_value['followers_count']
+                account_dict = {
+                    'account': account,
+                    'followers': followers
+                }
+                cuentas.append(account_dict)
+
+            data_hashtag = data_red.objects.filter(data_red_campana__id=campana_value['id']).filter(is_from_hashtag=True).count()
+            data_account = data_red.objects.filter(data_red_campana__id=campana_value['id']).filter(is_from_hashtag=False).count()
+
+            data = {
+                'labels': ['Datos de hashtag', 'Datos de cuentas'],
+                'datasets': [
+                    {
+                        'label': "Distribución de los datos",
+                        'backgroundColor': ["#3e95cd", "#0047CC"],
+                        'data': [data_hashtag, data_account]
+                    }
+                ]
+            }
+
     try:
-        return render(request, "campanas_empresa.html", {'campanas':campanas})
+        return render(request, "campanas_empresa.html", {
+            'campanas':campanas, 
+            'cuentas': cuentas, 
+            'data_hashtag':data_hashtag, 
+            'data_account':data_account,
+            'pie_chart': data
+        })
     except template.TemplateDoesNotExist:
         html_template = loader.get_template( 'page-404.html' )
         return HttpResponse(html_template.render(context, request))
