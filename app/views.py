@@ -109,9 +109,34 @@ def index(request):
             ]
         }
 
+        #Data social media
+        instagram = red_social.objects.filter(nombre_red_social="Instagram").values()
+        for value in instagram:
+            insta_iden = value['id']
+        
+        facebook = red_social.objects.filter(nombre_red_social="Facebook").values()
+        for value in facebook:
+            face_iden = value['id']
+
+        twitter = red_social.objects.filter(nombre_red_social="Twitter").values()
+        for value in facebook:
+            twitt_iden = value['id']
+
+        data_instagram = data_red.objects.filter(data_red_social=insta_iden).count()
+        data_facebook = data_red.objects.filter(data_red_social=face_iden).count()
+        data_twitter = data_red.objects.filter(data_red_social=twitt_iden).count()
 
         try:
-            return render(request, "index_publicist.html", {"empresas":empresas_to_list, 'datas': datas, 'pie_chart': data})
+            return render(request, "index_publicist.html", 
+                {
+                    "empresas":empresas_to_list, 
+                    'datas': datas, 
+                    'pie_chart': data, 
+                    'data_instagram':data_instagram,
+                    'data_facebook':data_facebook,
+                    'data_twitter':data_twitter
+                }
+            )
         except template.TemplateDoesNotExist:
             html_template = loader.get_template( 'horizontal-page-404.html' )
             return HttpResponse(html_template.render(context, request))
