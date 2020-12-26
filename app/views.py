@@ -109,7 +109,6 @@ def index(request):
             ]
         }
 
-        logger.error(data)
 
         try:
             return render(request, "index_publicist.html", {"empresas":empresas_to_list, 'datas': datas, 'pie_chart': data})
