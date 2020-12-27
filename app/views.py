@@ -90,9 +90,28 @@ def index(request):
                         ]
                     }
                         
-                    
+
+        official_escuchas = escucha.objects.filter(empresa_red_social__id=empresa_id).filter(es_competencia=False).count()
+        unofficial_escuchas = escucha.objects.filter(empresa_red_social__id=empresa_id).filter(es_competencia=True).count()
+
+        data = {
+            'labels': ['Escuchas de la competencia', 'Escuchas oficiales'],
+            'datasets': [
+                {
+                    'label': "Distribución de las escuchas",
+                    'backgroundColor': ["#3e95cd", "#0047CC"],
+                    'data': [unofficial_escuchas, official_escuchas]
+                }
+            ]
+        }
+
+
         try:
-            return render(request, "index_client.html", {'empresa_id': empresa_id, 'data_followers_twit': dataset_followers_twit})
+            return render(request, "index_client.html", {
+                'empresa_id': empresa_id, 
+                'data_followers_twit': dataset_followers_twit,
+                'pie_chart': data
+            })
         except template.TemplateDoesNotExist:
             html_template = loader.get_template( 'horizontal-page-404.html' )
             return HttpResponse(html_template.render(context, request))
