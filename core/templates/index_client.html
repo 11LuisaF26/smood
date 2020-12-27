@@ -110,12 +110,15 @@
                                 <!-- [ horizontal-layout ] start -->
                                 <div class="col-sm-12">
                                     <div class="card" style="background-color:#001233;">
-                                        <div class="card-header">
-                                            <h5 style="color:#ffffff;">Horizontal layout</h5>
-                                        </div>
                                         <div class="card-body">
-                                            <div class="col-md-6">
-                                                <canvas id="folowers_twit" width="600 " height="400"></canvas>
+                                            <div class="col-md-5" style="display:inline-block;">
+                                                <canvas id="folowers_twit" width="100" height="100"></canvas>
+                                            </div>
+                                            <div class="col-md-1" style="display:inline-block;">
+                                                
+                                            </div>
+                                            <div class="col-md-5" style="display:inline-block">
+                                                <canvas id="pie-chart" width="100" height="100"></canvas>
                                             </div>
                                         </div>
                                     </div>
@@ -209,6 +212,20 @@
         });
     </script>
 
+    <script>
+        new Chart(document.getElementById("pie-chart"), {
+            type: 'pie',
+            data: {{ pie_chart|safe }},
+            options: {
+            title: {
+                display: true,
+                text: 'Escuchas de la campaña',
+                fontSize: 20,
+                fontColor: "#ffffff"
+            }
+            }
+        });
+    </script>
     <script src="/static/assets/js/analytics.js"></script>
 
     

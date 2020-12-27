@@ -109,14 +109,21 @@
                                     <div class="col-sm-4">
                                         <div class="card border border-primary mb-3">
                                             <div class="card-header bg-transparent border border-primary">
-                                                <h5 class="card-title">{{campana.nombre_campana}}</h5> 
+                                                <h4 class="card-title">{{campana.nombre_campana}}</h4> 
                                             </div>
                                             <div class="card-body text-primary border border-primary">
                                                 </br>
-                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                                <h5 class="card-title" style="text-align:center">Cuentas</h5> 
+                                                <ul class="list-group">
+                                                    {% for cuenta in cuentas %}
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            {{cuenta.account}}
+                                                            <span class="badge bg-success rounded-pill">Seguidores: {{cuenta.followers}}</span>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                                </br>
+                                                <canvas id="pie-chart" width="600 " height="400"></canvas>
                                             </div>
                                         </div>
                                     </div>
@@ -177,6 +184,20 @@
     </script>
 
     <script src="/static/assets/js/analytics.js"></script>
+
+    <script>
+        new Chart(document.getElementById("pie-chart"), {
+            type: 'pie',
+            data: {{ pie_chart|safe }},
+            options: {
+            title: {
+                display: true,
+                text: 'Datos de la campaña',
+                fontSize: 20
+            }
+            }
+        });
+    </script>
 
 </body>
 </html>
