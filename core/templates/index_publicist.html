@@ -14,6 +14,9 @@
     <meta name="description" content="" />
     <meta name="keywords" content="">
     <meta name="author" content="Utadeo" />
+    <link rel="stylesheet" href="/static/assets/css/plugins/Chart.min.css">
+    <script src="/static/assets/js/chart_js/Chart.bundle.min.js"></script>
+    <script src="/static/assets/js/chart_js/Chart.min.js"></script>
     <!-- Favicon icon -->
     <link rel="icon" href="/static/assets/images/favicon.ico" type="image/x-icon">
 
@@ -134,58 +137,85 @@
                 <div class="pcoded-inner-content">
                     <div class="main-body">
                         <div class="page-wrapper">
-                            <div class="page-header">
-                                <div class="page-block">
-                                    <div class="row align-items-center">
-                                        <div class="col-md-12">
-                                            <div class="page-header-title">
-                                                <h5 class="m-b-10">Horizontal Layout 2</h5>
-                                            </div>
-                                            <ul class="breadcrumb">
-                                                <li class="breadcrumb-item"><a href="index_admin.html"><i class="feather icon-home"></i></a></li>
-                                                <li class="breadcrumb-item"><a href="#!">Page Layout</a></li>
-                                                <li class="breadcrumb-item"><a href="#!">Horizontal Layout 2</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <!-- [ Main Content ] start -->
                             <div class="row">
-                                <!-- [ horizontal-layout ] start -->
-                                <div class="col-sm-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5>Horizontal layout</h5>
-                                            <div class="card-header-right">
-                                                <div class="btn-group card-option">
-                                                    <button type="button" class="btn dropdown-toggle btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="feather icon-more-horizontal"></i>
-                                                    </button>
-                                                    <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right">
-                                                        <li class="dropdown-item full-card"><a href="#!"><span><i class="feather icon-maximize"></i> maximize</span><span style="display:none"><i class="feather icon-minimize"></i> Restore</span></a>
-                                                        </li>
-                                                        <li class="dropdown-item minimize-card"><a href="#!"><span><i class="feather icon-minus"></i> collapse</span><span style="display:none"><i class="feather icon-plus"></i> expand</span></a></li>
-                                                        <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
-                                                        <li class="dropdown-item close-card"><a href="#!"><i class="feather icon-trash"></i> remove</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
+                                {% for data in datas %}
+                                    <div class="col-md-6 col-xl-3">
+                                    <div class="card {{data.color}} order-card">
                                         <div class="card-body">
-                                            <p>In Horizontal Layout V2 - Navigation bar is set in a Horizontal way with fixed width container. It also showing/hidden while scrolling up/down.</p>
-                                            <div class="alert alert-info mb-0" role="alert">
-                                                <p class="mb-0">It is best suited for those applications where you required your navigation is set to be a Horizontal way with fixed width container.</p>
+                                            <h3 class="text-white">{{data.campana_name}}</h3>
+                                            <p class="m-b-0">Publicaciones<span class="float-right">{{data.post_account}}</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-xl-8">
+                                    <div class="card">
+                                        <div class="card-body table-border-style">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr> 
+                                                            <th>#</th>
+                                                            <th>NIT</th>
+                                                            <th>Nombre</th>
+                                                            <th>Estado</th>
+                                                        </tr>
+                                                    </thead>
+                                                    
+                                                    <tbody>                                        
+                                                    {% for empresa in empresas %}
+                                                        <tr> 
+                                                            <td>{{ forloop.counter }}</td>
+                                                            <td>{{empresa.nit_empresa}} </td>
+                                                            <td>{{empresa.nombre_empresa}}</td>
+                                                            <td>{{empresa.estado_empresa}}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                    
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- [ horizontal-layout ] end -->
+                                <div class="col-xl-4">
+                                    <div class="card">
+                                        <div class="card-body table-border-style">
+                                            <canvas id="pie-chart" width="600 " height="400"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
-                            <!-- [ Main Content ] end -->
-                            <!-- [ Main Content ] start -->
+
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body text-center">
+                                            <i class="fab fa-twitter text-c-green d-block f-40"></i>
+                                            <h4 class="m-t-20"><span class="text-c-blgreenue">{{data_twitter}} </span>Publicaciones</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body text-center">
+                                            <i class="fab fa-facebook text-c-blue d-block f-40"></i>
+                                            <h4 class="m-t-20"><span class="text-c-blgreenue">{{data_facebook}} </span>Publicaciones</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body text-center">
+                                            <i class="fab fa-instagram text-c-red d-block f-40"></i>
+                                            <h4 class="m-t-20"><span class="text-c-blgreenue">{{data_instagram}} </span>Publicaciones</h4>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <!-- [ Main Content ] end -->
@@ -237,6 +267,20 @@
                 MenuTrigger: 'hover',
                 SubMenuTrigger: 'hover',
             });
+        });
+    </script>
+
+    <script>
+        new Chart(document.getElementById("pie-chart"), {
+            type: 'pie',
+            data: {{ pie_chart|safe }},
+            options: {
+            title: {
+                display: true,
+                text: 'Escuchas con más datos',
+                fontSize: 20
+            }
+            }
         });
     </script>
 
