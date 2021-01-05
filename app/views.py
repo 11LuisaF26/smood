@@ -88,9 +88,9 @@ def index(request):
             for j in range(len(values_list)):
                 if values_list[j] > max1:
                     max1 = values_list[j]
-                    
-            values_list.remove(max1)
-            final_list.append(max1)
+            if values_list:
+                values_list.remove(max1)
+                final_list.append(max1)
         
         labels=[]
         for item in final_list:
@@ -119,7 +119,7 @@ def index(request):
             face_iden = value['id']
 
         twitter = red_social.objects.filter(nombre_red_social="Twitter").values()
-        for value in facebook:
+        for value in twitter:
             twitt_iden = value['id']
 
         data_instagram = data_red.objects.filter(data_red_social=insta_iden).count()
@@ -183,8 +183,7 @@ def index(request):
                             }
                         ]
                     }
-                        
-                    
+
         try:
             return render(request, "index_client.html", {'empresa_id': empresa_id, 'data_followers_twit': dataset_followers_twit})
         except template.TemplateDoesNotExist:
