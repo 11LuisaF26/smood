@@ -31,6 +31,7 @@ def index(request):
     context = {}
     user = request.user
     user_id = user.id
+    '''
     if user.groups.filter(name='Administrador').exists():
         try:
             return render(request, "index_admin.html")
@@ -40,8 +41,9 @@ def index(request):
         except:
             html_template = loader.get_template( 'horizontal-page-500.html' )
             return HttpResponse(html_template.render(context, request))
+    '''
     
-    if user.groups.filter(name='Publicista').exists():
+    if user.groups.filter(name='Publicista').exists() or user.groups.filter(name='Administrador').exists():
         # Data for the cards
         datas = []
         colors = ['bg-c-blue', 'bg-c-green', 'bg-c-yellow', 'bg-c-red']
