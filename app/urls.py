@@ -51,6 +51,6 @@ urlpatterns = [
     re_path(r'^nube/facebook/(?P<id>\w+)/$', nube.cloud_gen_fb, name='nube_de_palabras_fb'),
     re_path(r'^nube/instagram/(?P<id>\w+)/$', nube.cloud_gen_ig, name='nube_de_palabras_ig'),
     
-    re_path(r'^nube/(?P<id>\w+)/$', nube.cloud_gen_p, name='nube_de_palabras_p'),
+
     
 ]

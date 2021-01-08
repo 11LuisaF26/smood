@@ -154,39 +154,3 @@ def generador(nombre,texto,User):
 def red(request):
     return render(request, "red.html") 
 
-# ********************************************
-# ************** PRUEBA DE NUBE **************
-# ********************************************
-
-def nube_de_palabras_p (text):        
-    stopwords = set(STOPWORDS)           
-    stopwords.add("queryset")    
-    stopwords.add("'")                       
-
-    plt.figure(figsize = (20,5))
-        
-    wordcloud = WordCloud(background_color='white', stopwords=stopwords).generate(text)
-    plt.figure(figsize = (10,5))
-    plt.imshow(wordcloud, interpolation= 'bilinear')
-    plt.axis("off")
-    
-    image = io.BytesIO()
-    plt.savefig(image, format='png')
-    image.seek(0)  # rewind the data
-    string = base64.b64encode(image.read())
-
-    image_64 = 'data:image/png;base64,' + urllib.parse.quote(string)
-    return image_64
-        
-def cloud_gen_p(request, id=0):            
-    emp = escucha.objects.get(pk=id)        
-    twitter_red_social = red_social.objects.get(nombre_red_social="Twitter")                
-    twitter_data = data_red.objects.filter(data_red_escucha =emp,data_red_social =twitter_red_social ).values('publicacion_texto')        
-    texto = str(twitter_data)    
-    word_list = normalize(texto)
-    text =  word_list.replace("'", '')
-    wordcloud = nube_de_palabras_p(text)
-    return render(request, "nube.html",{'wordcloud':wordcloud})  
-       
-    
-    
