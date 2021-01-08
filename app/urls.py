@@ -35,8 +35,8 @@ urlpatterns = [
     path('escuchas/campana/<int:campana_id>', views.escuchas_campana, name='escuchas_campana'),
     path('campanas/empresa/<int:empresa_id>', views.campanas_empresa, name='campana_empresa'),
     # path('nube/twitter', nube.cloud_gen_t, name='nube_de_palabras_twitter'),
-    path('nube/facebook', nube.cloud_gen_fb, name='nube_de_palabras_fb'),
-    path('nube/instagram', nube.cloud_gen_ig, name='nube_de_palabras_ig'),
+    # path('nube/facebook', nube.cloud_gen_fb, name='nube_de_palabras_fb'),
+    # path('nube/instagram', nube.cloud_gen_ig, name='nube_de_palabras_ig'),
     re_path(r'^empresas/save/(?P<id>\w+)/$', views.add_empresas, name='editar_empresa'),
     re_path(r'^empresas/delete/(?P<id>\w+)/$', views.delete_empresas, name='eliminar_empresa'),
     re_path(r'^redes/save/(?P<id>\w+)/$', views.add_red_social, name='editar_redes'),
@@ -46,7 +46,10 @@ urlpatterns = [
     re_path(r'^escuchas/save/(?P<id>\w+)/$', views.add_escuchas, name='editar_escucha'),
     re_path(r'^escuchas/delete/(?P<id>\w+)/$', views.delete_escucha, name='eliminar_escucha'),
 
-
+    #Nube de palabras
+    re_path(r'^nube/twitter/(?P<id>\w+)/$', nube.cloud_gen_t, name='nube_de_palabras_twitter'),
+    re_path(r'^nube/facebook/(?P<id>\w+)/$', nube.cloud_gen_fb, name='nube_de_palabras_fb'),
+    re_path(r'^nube/instagram/(?P<id>\w+)/$', nube.cloud_gen_ig, name='nube_de_palabras_ig'),
     
     re_path(r'^nube/(?P<id>\w+)/$', nube.cloud_gen_p, name='nube_de_palabras_p'),
     

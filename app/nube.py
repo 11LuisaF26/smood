@@ -60,149 +60,65 @@ def con(request):
 # **************************
 # Nube de palabras Twitter
 # **************************
-def nube_de_palabras_t (text):
-        emp = campana_publicitaria.objects.get(pk=3)
+def nube_de_palabras(text):        
+    stopwords = set(STOPWORDS)           
+    stopwords.add("queryset")    
+    stopwords.add("'")                               
+    plt.figure(figsize = (20,5))
         
-        twitter_red_social = red_social.objects.get(nombre_red_social="Twitter")    
-        ids = campana_publicitaria.objects.values_list('nombre_campana', flat=True).filter(id =3)    
-        twitter_data_to_list = data_red.objects.filter(data_red_social =twitter_red_social, data_red_campana__in = ids).values('publicacion_texto')
+    wordcloud = WordCloud(background_color='white', stopwords=stopwords).generate(text)
+    plt.figure(figsize = (10,5))
+    plt.imshow(wordcloud, interpolation= 'bilinear')
+    plt.axis("off")
     
-        text = str(twitter_data_to_list)
-        # ' ''.join(twitter_data_to_list)
-        word_list = normalize(text)    
-        
-        stopwords = set(STOPWORDS)           
-        stopwords.add("queryset'")
-        # stopwords.add('publicacion_texto')
-        # stopwords.add("publicacion_texto'")
-        # stopwords.add('publicacion_texto RT')
-        # stopwords.add('una')
-        
-        wordcloud = WordCloud(background_color='white', stopwords=stopwords).generate(word_list)
-        plt.imshow(wordcloud)
-        plt.axis("off")
-        #plt.show()
-        image = io.BytesIO()
-        plt.savefig(image, format='png')
-        image.seek(0)  # rewind the data
-        string = base64.b64encode(image.read())
+    image = io.BytesIO()
+    plt.savefig(image, format='png')
+    image.seek(0)  # rewind the data
+    string = base64.b64encode(image.read())
 
-        image_64 = 'data:image/png;base64,' + urllib.parse.quote(string)
-        return image_64
-        # 
-        # plt.imshow(wordcloud)
-        # plt.axis("off")
-        # s = plt.show()
+    image_64 = 'data:image/png;base64,' + urllib.parse.quote(string)
+    return image_64
 
 def cloud_gen_t(request, id):    
-    emp = campana_publicitaria.objects.get(pk=3)        
-    twitter_red_social = red_social.objects.get(nombre_red_social="Twitter")    
-    ids = campana_publicitaria.objects.values_list('nombre_campana', flat=True).filter(id =3)    
-    twitter_data_to_list = data_red.objects.filter(data_red_social =twitter_red_social, data_red_campana__in = ids).values('publicacion_texto')
-    texto = str(twitter_data_to_list)
+    emp = escucha.objects.get(pk=id)        
+    twitter_red_social = red_social.objects.get(nombre_red_social="Twitter")                
+    twitter_data = data_red.objects.filter(data_red_escucha =emp,data_red_social =twitter_red_social ).values('publicacion_texto')        
+    texto = str(twitter_data)    
     word_list = normalize(texto)
-    text = ''
+    text =  word_list.replace("'", '')
+    wordcloud = nube_de_palabras_p(text)
     
-    for i in word_list:
-        if __name__ == '__main__':
-            text += i.text
-
-    wordcloud = nube_de_palabras_t(text)
     return render(request, "nube_de_palabras_twitter.html",{'wordcloud':wordcloud})
 
 
 # **************************
 # Nube de palabras Facebook
 # **************************
-def nube_de_palabras_fb (text):       
-        fb_red_social = red_social.objects.get(nombre_red_social="Facebook")
-        fb_data_to_list = data_red.objects.filter(data_red_social = fb_red_social).values('publicacion_texto')
-        text = str(fb_data_to_list)
-        word_list = normalize(text)    
-        
-        stopwords = set(STOPWORDS)           
-        stopwords.add("queryset'")
-        # stopwords.add('publicacion_texto')
-        # stopwords.add("publicacion_texto'")
-        # stopwords.add('publicacion_texto RT')
-        # stopwords.add('una')
-        
-        wordcloud = WordCloud(background_color='white', stopwords=stopwords).generate(word_list)
-        plt.imshow(wordcloud)
-        plt.axis("off")
-        #plt.show()
-        image = io.BytesIO()
-        plt.savefig(image, format='png')
-        image.seek(0)  # rewind the data
-        string = base64.b64encode(image.read())
-
-        image_64 = 'data:image/png;base64,' + urllib.parse.quote(string)
-        return image_64            
-        # 
-        # plt.imshow(wordcloud)
-        # plt.axis("off")
-        # s = plt.show()
-
-def cloud_gen_fb(request):
+def cloud_gen_fb(request, id=0):
+    emp = escucha.objects.get(pk=id)        
     fb_red_social = red_social.objects.get(nombre_red_social="Facebook")
-    fb_data_to_list = data_red.objects.filter(data_red_social = fb_red_social).values('publicacion_texto')
-    texto = str(fb_data_to_list)
+    fb_data_to_list = data_red.objects.filter(data_red_escucha =emp,data_red_social =fb_red_social).values('publicacion_texto')        
+    texto = str(fb_data_to_list)    
     word_list = normalize(texto)
-    text = ''
-    
-    for i in word_list:
-        if __name__ == '__main__':
-            text += i.text
+    text =  word_list.replace("'", '')
+    wordcloud = nube_de_palabras(text)
 
-    wordcloud = nube_de_palabras_fb(text)
     return render(request, "nube_de_palabras_fb.html",{'wordcloud':wordcloud})   
 
 # **************************
 # Nube de palabras Instagram
 # **************************
-
-def nube_de_palabras_ig (text):       
-        ig_red_social = red_social.objects.get(nombre_red_social="Instagram")
-        ig_data_to_list = data_red.objects.filter(data_red_social = ig_red_social).values('publicacion_texto')
-        text = str(ig_data_to_list)
-        word_list = normalize(text)    
-        
-        stopwords = set(STOPWORDS)           
-        stopwords.add("queryset'")
-        # stopwords.add('publicacion_texto')
-        # stopwords.add("publicacion_texto'")
-        # stopwords.add('publicacion_texto RT')
-        # stopwords.add('una')
-        
-        wordcloud = WordCloud(background_color='white', stopwords=stopwords).generate(word_list)
-        plt.imshow(wordcloud)
-        plt.axis("off")
-        #plt.show()
-        image = io.BytesIO()
-        plt.savefig(image, format='png')
-        image.seek(0)  # rewind the data
-        string = base64.b64encode(image.read())
-
-        image_64 = 'data:image/png;base64,' + urllib.parse.quote(string)
-        return image_64            
-        # 
-        # plt.imshow(wordcloud)
-        # plt.axis("off")
-        # s = plt.show()
-
-def cloud_gen_ig(request):
+def cloud_gen_ig(request, id=0):
+    emp = escucha.objects.get(pk=id)        
     ig_red_social = red_social.objects.get(nombre_red_social="Instagram")
-    ig_data_to_list = data_red.objects.filter(data_red_social = ig_red_social).values('publicacion_texto')
+    ig_data_to_list = data_red.objects.filter(data_red_escucha =emp,data_red_social =ig_red_social).values('publicacion_texto')        
     texto = str(ig_data_to_list)
     word_list = normalize(texto)
-    text = ''
+    text =  word_list.replace("'", '')
     
-    for i in word_list:
-        if __name__ == '__main__':
-            text += i.text
+    wordcloud = nube_de_palabras(text)
 
-    wordcloud = nube_de_palabras_ig(text)
-    return render(request, "nube_de_palabras_ig.html",{'wordcloud':wordcloud})  
+    return render(request, "nube_de_palabras_ig.html",{'wordcloud':wordcloud})
 
 
 # **************************
@@ -243,27 +159,24 @@ def red(request):
 # ********************************************
 
 def nube_de_palabras_p (text):        
-        stopwords = set(STOPWORDS)           
-        stopwords.add("queryset")    
-        stopwords.add("'")                       
-        # stopwords.add('publicacion_texto')
-        # stopwords.add("publicacion_texto'")
-        # stopwords.add('publicacion_texto RT')
-        
-        plt.figure(figsize = (20,5))
-        
-        wordcloud = WordCloud(background_color='white', stopwords=stopwords).generate(text)
-        plt.figure(figsize = (10,5))
-        plt.imshow(wordcloud, interpolation= 'bilinear')
-        plt.axis("off")
-        #plt.show()
-        image = io.BytesIO()
-        plt.savefig(image, format='png')
-        image.seek(0)  # rewind the data
-        string = base64.b64encode(image.read())
+    stopwords = set(STOPWORDS)           
+    stopwords.add("queryset")    
+    stopwords.add("'")                       
 
-        image_64 = 'data:image/png;base64,' + urllib.parse.quote(string)
-        return image_64
+    plt.figure(figsize = (20,5))
+        
+    wordcloud = WordCloud(background_color='white', stopwords=stopwords).generate(text)
+    plt.figure(figsize = (10,5))
+    plt.imshow(wordcloud, interpolation= 'bilinear')
+    plt.axis("off")
+    
+    image = io.BytesIO()
+    plt.savefig(image, format='png')
+    image.seek(0)  # rewind the data
+    string = base64.b64encode(image.read())
+
+    image_64 = 'data:image/png;base64,' + urllib.parse.quote(string)
+    return image_64
         
 def cloud_gen_p(request, id=0):            
     emp = escucha.objects.get(pk=id)        
