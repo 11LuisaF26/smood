@@ -40,3 +40,10 @@ class credenciales_form(ModelForm):
     class Meta():
         model = escucha_credencial
         fields = ('twitter_bearer_token', 'instagram_username', 'instagram_password', 'instagram_path',)
+
+class data_red_form(ModelForm):
+    class Meta():
+        model = data_red
+        fields = ('publicacion_id', 'publicacion_fecha','publicacion_texto','publicacion_likes','publicacion_comentarios',
+        'publicacion_compartidos', 'publicacion_user' , 'is_from_hashtag' , 'data_red_escucha', 'data_red_campana','data_red_social',)
+

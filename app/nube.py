@@ -27,6 +27,7 @@ import json
 import string
 import spacy
 from spacy_spanish_lemmatizer import SpacyCustomLemmatizer
+from django.db.models import Q
 
 
 # nltk.download('stopwords')
@@ -50,13 +51,22 @@ def normalize(text):
     words = [t.orth_ for t in doc if not t.is_punct | t.is_stop]
     lexical_tokens = str([t.lower() for t in words if len(t) > 3 and t.isalpha()])
     return lexical_tokens
+
+
+def con(request):                
+    empresas_to_list = data_red.objects.all()    
+    return render(request, "nube.html", {"data_red":empresas_to_list})
     
 # **************************
 # Nube de palabras Twitter
 # **************************
-def nube_de_palabras_t (text):       
-        twitter_red_social = red_social.objects.get(nombre_red_social="Twitter")
-        twitter_data_to_list = data_red.objects.filter(data_red_social = twitter_red_social).values('publicacion_texto')
+def nube_de_palabras_t (text):
+        emp = campana_publicitaria.objects.get(pk=3)
+        
+        twitter_red_social = red_social.objects.get(nombre_red_social="Twitter")    
+        ids = campana_publicitaria.objects.values_list('nombre_campana', flat=True).filter(id =3)    
+        twitter_data_to_list = data_red.objects.filter(data_red_social =twitter_red_social, data_red_campana__in = ids).values('publicacion_texto')
+    
         text = str(twitter_data_to_list)
         # ' ''.join(twitter_data_to_list)
         word_list = normalize(text)    
@@ -78,15 +88,17 @@ def nube_de_palabras_t (text):
         string = base64.b64encode(image.read())
 
         image_64 = 'data:image/png;base64,' + urllib.parse.quote(string)
-        return image_64            
+        return image_64
         # 
         # plt.imshow(wordcloud)
         # plt.axis("off")
         # s = plt.show()
 
-def cloud_gen_t(request):
-    twitter_red_social = red_social.objects.get(nombre_red_social="Twitter")
-    twitter_data_to_list = data_red.objects.filter(data_red_social = twitter_red_social).values('publicacion_texto')
+def cloud_gen_t(request, id):    
+    emp = campana_publicitaria.objects.get(pk=3)        
+    twitter_red_social = red_social.objects.get(nombre_red_social="Twitter")    
+    ids = campana_publicitaria.objects.values_list('nombre_campana', flat=True).filter(id =3)    
+    twitter_data_to_list = data_red.objects.filter(data_red_social =twitter_red_social, data_red_campana__in = ids).values('publicacion_texto')
     texto = str(twitter_data_to_list)
     word_list = normalize(texto)
     text = ''
@@ -225,3 +237,43 @@ def generador(nombre,texto,User):
 
 def red(request):
     return render(request, "red.html") 
+
+# ********************************************
+# ************** PRUEBA DE NUBE **************
+# ********************************************
+
+def nube_de_palabras_p (text):        
+        stopwords = set(STOPWORDS)           
+        stopwords.add("queryset")    
+        stopwords.add("'")                       
+        # stopwords.add('publicacion_texto')
+        # stopwords.add("publicacion_texto'")
+        # stopwords.add('publicacion_texto RT')
+        
+        plt.figure(figsize = (20,5))
+        
+        wordcloud = WordCloud(background_color='white', stopwords=stopwords).generate(text)
+        plt.figure(figsize = (10,5))
+        plt.imshow(wordcloud, interpolation= 'bilinear')
+        plt.axis("off")
+        #plt.show()
+        image = io.BytesIO()
+        plt.savefig(image, format='png')
+        image.seek(0)  # rewind the data
+        string = base64.b64encode(image.read())
+
+        image_64 = 'data:image/png;base64,' + urllib.parse.quote(string)
+        return image_64
+        
+def cloud_gen_p(request, id=0):            
+    emp = escucha.objects.get(pk=id)        
+    twitter_red_social = red_social.objects.get(nombre_red_social="Twitter")                
+    twitter_data = data_red.objects.filter(data_red_escucha =emp,data_red_social =twitter_red_social ).values('publicacion_texto')        
+    texto = str(twitter_data)    
+    word_list = normalize(texto)
+    text =  word_list.replace("'", '')
+    wordcloud = nube_de_palabras_p(text)
+    return render(request, "nube.html",{'wordcloud':wordcloud})  
+       
+    
+    
