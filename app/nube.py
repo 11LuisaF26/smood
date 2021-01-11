@@ -2,7 +2,7 @@ import io
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import loader
-from django.http import HttpResponse, HttpResponseRedirect 
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django import template
 from django.contrib import messages
 from django.contrib.auth.models import Group, User
@@ -51,15 +51,7 @@ def normalize(text):
     words = [t.orth_ for t in doc if not t.is_punct | t.is_stop]
     lexical_tokens = str([t.lower() for t in words if len(t) > 3 and t.isalpha()])
     return lexical_tokens
-
-
-def con(request):                
-    empresas_to_list = data_red.objects.all()    
-    return render(request, "nube.html", {"data_red":empresas_to_list})
     
-# **************************
-# Nube de palabras Twitter
-# **************************
 def nube_de_palabras(text):        
     stopwords = set(STOPWORDS)           
     stopwords.add("queryset")    
@@ -79,6 +71,9 @@ def nube_de_palabras(text):
     image_64 = 'data:image/png;base64,' + urllib.parse.quote(string)
     return image_64
 
+# **************************
+# Nube de palabras Twitter
+# **************************
 def cloud_gen_t(request, id):    
     emp = escucha.objects.get(pk=id)        
     twitter_red_social = red_social.objects.get(nombre_red_social="Twitter")                
@@ -127,30 +122,56 @@ def cloud_gen_ig(request, id=0):
 
 def tokenizeText(sample):    
     doc = nlp(sample)
+    stopwords = set(STOPWORDS)           
+    stopwords.add("queryset")    
     lemmas = [token.lemma_ for token in doc]
-    a_lemmas = [lemma for lemma in lemmas if (lemma.isalpha()  and lemma != '-PRON-') and lemma not in STOPLIST and lemma not in SYMBOLS]
+    a_lemmas = [lemma for lemma in lemmas if (lemma.isalpha()  and lemma != '-PRON-') and lemma not in stopwords and lemma not in SYMBOLS]    
     return a_lemmas
-'''
-df=pd.read_csv('C:\\Users\\Jaime\\Documents\\Luisa\\git\\descarga.csv')
-df=df.fillna(" ")
-'''
 
-def generador(nombre,texto,User):
+
+def generador(red,texto):    
     arreglo=[]
-    for i in range(0,len(texto)):
-        if len(texto[i])>10:
+    for i in range(0,len(texto)):                
+        if len(texto[i])>5:            
             data=tokenizeText(texto[i])
             data_tree=dict()
             data_tree['submissionID']=str(i)
-            data_tree['keywords']=data
-            data_tree['year']=nombre[i]
-            data_tree['cleanTitle']=User[i]
+            data_tree['keywords']=data           
+            
             arreglo.append(data_tree)
     return json.dumps(arreglo,ensure_ascii=False)
 
-#print('var keywords1='+generador(df["data red social"].values.tolist(),df["Text"].values.tolist(),df["User"].values.tolist())+";")
 
+def red_palabras_t(request, id=0):
+    #texto
+    emp = escucha.objects.get(pk=id)        
+    twitter_red_social = red_social.objects.get(nombre_red_social="Twitter")                
+    twitter_data = data_red.objects.filter(data_red_escucha =emp,data_red_social =twitter_red_social ).values_list('publicacion_texto') 
+    word = list(twitter_data)
+    texto = [i for (i,) in word]           
+    red_palabras = generador(twitter_red_social,texto)
+    
+    return render(request, "red_palabras_twitter.html", {'red_palabras':red_palabras})
+    
 
-def red(request):
-    return render(request, "red.html") 
+def red_palabras_fb(request, id=0):
+    #texto
+    emp = escucha.objects.get(pk=id)        
+    fb_red_social = red_social.objects.get(nombre_red_social="Facebook")                
+    fb_data = data_red.objects.filter(data_red_escucha =emp,data_red_social =fb_red_social ).values_list('publicacion_texto') 
+    word = list(fb_data)
+    texto = [i for (i,) in word]           
+    red_palabras = generador(fb_red_social,texto)
+    
+    return render(request, "red_palabras_fb.html", {'red_palabras':red_palabras})
 
+def red_palabras_ig(request, id=0):
+    #texto
+    emp = escucha.objects.get(pk=id)        
+    ig_red_social = red_social.objects.get(nombre_red_social="Instagram")                
+    ig_data = data_red.objects.filter(data_red_escucha =emp,data_red_social =ig_red_social ).values_list('publicacion_texto') 
+    word = list(ig_data)
+    texto = [i for (i,) in word]           
+    red_palabras = generador(ig_red_social,texto)
+    
+    return render(request, "red_palabras_ig.html", {'red_palabras':red_palabras})

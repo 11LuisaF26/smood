@@ -1,0 +1,112 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.min.css" />
+<link rel="stylesheet" href="style.css">
+
+
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="/static/assets/js/crossfilter.min.js"></script>
+<script src="/static/assets/js/ucc-ojs2.js"></script>
+<script src="/static/assets/js/d3-bboxCollide.min.js"></script>
+<style>
+    /* svg .link{
+                    stroke:gray;
+                } */
+    svg .link.active {
+        stroke: red;
+    }
+
+    svg .link.inactive {
+        opacity: 0;
+    }
+
+    li {
+        font-size: 10px
+    }
+</style>
+{% extends "layouts/base.html" %}
+
+{% block title %} Crear Empresa {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<!-- [ Main Content ] start -->
+<section class="pcoded-main-container">
+    <div class="pcoded-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">Red de palabras</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/ "><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="/redes/">Redes Sociales</a></li>
+                            <li class="breadcrumb-item"><a href="#!">Red de palabras </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Red de palabras</h5>
+                    </div>
+                    <span class="card-body table-border-style">
+                        <section>
+                            <div class="container">
+                                <div class="row" id= "palabras">
+                                   {{red_palabras}}
+                                </div>
+                            </div>
+                            <div>
+                                <div class="col-lg-12  col-md-12 col-xs-12 col-sm-12" id="palabras"></div>
+                            </div>
+                        </section>
+                        <section>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-12  col-md-12 col-xs-12 col-sm-12" id="kwds"></div>
+                                </div>
+                            </div>
+                        </section>
+                        
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<!-- Apex Chart -->
+<script src="/static/assets/js/plugins/apexcharts.min.js"></script>
+<!-- custom-chart js -->
+<script src="/static/assets/js/pages/dashboard-main.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+    
+</script>
+<script type="text/javascript">
+    var jsonObject = JSON.parse('{{ red_palabras | escapejs }}');
+    
+    
+
+    var keynet = ucc.keyWords('kwds')
+        .data(jsonObject).linkAccessor('keywords')
+    keynet.draw();
+</script>
+
+{% endblock javascripts %}
