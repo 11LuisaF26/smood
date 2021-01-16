@@ -1,352 +1,655 @@
-{% extends "layouts/base.html" %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block title %} Acerca de {% endblock %}
+<head>
+    <title>
+        Acerca de
+    </title> 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="">
+    <meta name="author" content="Utadeo" />
+    <link rel="icon" href="/static/assets/images/favicon.ico" type="image/x-icon">
 
-<!-- Specific CSS goes HERE -->
-{% block stylesheets %}
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-{% endblock stylesheets %}
+    <link rel="stylesheet" href="/static/assets/css/style.css">
 
-{% block content %}
-<!-- [ Main Content ] start -->
-<section class="pcoded-main-container">
-    <div class="pcoded-content">
-        <!-- [ breadcrumb ] start -->
-        <div class="row">
-            <!-- [ stiped-table ] start -->
-            <div class="col-xl-12">
-
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-body" style="background-image: linear-gradient(to bottom,#ffffff80, #73b4ff);"
-                align="center">
-                <h1 style="color:#001233;">Semiótica</h1>
-                <h4 style="color:#ffffff;">y planeación estratégica</h4>
-            </div>
-            <div class="card-body" style="background-image: linear-gradient(to right, #001233, #73b4ff);">
-                <div class="row">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-6 align-self-center">
-                                <p style="color:#ffffff;font-size: 1rem; text-align: justify;">
-                                    Es un proyecto de la escuela de publicidad de la universidad Jorge Tadeo Lozano
-                                    liderado por el Profesor Jairo Sojo y planteado desde el año 2014. Este proyecto ha
-                                    pasado por diferentes fases de desarrollo.<br>
-                                    La primera de ellas ocurre desde el semillero de investigación: semiótica,
-                                    planeación y estrategia/4B donde la profesora Liliana Catherine Suarez planteó la
-                                    necesidad de profundización en la investigación de mercados, del target y del
-                                    entorno general para aumentar las probabilidades de éxito en la planeación
-                                    publicitaría.
-                                </p>
-                            </div>
-                            <div class="col-sm-6 align-self-center" align="center">
-                                <img src="/static/assets/images/utadeo.png" width="300" height="200">
-                            </div>
-                            <div class="col-sm-12 align-self-center">
-                                <p style="color: #ffffff;font-size: 1rem; text-align: justify;">
-                                    En este sentido se utilizó el Big Data como herramienta de investigación para
-                                    desarrollar una prueba piloto de análisis de datos en torno a la percepción que los
-                                    estudiantes de la universidad Jorge Tadeo Lozano tienen hacía la institución. De
-                                    allí nace el proceso de elaboración correspondiente a la investigación del proyecto
-                                    "Modelo semiótico de planeación estratégica publicitaria: Minería y análisis de
-                                    datos con investigación en mercados y Big data como herramientas de planeación,
-                                    control y prospectiva de resultados" de la Universidad de Bogotá Jorge Tadeo
-                                    Lozano.<br>
-                                    Mediante la colaboración de las facultades de mercadeo y publicidad se realizó
-                                    la
-                                    elaboración de un modelo semiótico de planeación estratégica publicitaria a
-                                    partir
-                                    de la sistematización teórica de algunos elementos de la semiótica pragmática,
-                                    de
-                                    las pruebas piloto de investigación de mercado y la simulación de algoritmos
-                                    recurriendo al uso de Big Data e Inteligencia Artificial para identificar las
-                                    variables funcionales dentro de un software piloto capaz de recopilar datos de
-                                    forma
-                                    automática y brindar un modelo de planeación adecuado.<br>
-                                </p>
-                            </div>
-                            <div class="col-sm-6 align-self-center" align="center">
-                                <img src="/static/assets/images/2logo.png" width="300" height="300">
-                            </div>
-                            <div class="col-sm-6 align-self-center">
-                                <p style="color: #ffffff;font-size: 1rem; text-align: justify;">
-
-                                    La siguiente fase del proyecto es extender los hallazgos encontrados a casos
-                                    concretos de planeación estratégica publicitaria con clientes reales y
-                                    automatizar
-                                    la etapa diagnostica de planeación a través de un software con siete variables
-                                    (mercado, target, comunicación, tendencias, verbatims, enciclopedias y cadenas
-                                    de
-                                    significación) con el objetivo de tener análisis de la información procesado,
-                                    utilizando métodos digitales para la extracción de información del
-                                    comportamiento de
-                                    un producto en redes sociales y la participación de la inteligencia humana para
-                                    la
-                                    toma de decisiones.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div div class="card-body" style="background-image: linear-gradient(to bottom,#ffffff80, #73b4ff);"
-                align="center">
-                <h1 class="animated fadeInLeft" style="border: none; box-shadow: none;">Equipo</h1>
-            </div>
-            <div class="card-body" style="background-image: linear-gradient(to right, #001233, #73b4ff);">
-                <div class="row">
-                    <div class="container">
-                        <div class="row blog">
-                            <div class="col-md-12">
-                                <div id="blogCarousel" class="carousel slide" data-ride="carousel">
-
-                                    <!-- Carousel items -->
-                                    <div class="carousel-inner">
-                                        <div class="carousel-item active">
-                                            <div class="row">
-                                                <div class="col-md-3 col-lg-3">
-                                                    <div class="card">
-                                                        <img src="/static/assets/images/vladimir.jpg" alt="Image" style="max-width:100%;" width="250" height="250">
-                                                        <h4 align="center">Vladimir Sánchez</h4>
-                                                        <h6 align="center">Profesor Asociado II </h6>
-                                                        <p style="color: white;" align="center"></p>
-                                                        <div align="center">
-                                                            <a href="https://www.linkedin.com/in/vladimir-sanchez-ria%C3%B1o-a4402a94/"
-                                                                target="_blank" text-align="center"><img
-                                                                    src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
-                                                                    width=50 height=32 /> </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-3 col-lg-3">
-                                                    <div class="card">
-                                                        <img src="/static/assets/images/catherine.jpg" alt="Image"
-                                                            style="max-width:100%;" width="250" height="250">
-
-                                                        <h4 align="center">Catherine Suárez</h4>
-                                                        <h6 align="center">Profesor Asociado I</h6>
-                                                        <p style="color: white;" align="center"></p>
-                                                        <div align="center">
-                                                            <a href="https://www.linkedin.com/in/catherinesu%C3%A1rez/"
-                                                                target="_blank" text-align="center"><img
-                                                                    src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
-                                                                    width=50 height=32 /> </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-3 col-lg-3">
-                                                    <div class="card">
-
-                                                        <img src="/static/assets/images/olmer.jpg" alt="Image"
-                                                            style="max-width:100%;" width="250" height="250">
-
-                                                        <h4 align="center">Olmer García</h4>
-                                                        <h6 align="center">Profesor Asociado I
-                                                        </h6>
-                                                        <p style="color: white;" align="center"></p>
-                                                        <div align="center">
-                                                            <a href="https://www.linkedin.com/in/olmerg/" target="_blank"
-                                                                text-align="center"><img
-                                                                    src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
-                                                                    width=50 height=32 /> </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="col-md-3 col-lg-3">
-                                                    <div class="card">
-
-                                                        <img src="/static/assets/images/jairo.jpg" alt="Image"
-                                                            style="max-width:100%;" width="250" height="250">
-
-                                                        <h4 align="center">Jairo Sojo</h4>
-                                                        <h6 align="center">Profesor Asociado I
-                                                        </h6>
-                                                        <p style="color: white;" align="center"></p>
-                                                        <div align="center">
-                                                            <a href="https://www.linkedin.com/in/jairo-sojo-995891145/"
-                                                                target="_blank" text-align="center"><img
-                                                                    src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
-                                                                    width=50 height=32 /> </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--.row-->
-                                        </div>
-                                        <!--.item-->
-
-                                        <div class="carousel-item">
-                                            <div class="row">
-                                                <div class="col-md-3 col-lg-3">
-                                                    <div class="card">
-                                                        <a href="#">
-                                                            <img src="/static/assets/images/victor.png" alt="Image"
-                                                                style="max-width:100%;" width="250" height="250">
-                                                        </a>
-                                                        <h4 align="center">Victor Castañeda</h4>
-                                                        <h6 align="center">Ingeniería de sistemas</h6>
-                                                        <p style="color: white;" align="center"></p>
-                                                        <div align="center">
-                                                            <a href="https://www.linkedin.com/in/victor-danilo-casta%C3%B1eda-pinzon-7b4a16171/"
-                                                                target="_blank" text-align="center"><img
-                                                                    src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
-                                                                    width=50 height=32 /> </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-3 col-lg-3">
-                                                    <div class="card">
-                                                        <a href="#">
-                                                            <img src="/static/assets/images/luisa.jpeg" alt="Image"
-                                                                style="max-width:100%;" width="250" height="250">
-                                                        </a>
-                                                        <h4 align="center">Luisa Rodriguez</h4>
-                                                        <h6 align="center">Ingeniería de sistemas</h6>
-                                                        <p style="color: white;" align="center"></p>
-                                                        <div align="center">
-                                                            <a href="https://www.linkedin.com/in/luisa-fernanda-rodriguez-sarmiento-2309611b6/"
-                                                                target="_blank" text-align="center"><img
-                                                                    src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
-                                                                    width=50 height=32 /> </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="col-md-3 col-lg-3">
-                                                    <div class="card">
-                                                        <a href="#">
-                                                            <img src="http://placehold.it/250x250" alt="Image"
-                                                                style="max-width:100%;">
-                                                        </a>
-                                                        <h4 align="center">Isabel Enriquez</h4>
-                                                        <h6 align="center">Publicidad</h6>
-                                                        <p style="color: white;" align="center"></p>
-                                                        <div align="center">
-                                                            <a href="https://www.linkedin.com/in/isabel-sof%C3%ADa-enriquez-avilez-276720125/"
-                                                                target="_blank" text-align="center"><img
-                                                                    src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
-                                                                    width=50 height=32 /> </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-3 col-lg-3">
-                                                    <div class="card">
-                                                        <a href="#">
-                                                            <img src="/static/assets/images/gabriela.jpeg" alt="Image"
-                                                                style="max-width:100%;" width="250" height="250">
-                                                        </a>
-                                                        <h4 align="center">Gabriela Andrade</h4>
-                                                        <h6 align="center">Mercadeo</h6>
-                                                        <p style="color: white;" align="center"></p>
-                                                        <div align="center">
-                                                            <a href="https://www.linkedin.com/in/gabriela-andrade-4ab393120/"
-                                                                target="_blank" text-align="center"><img
-                                                                    src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
-                                                                    width=50 height=32 /> </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--.row-->
-                                        </div>
-                                        <!--.item-->
-                                    </div>
-                                    <div class="col-md-12">
-                                        <ol class="carousel-indicators">
-                                            <li data-target="#blogCarousel" data-slide-to="0" class="active"
-                                                style="width: 12px;  bottom: 10px; height: 0%;"></li>
-                                            <li data-target="#blogCarousel" data-slide-to="1" style="width: 12px;
-                                            bottom: 10px; height: 0%"></li>
-                                        </ol>
-                                    </div>
-                                    <!--.carousel-inner-->
-                                </div>
-                                <!--.Carousel-->
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-body" style="background-image: linear-gradient(to bottom,#ffffff80, #73b4ff);"
-                align="center">
-                <h1 style="color:#001233;">S-mood</h1>
-                <h4 style="color:#ffffff;">Software de planeación estratégica</h4>
-            </div>
-            <div class="card-body" style="background-image: linear-gradient(to right, #001233, #73b4ff);">
-                <div class="row">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-6 align-self-center" align="center">
-                                <img src="/static/assets/images/3logo.png" width="300" height="300">
-                            </div>
-                            <div class="col-sm-6 align-self-center">
-                                <p style="color:#ffffff;font-size: 1rem; text-align: justify;">
-                                    S-mood es un software piloto de planeación estratégica para el campo de la
-                                    publicidad y el mercado del cual mediante técnicas de Inteligencia
-                                    artificial y NLP (Natural Language Processing o en español Procesamiento de
-                                    Lenguaje Natural) se busca obtener información relevante con respecto a una
-                                    marca y su competencia por medio de las redes sociales. <br><br>
-                                    La principal funcionalidad del software es sistematizar las variables de entrada
-                                    y
-                                    definir las unidades hermenéuticas de búsqueda. A grandes rasgos el
-                                    funcionamiento
-                                    del software se puede dividir de la siguiente manera: <br>
-                                </p>
-                            </div>
-                            <div class="col-sm-12 align-self-center">
-                                <p style="color: #ffffff;font-size: 1rem; text-align: justify;">
-                                    El control de usuarios y permisos, obtención de información de redes sociales,
-                                    la participación de la
-                                    inteligencia humana para toma de decisiones y la visualización de la información
-                                    procesada y lista para el control y seguimiento del modelo semiótico. <br>
-                                    Al ser el resultado de la fusión de la investigación de mercados y la planeación
-                                    estratégica publicitaria, se propone el nombre S-mood para el software.
-                                    Para llegar a él se parte de las dos palabras “Semiotic” y “Model”, pero se
-                                    realizan combinaciones de términos como La S de semiótica y se le agrega una
-                                    “o” a la palabra “model” con lo cual se gana sonoridad (dinamismo sonoro),
-                                    pero además se agrega la significación de Mood del “humor” como estado de
-                                    animo. Al final, la combinación implica el estudio del estado de ánimo, los
-                                    comportamientos de las personas y las estrategias que de allí se pueden
-                                    generar para resolver casos de Publicidad y de Marketing, el cual es el
-                                    objetivo principal de la Investigación y del Software.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</section>>
+</head>
 
 
 
-{% endblock content %}
+<style>
+    #webcoderskull{
+        position: absolute;
+        left: 0;
+        top: 25%;
+        width: 100%;
+        text-align: center;
+    }
+
+    canvas{
+        height:100vh;
+        background-color:#001233;
+    }
+
+    #webcoderskull h1{
+        letter-spacing: 5px;
+        font-size: 5rem;
+        font-family: 'Roboto', sans-serif;
+        text-transform: uppercase;
+        font-weight: bold;
+        color: #ffffff;
+    }
+
+</style>
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}
 <script>
     $('#blogCarousel').carousel({
         interval: 5000
     });
 </script>
+
+
+<body class="">
+    {% include 'includes/navigation.html' %}
+    <div class="row">
+        <div class="col-xl-12 col-md-12" id="particles">
+            <div id="webcoderskull">
+                <h1>PARTICLE BACKGROUND</h1>
+                <p style="color:#ffffff">Web Coder Skull Team</p>        
+            </div>
+        </div>
+    </div>
+    </br>
+    </br>
+    <div class="row">
+        <div class="col-xl-2 col-md-2">
+        </div>
+        
+        <div class="col-xl-8 col-md-8">
+            <div class="row" style="align-items:center;">
+                <div class="col-md-3 col-lg-3">
+                    <div class="card align-items-center">
+                        <img src="/static/assets/images/catherine.jpg" alt="Image"
+                            style="max-width:100%;" width="250" height="250">
+                        <h4>Catherine Suarez</h4>
+                        <h6>Directora del programa de Mercadeo</h6>
+                        <div>
+                            <a href="https://www.linkedin.com/in/catherinesu%C3%A1rez/"
+                                target="_blank" text-align="center"><img
+                                    src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
+                                    width=50 height=32 /> </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-lg-3">
+                    <div class="card align-items-center">
+                        <img src="/static/assets/images/vladimir.jpg" alt="Image" style="max-width:100%;" width="250" height="250">
+                        <h4>Vladimir Sánchez</h4>
+                        <h6>Profesor Asociado e investigador</h6>
+                        <div>
+                            <a href="https://www.linkedin.com/in/vladimir-sanchez-ria%C3%B1o-a4402a94/"
+                                target="_blank" text-align="center"><img
+                                    src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
+                                    width=50 height=32 /> </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-lg-3">
+                    <div class="card align-items-center">
+                        <img src="/static/assets/images/olmer.jpg" alt="Image" style="max-width:100%;" width="250" height="250">
+                        <h4>Olmer García</h4>
+                        <h6>Profesor Asociado</h6>
+                        <div>
+                            <a href="https://www.linkedin.com/in/olmerg/"
+                                target="_blank" text-align="center"><img
+                                    src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
+                                    width=50 height=32 /> </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-lg-3">
+                    <div class="card align-items-center">
+                        <img src="/static/assets/images/jairo.jpg" alt="Image" style="max-width:100%;" width="250" height="250">
+                        <h4>Jairo Sojo</h4>
+                        <h6>Profesor Asociado</h6>
+                        <div>
+                            <a href="https://www.linkedin.com/in/jairo-sojo-995891145/"
+                                target="_blank" text-align="center"><img
+                                    src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
+                                    width=50 height=32 /> </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="align-items:center;">
+                <div class="col-md-3 col-lg-3">
+                    <div class="card align-items-center">
+                        <img src="/static/assets/images/victor.png" alt="Image"
+                            style="max-width:100%;" width="250" height="250">
+                        <h4>Victor Castañeda</h4>
+                        <h6>Ingeniería de sistemas</h6>
+                        <div>
+                            <a href="https://www.linkedin.com/in/victor-danilo-casta%C3%B1eda-pinzon-7b4a16171/"
+                                target="_blank" text-align="center"><img
+                                    src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
+                                    width=50 height=32 /> </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-lg-3">
+                    <div class="card align-items-center">
+                        <img src="/static/assets/images/luisa.jpeg" alt="Image" style="max-width:100%;" width="250" height="250">
+                        <h4>Luisa Rodriguez</h4>
+                        <h6>Ingeniería de sistemas</h6>
+                        <div>
+                            <a href="https://www.linkedin.com/in/luisa-fernanda-rodriguez-sarmiento-2309611b6/"
+                                target="_blank" text-align="center"><img
+                                    src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
+                                    width=50 height=32 /> </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-lg-3">
+                    <div class="card align-items-center">
+                        <img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;" width="250" height="250">
+                        <h4>Isabel Enriquez</h4>
+                        <h6>Publicidad</h6>
+                        <div>
+                            <a href="https://www.linkedin.com/in/isabel-sof%C3%ADa-enriquez-avilez-276720125/"
+                                target="_blank" text-align="center"><img
+                                    src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
+                                    width=50 height=32 /> </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-lg-3">
+                    <div class="card align-items-center">
+                        <img src="/static/assets/images/gabriela.jpeg" alt="Image" style="max-width:100%;" width="250" height="250">
+                        <h4>Gabriela Andrade</h4>
+                        <h6>Mercadeo</h6>
+                        <div>
+                            <a href="https://www.linkedin.com/in/gabriela-andrade-4ab393120/"
+                                target="_blank" text-align="center"><img
+                                    src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
+                                    width=50 height=32 /> </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-2 col-md-2">
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    /*!
+    * Particleground
+    *
+    */
+    document.addEventListener('DOMContentLoaded', function () {
+    particleground(document.getElementById('particles'), {
+        dotColor: '#5cbdaa',
+        lineColor: '#5cbdaa'
+    });
+    var intro = document.getElementById('intro');
+    intro.style.marginTop = - intro.offsetHeight / 2 + 'px';
+    }, false);
+
+
+
+    ;(function(window, document) {
+    "use strict";
+    var pluginName = 'particleground';
+
+    function extend(out) {
+        out = out || {};
+        for (var i = 1; i < arguments.length; i++) {
+        var obj = arguments[i];
+        if (!obj) continue;
+        for (var key in obj) {
+            if (obj.hasOwnProperty(key)) {
+            if (typeof obj[key] === 'object')
+                deepExtend(out[key], obj[key]);
+            else
+                out[key] = obj[key];
+            }
+        }
+        }
+        return out;
+    };
+
+    var $ = window.jQuery;
+
+    function Plugin(element, options) {
+        var canvasSupport = !!document.createElement('canvas').getContext;
+        var canvas;
+        var ctx;
+        var particles = [];
+        var raf;
+        var mouseX = 0;
+        var mouseY = 0;
+        var winW;
+        var winH;
+        var desktop = !navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|BB10|mobi|tablet|opera mini|nexus 7)/i);
+        var orientationSupport = !!window.DeviceOrientationEvent;
+        var tiltX = 0;
+        var pointerX;
+        var pointerY;
+        var tiltY = 0;
+        var paused = false;
+
+        options = extend({}, window[pluginName].defaults, options);
+
+        /**
+        * Init
+        */
+        function init() {
+        if (!canvasSupport) { return; }
+
+        //Create canvas
+        canvas = document.createElement('canvas');
+        canvas.className = 'pg-canvas';
+        canvas.style.display = 'block';
+        element.insertBefore(canvas, element.firstChild);
+        ctx = canvas.getContext('2d');
+        styleCanvas();
+
+        // Create particles
+        var numParticles = Math.round((canvas.width * canvas.height) / options.density);
+        for (var i = 0; i < numParticles; i++) {
+            var p = new Particle();
+            p.setStackPos(i);
+            particles.push(p);
+        };
+
+        window.addEventListener('resize', function() {
+            resizeHandler();
+        }, false);
+
+        document.addEventListener('mousemove', function(e) {
+            mouseX = e.pageX;
+            mouseY = e.pageY;
+        }, false);
+
+        if (orientationSupport && !desktop) {
+            window.addEventListener('deviceorientation', function () {
+            // Contrain tilt range to [-30,30]
+            tiltY = Math.min(Math.max(-event.beta, -30), 30);
+            tiltX = Math.min(Math.max(-event.gamma, -30), 30);
+            }, true);
+        }
+
+        draw();
+        hook('onInit');
+        }
+
+        /**
+        * Style the canvas
+        */
+        function styleCanvas() {
+        canvas.width = element.offsetWidth;
+        canvas.height = element.offsetHeight;
+        ctx.fillStyle = options.dotColor;
+        ctx.strokeStyle = options.lineColor;
+        ctx.lineWidth = options.lineWidth;
+        }
+
+        /**
+        * Draw particles
+        */
+        function draw() {
+        if (!canvasSupport) { return; }
+
+        winW = window.innerWidth;
+        winH = window.innerHeight;
+
+        // Wipe canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Update particle positions
+        for (var i = 0; i < particles.length; i++) {
+            particles[i].updatePosition();
+        };
+        // Draw particles
+        for (var i = 0; i < particles.length; i++) {
+            particles[i].draw();
+        };
+
+        // Call this function next time screen is redrawn
+        if (!paused) {
+            raf = requestAnimationFrame(draw);
+        }
+        }
+
+        /**
+        * Add/remove particles.
+        */
+        function resizeHandler() {
+        // Resize the canvas
+        styleCanvas();
+
+        var elWidth = element.offsetWidth;
+        var elHeight = element.offsetHeight;
+
+        // Remove particles that are outside the canvas
+        for (var i = particles.length - 1; i >= 0; i--) {
+            if (particles[i].position.x > elWidth || particles[i].position.y > elHeight) {
+            particles.splice(i, 1);
+            }
+        };
+
+        // Adjust particle density
+        var numParticles = Math.round((canvas.width * canvas.height) / options.density);
+        if (numParticles > particles.length) {
+            while (numParticles > particles.length) {
+            var p = new Particle();
+            particles.push(p);
+            }
+        } else if (numParticles < particles.length) {
+            particles.splice(numParticles);
+        }
+
+        // Re-index particles
+        for (i = particles.length - 1; i >= 0; i--) {
+            particles[i].setStackPos(i);
+        };
+        }
+
+        /**
+        * Pause particle system
+        */
+        function pause() {
+        paused = true;
+        }
+
+        /**
+        * Start particle system
+        */
+        function start() {
+        paused = false;
+        draw();
+        }
+
+        /**
+        * Particle
+        */
+        function Particle() {
+        this.stackPos;
+        this.active = true;
+        this.layer = Math.ceil(Math.random() * 3);
+        this.parallaxOffsetX = 0;
+        this.parallaxOffsetY = 0;
+        // Initial particle position
+        this.position = {
+            x: Math.ceil(Math.random() * canvas.width),
+            y: Math.ceil(Math.random() * canvas.height)
+        }
+        // Random particle speed, within min and max values
+        this.speed = {}
+        switch (options.directionX) {
+            case 'left':
+            this.speed.x = +(-options.maxSpeedX + (Math.random() * options.maxSpeedX) - options.minSpeedX).toFixed(2);
+            break;
+            case 'right':
+            this.speed.x = +((Math.random() * options.maxSpeedX) + options.minSpeedX).toFixed(2);
+            break;
+            default:
+            this.speed.x = +((-options.maxSpeedX / 2) + (Math.random() * options.maxSpeedX)).toFixed(2);
+            this.speed.x += this.speed.x > 0 ? options.minSpeedX : -options.minSpeedX;
+            break;
+        }
+        switch (options.directionY) {
+            case 'up':
+            this.speed.y = +(-options.maxSpeedY + (Math.random() * options.maxSpeedY) - options.minSpeedY).toFixed(2);
+            break;
+            case 'down':
+            this.speed.y = +((Math.random() * options.maxSpeedY) + options.minSpeedY).toFixed(2);
+            break;
+            default:
+            this.speed.y = +((-options.maxSpeedY / 2) + (Math.random() * options.maxSpeedY)).toFixed(2);
+            this.speed.x += this.speed.y > 0 ? options.minSpeedY : -options.minSpeedY;
+            break;
+        }
+        }
+
+        /**
+        * Draw particle
+        */
+        Particle.prototype.draw = function() {
+        // Draw circle
+        ctx.beginPath();
+        ctx.arc(this.position.x + this.parallaxOffsetX, this.position.y + this.parallaxOffsetY, options.particleRadius / 2, 0, Math.PI * 2, true);
+        ctx.closePath();
+        ctx.fill();
+
+        // Draw lines
+        ctx.beginPath();
+        // Iterate over all particles which are higher in the stack than this one
+        for (var i = particles.length - 1; i > this.stackPos; i--) {
+            var p2 = particles[i];
+
+            // Pythagorus theorum to get distance between two points
+            var a = this.position.x - p2.position.x
+            var b = this.position.y - p2.position.y
+            var dist = Math.sqrt((a * a) + (b * b)).toFixed(2);
+
+            // If the two particles are in proximity, join them
+            if (dist < options.proximity) {
+            ctx.moveTo(this.position.x + this.parallaxOffsetX, this.position.y + this.parallaxOffsetY);
+            if (options.curvedLines) {
+                ctx.quadraticCurveTo(Math.max(p2.position.x, p2.position.x), Math.min(p2.position.y, p2.position.y), p2.position.x + p2.parallaxOffsetX, p2.position.y + p2.parallaxOffsetY);
+            } else {
+                ctx.lineTo(p2.position.x + p2.parallaxOffsetX, p2.position.y + p2.parallaxOffsetY);
+            }
+            }
+        }
+        ctx.stroke();
+        ctx.closePath();
+        }
+
+        /**
+        * update particle position
+        */
+        Particle.prototype.updatePosition = function() {
+        if (options.parallax) {
+            if (orientationSupport && !desktop) {
+            // Map tiltX range [-30,30] to range [0,winW]
+            var ratioX = (winW - 0) / (30 - -30);
+            pointerX = (tiltX - -30) * ratioX + 0;
+            // Map tiltY range [-30,30] to range [0,winH]
+            var ratioY = (winH - 0) / (30 - -30);
+            pointerY = (tiltY - -30) * ratioY + 0;
+            } else {
+            pointerX = mouseX;
+            pointerY = mouseY;
+            }
+            // Calculate parallax offsets
+            this.parallaxTargX = (pointerX - (winW / 2)) / (options.parallaxMultiplier * this.layer);
+            this.parallaxOffsetX += (this.parallaxTargX - this.parallaxOffsetX) / 10; // Easing equation
+            this.parallaxTargY = (pointerY - (winH / 2)) / (options.parallaxMultiplier * this.layer);
+            this.parallaxOffsetY += (this.parallaxTargY - this.parallaxOffsetY) / 10; // Easing equation
+        }
+
+        var elWidth = element.offsetWidth;
+        var elHeight = element.offsetHeight;
+
+        switch (options.directionX) {
+            case 'left':
+            if (this.position.x + this.speed.x + this.parallaxOffsetX < 0) {
+                this.position.x = elWidth - this.parallaxOffsetX;
+            }
+            break;
+            case 'right':
+            if (this.position.x + this.speed.x + this.parallaxOffsetX > elWidth) {
+                this.position.x = 0 - this.parallaxOffsetX;
+            }
+            break;
+            default:
+            // If particle has reached edge of canvas, reverse its direction
+            if (this.position.x + this.speed.x + this.parallaxOffsetX > elWidth || this.position.x + this.speed.x + this.parallaxOffsetX < 0) {
+                this.speed.x = -this.speed.x;
+            }
+            break;
+        }
+
+        switch (options.directionY) {
+            case 'up':
+            if (this.position.y + this.speed.y + this.parallaxOffsetY < 0) {
+                this.position.y = elHeight - this.parallaxOffsetY;
+            }
+            break;
+            case 'down':
+            if (this.position.y + this.speed.y + this.parallaxOffsetY > elHeight) {
+                this.position.y = 0 - this.parallaxOffsetY;
+            }
+            break;
+            default:
+            // If particle has reached edge of canvas, reverse its direction
+            if (this.position.y + this.speed.y + this.parallaxOffsetY > elHeight || this.position.y + this.speed.y + this.parallaxOffsetY < 0) {
+                this.speed.y = -this.speed.y;
+            }
+            break;
+        }
+
+        // Move particle
+        this.position.x += this.speed.x;
+        this.position.y += this.speed.y;
+        }
+
+        /**
+        * Setter: particle stacking position
+        */
+        Particle.prototype.setStackPos = function(i) {
+        this.stackPos = i;
+        }
+
+        function option (key, val) {
+        if (val) {
+            options[key] = val;
+        } else {
+            return options[key];
+        }
+        }
+
+        function destroy() {
+        console.log('destroy');
+        canvas.parentNode.removeChild(canvas);
+        hook('onDestroy');
+        if ($) {
+            $(element).removeData('plugin_' + pluginName);
+        }
+        }
+
+        function hook(hookName) {
+        if (options[hookName] !== undefined) {
+            options[hookName].call(element);
+        }
+        }
+
+        init();
+
+        return {
+        option: option,
+        destroy: destroy,
+        start: start,
+        pause: pause
+        };
+    }
+
+    window[pluginName] = function(elem, options) {
+        return new Plugin(elem, options);
+    };
+
+    window[pluginName].defaults = {
+        minSpeedX: 0.1,
+        maxSpeedX: 0.7,
+        minSpeedY: 0.1,
+        maxSpeedY: 0.7,
+        directionX: 'center', // 'center', 'left' or 'right'. 'center' = dots bounce off edges
+        directionY: 'center', // 'center', 'up' or 'down'. 'center' = dots bounce off edges
+        density: 10000, // How many particles will be generated: one particle every n pixels
+        dotColor: '#666666',
+        lineColor: '#666666',
+        particleRadius: 7, // Dot size
+        lineWidth: 1,
+        curvedLines: false,
+        proximity: 100, // How close two dots need to be before they join
+        parallax: true,
+        parallaxMultiplier: 5, // The lower the number, the more extreme the parallax effect
+        onInit: function() {},
+        onDestroy: function() {}
+    };
+
+    // nothing wrong with hooking into jQuery if it's there...
+    if ($) {
+        $.fn[pluginName] = function(options) {
+        if (typeof arguments[0] === 'string') {
+            var methodName = arguments[0];
+            var args = Array.prototype.slice.call(arguments, 1);
+            var returnVal;
+            this.each(function() {
+            if ($.data(this, 'plugin_' + pluginName) && typeof $.data(this, 'plugin_' + pluginName)[methodName] === 'function') {
+                returnVal = $.data(this, 'plugin_' + pluginName)[methodName].apply(this, args);
+            }
+            });
+            if (returnVal !== undefined){
+            return returnVal;
+            } else {
+            return this;
+            }
+        } else if (typeof options === "object" || !options) {
+            return this.each(function() {
+            if (!$.data(this, 'plugin_' + pluginName)) {
+                $.data(this, 'plugin_' + pluginName, new Plugin(this, options));
+            }
+            });
+        }
+        };
+    }
+
+    })(window, document);
+
+    (function() {
+        var lastTime = 0;
+        var vendors = ['ms', 'moz', 'webkit', 'o'];
+        for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+        window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+        window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame']
+                                    || window[vendors[x]+'CancelRequestAnimationFrame'];
+        }
+
+        if (!window.requestAnimationFrame)
+        window.requestAnimationFrame = function(callback, element) {
+            var currTime = new Date().getTime();
+            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+            var id = window.setTimeout(function() { callback(currTime + timeToCall); },
+            timeToCall);
+            lastTime = currTime + timeToCall;
+            return id;
+        };
+
+        if (!window.cancelAnimationFrame)
+        window.cancelAnimationFrame = function(id) {
+            clearTimeout(id);
+        };
+    }());
+
+</script>
 <!-- Apex Chart -->
 <script src="/static/assets/js/plugins/apexcharts.min.js"></script>
 <!-- custom-chart js -->
 <script src="/static/assets/js/pages/dashboard-main.js"></script>
-
-{% endblock javascripts %}
