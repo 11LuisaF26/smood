@@ -26507,3 +26507,15 @@ div.dtk-focus-alt table.dataTable tbody th.focus {
 .blog .carousel-indicators .active {
 background: #707070;
 }
+
+
+.window-notice {
+    background: rgba(33, 41, 52, .85);
+    left: 0;
+    bottom: 0;
+    right: 0;
+    top: 0;
+    display: flex;
+    position: fixed;
+    z-index: 999;
+}

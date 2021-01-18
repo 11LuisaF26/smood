@@ -75,13 +75,13 @@ def nube_de_palabras(text):
 # Nube de palabras Twitter
 # **************************
 def cloud_gen_t(request, id):    
-    emp = escucha.objects.get(pk=id)        
+    emp = campana_publicitaria.objects.get(pk=id)        
     twitter_red_social = red_social.objects.get(nombre_red_social="Twitter")                
-    twitter_data = data_red.objects.filter(data_red_escucha =emp,data_red_social =twitter_red_social ).values('publicacion_texto')        
+    twitter_data = data_red.objects.filter(data_red_campana =emp,data_red_social =twitter_red_social ).values('publicacion_texto')        
     texto = str(twitter_data)    
     word_list = normalize(texto)
     text =  word_list.replace("'", '')
-    wordcloud = nube_de_palabras_p(text)
+    wordcloud = nube_de_palabras(text)
     
     return render(request, "nube_de_palabras_twitter.html",{'wordcloud':wordcloud})
 
@@ -90,9 +90,9 @@ def cloud_gen_t(request, id):
 # Nube de palabras Facebook
 # **************************
 def cloud_gen_fb(request, id=0):
-    emp = escucha.objects.get(pk=id)        
+    emp = campana_publicitaria.objects.get(pk=id)        
     fb_red_social = red_social.objects.get(nombre_red_social="Facebook")
-    fb_data_to_list = data_red.objects.filter(data_red_escucha =emp,data_red_social =fb_red_social).values('publicacion_texto')        
+    fb_data_to_list = data_red.objects.filter(data_red_campana =emp,data_red_social =fb_red_social).values('publicacion_texto')        
     texto = str(fb_data_to_list)    
     word_list = normalize(texto)
     text =  word_list.replace("'", '')
@@ -104,9 +104,9 @@ def cloud_gen_fb(request, id=0):
 # Nube de palabras Instagram
 # **************************
 def cloud_gen_ig(request, id=0):
-    emp = escucha.objects.get(pk=id)        
+    emp = campana_publicitaria.objects.get(pk=id)        
     ig_red_social = red_social.objects.get(nombre_red_social="Instagram")
-    ig_data_to_list = data_red.objects.filter(data_red_escucha =emp,data_red_social =ig_red_social).values('publicacion_texto')        
+    ig_data_to_list = data_red.objects.filter(data_red_campana =emp,data_red_social =ig_red_social).values('publicacion_texto')        
     texto = str(ig_data_to_list)
     word_list = normalize(texto)
     text =  word_list.replace("'", '')
@@ -144,9 +144,9 @@ def generador(red,texto):
 
 def red_palabras_t(request, id=0):
     #texto
-    emp = escucha.objects.get(pk=id)        
+    emp = campana_publicitaria.objects.get(pk=id)        
     twitter_red_social = red_social.objects.get(nombre_red_social="Twitter")                
-    twitter_data = data_red.objects.filter(data_red_escucha =emp,data_red_social =twitter_red_social ).values_list('publicacion_texto') 
+    twitter_data = data_red.objects.filter(data_red_campana =emp,data_red_social =twitter_red_social ).values_list('publicacion_texto') 
     word = list(twitter_data)
     texto = [i for (i,) in word]           
     red_palabras = generador(twitter_red_social,texto)
@@ -156,9 +156,9 @@ def red_palabras_t(request, id=0):
 
 def red_palabras_fb(request, id=0):
     #texto
-    emp = escucha.objects.get(pk=id)        
+    emp = campana_publicitaria.objects.get(pk=id)        
     fb_red_social = red_social.objects.get(nombre_red_social="Facebook")                
-    fb_data = data_red.objects.filter(data_red_escucha =emp,data_red_social =fb_red_social ).values_list('publicacion_texto') 
+    fb_data = data_red.objects.filter(data_red_campana =emp,data_red_social =fb_red_social ).values_list('publicacion_texto') 
     word = list(fb_data)
     texto = [i for (i,) in word]           
     red_palabras = generador(fb_red_social,texto)
@@ -167,9 +167,9 @@ def red_palabras_fb(request, id=0):
 
 def red_palabras_ig(request, id=0):
     #texto
-    emp = escucha.objects.get(pk=id)        
+    emp = campana_publicitaria.objects.get(pk=id)        
     ig_red_social = red_social.objects.get(nombre_red_social="Instagram")                
-    ig_data = data_red.objects.filter(data_red_escucha =emp,data_red_social =ig_red_social ).values_list('publicacion_texto') 
+    ig_data = data_red.objects.filter(data_red_campana =emp,data_red_social =ig_red_social ).values_list('publicacion_texto') 
     word = list(ig_data)
     texto = [i for (i,) in word]           
     red_palabras = generador(ig_red_social,texto)

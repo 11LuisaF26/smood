@@ -1,66 +1,110 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} Campanas {% endblock %} 
+{% block title %} Campanas {% endblock %}
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
 
-{% block content %}	
+{% block content %}
 
-    <!-- [ Main Content ] start -->
-    <section class="pcoded-main-container">
-        <div class="pcoded-content">    
-            <!--Innit campaings-->
-            <div class="row">
-                {% for campana_publicitaria in campanas_publicitarias %}
-                    <div class="col-sm-4">
-                    <div class="card border border-primary mb-3">
-                        <div class="card-header bg-transparent border border-primary">
-                            <h5 class="card-title">{{campana_publicitaria.nombre_campana}}</h5> 
-                            <div class="card-header-right">  
-                                <div class="btn-group card-option">
-                                    <button type="button" class="btn dropdown-toggle btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="feather icon-more-horizontal"></i>
-                                    </button>
-                                    <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right">
-                                        <li class="dropdown-item reload-card"><a href="{% url 'editar_campana' campana_publicitaria.id %}"><i class="feather icon-edit"></i> Editar</a></li>
-                                        <li class="dropdown-item close-card"><a href="{% url 'eliminar_campana' campana_publicitaria.id %}"><i class="feather icon-trash"></i> Eliminar</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body text-success border border-primary">
-                            </br>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        </div>
-                        <div class="card-footer bg-transparent border-success">
-                            <div align="center">
-                                </br>
-                                <a href="{% url 'escuchas_campana' campana_publicitaria.id %}" class="btn btn-outline-secondary"><i class="feather mr-2 icon-list"></i>Ver escuchas</a>
-                                <a href="/escucha/save" class="btn btn-outline-success"><i class="feather mr-2 icon-plus-square"></i>Escuchas</a>
+<!-- [ Main Content ] start -->
+<section class="pcoded-main-container">
+    <div class="pcoded-content">
+        <!--Innit campaings-->
+        <div class="row">
+            {% for campana_publicitaria in campanas_publicitarias %}
+            <div class="col-sm-4">
+                <div class="card border border-primary mb-3">
+                    <div class="card-header bg-transparent border border-primary">
+                        <h5 class="card-title">{{campana_publicitaria.nombre_campana}}</h5>
+                        <div class="card-header-right">
+                            <div class="btn-group card-option">
+                                <button type="button" class="btn dropdown-toggle btn-icon" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <i class="feather icon-more-horizontal"></i>
+                                </button>
+                                <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right">
+                                    <li class="dropdown-item reload-card"><a
+                                            href="{% url 'editar_campana' campana_publicitaria.id %}"><i
+                                                class="feather icon-edit"></i> Editar</a></li>
+                                    <li class="dropdown-item close-card"><a
+                                            href="{% url 'eliminar_campana' campana_publicitaria.id %}"><i
+                                                class="feather icon-trash"></i> Eliminar</a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
+                    <div class="card-body text-success border border-primary">
+                        </br>
+                        <div class="card-footer bg-white border-success">
+                            <div>
+                                <div align="center">
+                                    <a style="color: #6c757d;"><i class="fa fa-cloud" style="font-size:20px"></i> Nube
+                                        de palabras</a>
+                                    <div>
+                                        <a href="{% url 'nube_de_palabras_twitter' campana_publicitaria.id %}"
+                                            class="btn btn-outline-secondary" style="align-content: initial;"><i
+                                                class="fab fa-twitter" style="color: #00acee;"></i></a>
+
+                                        <a href="{% url 'nube_de_palabras_fb' campana_publicitaria.id %}"
+                                            class="btn btn-outline-secondary" align="left"><i class="fab fa-facebook"
+                                                style="color: #3b5998;"></i></a>
+
+                                        <a href="{% url 'nube_de_palabras_ig' campana_publicitaria.id %}"
+                                            class="btn btn-outline-secondary" align="left"><i class="fab fa-instagram"
+                                                style="color: #C13584;"></i></a>
+                                    </div>
+                                </div>
+                                <br>
+                                <div align="center">
+
+                                    <a style="color: #6c757d;"><i class="fas fa-project-diagram"
+                                            style="font-size:20px"></i> Nube de palabras</a>
+                                    <div>
+                                        <a href="{% url 'red_de_palabras_twitter' campana_publicitaria.id %}"
+                                            class="btn btn-outline-secondary" style="align-content: initial;"><i
+                                                class="fab fa-twitter" style="color: #00acee;"></i></a>
+
+                                        <a href="{% url 'red_de_palabras_fb' campana_publicitaria.id %}"
+                                            class="btn btn-outline-secondary" align="left"><i class="fab fa-facebook"
+                                                style="color: #3b5998;"></i></a>
+
+                                        <a href="{% url 'red_de_palabras_ig' campana_publicitaria.id %}"
+                                            class="btn btn-outline-secondary" align="left"><i class="fab fa-instagram"
+                                                style="color: #C13584;"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent border-success">
+                        <div align="center">
+                            </br>
+                            <a href="{% url 'escuchas_campana' campana_publicitaria.id %}"
+                                class="btn btn-outline-secondary"><i class="feather mr-2 icon-list"></i>Ver
+                                escuchas</a>
+                            <a href="/escucha/save" class="btn btn-outline-success"><i
+                                    class="feather mr-2 icon-plus-square"></i>Escuchas</a>
+                        </div>
+                    </div>
                 </div>
-                {% endfor %}
             </div>
-
-
-
+            {% endfor %}
         </div>
-    </section>
-            <!-- [ br]end -->
+
+
+
+    </div>
+</section>
+<!-- [ br]end -->
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 
-    <!-- Apex Chart -->
-    <script src="/static/assets/js/plugins/apexcharts.min.js"></script>
-    <!-- custom-chart js -->
-    <script src="/static/assets/js/pages/dashboard-main.js"></script>
+<!-- Apex Chart -->
+<script src="/static/assets/js/plugins/apexcharts.min.js"></script>
+<!-- custom-chart js -->
+<script src="/static/assets/js/pages/dashboard-main.js"></script>
 
 {% endblock javascripts %}
