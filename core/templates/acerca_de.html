@@ -1,341 +1,307 @@
-{% extends "layouts/base.html" %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block title %} Acerca de {% endblock %}
+<head>
+    <title>
+        Acerca de
+    </title> 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="">
+    <meta name="author" content="Utadeo" />
+    <link rel="icon" href="/static/assets/images/favicon.ico" type="image/x-icon">
+    <!-- prism css -->
+    <link rel="stylesheet" href="/static/assets/css/plugins/prism-coy.css">
+    <!-- vendor css -->
+    <link rel="stylesheet" href="/static/assets/css/style.css">
 
-<!-- Specific CSS goes HERE -->
-{% block stylesheets %}
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-{% endblock stylesheets %}
+    <link rel="stylesheet" href="/static/assets/css/style.css">
+    <link rel="stylesheet" href="/static/assets/css/particles.css">
+    <link rel="stylesheet" href="/static/assets/css/acerca_de_menu.css">
 
-{% block content %}
-<!-- [ Main Content ] start -->
-<section class="pcoded-main-container">
-    <div class="pcoded-content">
-        <!-- [ breadcrumb ] start -->
+</head>
+
+
+{% include 'includes/navigation.html' %}
+
+<body>
+    <div class="main-body">
         <div class="row">
-            <!-- [ stiped-table ] start -->
-            <div class="col-xl-12">
-
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-body" style="background-image: linear-gradient(to bottom,#ffffff80, #73b4ff);"
-                align="center">
-                <h1 style="color:#001233;">Semiótica</h1>
-                <h4 style="color:#ffffff;">y planeación estratégica</h4>
-            </div>
-            <div class="card-body" style="background-image: linear-gradient(to right, #001233, #73b4ff);">
-                <div class="row">
-                    <div class="container">
+            <div class="col-xl-12 col-md-12">
+                <div id="particles">
+                    <div id="webcoderskull">
+                        <div class="row justify-content-center">
+                            <h1 class="custom_center">Semiótica y planeación estratégica</h1>
+                        </div>
                         <div class="row">
-                            <div class="col-sm-6 align-self-center">
-                                <p style="color:#ffffff;font-size: 1rem; text-align: justify;">
+                            <div class="col-xl-1 col-md-1">
+                            </div>
+
+                            <div class="col-xl-5 col-md-5">
+                                <h4 class="custom_center">¿Qué es?</h4>
+                                <p class="custom_center">
                                     Es un proyecto de la escuela de publicidad de la universidad Jorge Tadeo Lozano
-                                    liderado por el Profesor Jairo Sojo y planteado desde el año 2014. Este proyecto ha
-                                    pasado por diferentes fases de desarrollo.<br>
-                                    La primera de ellas ocurre desde el semillero de investigación: semiótica,
-                                    planeación y estrategia/4B donde la profesora Liliana Catherine Suarez planteó la
-                                    necesidad de profundización en la investigación de mercados, del target y del
-                                    entorno general para aumentar las probabilidades de éxito en la planeación
-                                    publicitaría.
+                                    liderado por el Profesor Jairo Sojo y planteado desde el año 2014.
+                                    En la fase actual del proyecto el objetivo es producir un modelo semiótico dentro
+                                    de la investigación de mercados a partír del Big data aplicando minería y análisis de datos.
                                 </p>
                             </div>
-                            <div class="col-sm-6 align-self-center" align="center">
-                                <img src="/static/assets/images/utadeo.png" width="300" height="200">
-                            </div>
-                            <div class="col-sm-12 align-self-center">
-                                <p style="color: #ffffff;font-size: 1rem; text-align: justify;">
-                                    En este sentido se utilizó el Big Data como herramienta de investigación para
-                                    desarrollar una prueba piloto de análisis de datos en torno a la percepción que los
-                                    estudiantes de la universidad Jorge Tadeo Lozano tienen hacía la institución. De
-                                    allí nace el proceso de elaboración correspondiente a la investigación del proyecto
-                                    "Modelo semiótico de planeación estratégica publicitaria: Minería y análisis de
-                                    datos con investigación en mercados y Big data como herramientas de planeación,
-                                    control y prospectiva de resultados" de la Universidad de Bogotá Jorge Tadeo
-                                    Lozano.<br>
-                                    Mediante la colaboración de las facultades de mercadeo y publicidad se realizó
-                                    la
+                            <div class="col-xl-5 col-md-5">
+                                <h4 class="custom_center">¿Cómo?</h4>
+                                <p class="custom_center">
+                                    Mediante la colaboración de las facultades de mercadeo y publicidad se realizó la
                                     elaboración de un modelo semiótico de planeación estratégica publicitaria a
                                     partir
-                                    de la sistematización teórica de algunos elementos de la semiótica pragmática,
-                                    de
-                                    las pruebas piloto de investigación de mercado y la simulación de algoritmos
-                                    recurriendo al uso de Big Data e Inteligencia Artificial para identificar las
-                                    variables funcionales dentro de un software piloto capaz de recopilar datos de
-                                    forma
-                                    automática y brindar un modelo de planeación adecuado.<br>
+                                    de la sistematización teórica de algunos elementos de la semiótica pragmática.
+                            </div>
                                 </p>
-                            </div>
-                            <div class="col-sm-6 align-self-center" align="center">
-                                <img src="/static/assets/images/2logo.png" width="300" height="300">
-                            </div>
-                            <div class="col-sm-6 align-self-center">
-                                <p style="color: #ffffff;font-size: 1rem; text-align: justify;">
 
-                                    La siguiente fase del proyecto es extender los hallazgos encontrados a casos
-                                    concretos de planeación estratégica publicitaria con clientes reales y
-                                    automatizar
-                                    la etapa diagnostica de planeación a través de un software con siete variables
-                                    (mercado, target, comunicación, tendencias, verbatims, enciclopedias y cadenas
-                                    de
-                                    significación) con el objetivo de tener análisis de la información procesado,
-                                    utilizando métodos digitales para la extracción de información del
-                                    comportamiento de
-                                    un producto en redes sociales y la participación de la inteligencia humana para
-                                    la
-                                    toma de decisiones.
-                                </p>
+                            <div class="col-xl-1 col-md-1">
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div div class="card-body" style="background-image: linear-gradient(to bottom,#ffffff80, #73b4ff);"
-                align="center">
-                <h1 class="animated fadeInLeft" style="border: none; box-shadow: none;">Nuestro Equipo</h1>
-            </div>
-            <div class="card-body" style="background-image: linear-gradient(to right, #001233, #73b4ff);">
-                <div class="row">
-                    <div class="container">
-                        <div class="row blog">
-                            <div class="col-md-12">
-                                <div id="blogCarousel" class="carousel slide" data-ride="carousel">
-
-                                    <!-- Carousel items -->
-                                    <div class="carousel-inner">
-
-                                        <div class="carousel-item active">
-                                            <div class="row">
-                                                <div class="col-md-3">
-
-                                                    <img src="/static/assets/images/vladimir.jpg" alt="Image"
-                                                        style="max-width:100%;" width="250" height="250">
-
-                                                    <h4 style="color: white;" align="center">Vladimir Sánchez</h4>
-                                                    <h6 style="color: white;" align="center">Profesor Asociado II
-                                                    </h6>
-                                                    <p style="color: white;" align="center"></p>
-                                                    <div align="center">
-                                                        <a href="https://www.linkedin.com/in/vladimir-sanchez-ria%C3%B1o-a4402a94/"
-                                                            target="_blank" text-align="center"><img
-                                                                src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
-                                                                width=50 height=32 /> </a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-
-                                                    <img src="/static/assets/images/catherine.jpg" alt="Image"
-                                                        style="max-width:100%;" width="250" height="250">
-
-                                                    <h4 style="color: white;" align="center">Catherine Suárez</h4>
-                                                    <h6 style="color: white;" align="center">Profesor Asociado I
-                                                    </h6>
-                                                    <p style="color: white;" align="center"></p>
-                                                    <div align="center">
-                                                        <a href="https://www.linkedin.com/in/catherinesu%C3%A1rez/"
-                                                            target="_blank" text-align="center"><img
-                                                                src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
-                                                                width=50 height=32 /> </a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-
-                                                    <img src="/static/assets/images/olmer.jpg" alt="Image"
-                                                        style="max-width:100%;" width="250" height="250">
-
-                                                    <h4 style="color: white;" align="center">Olmer García</h4>
-                                                    <h6 style="color: white;" align="center">Profesor Asociado I
-                                                    </h6>
-                                                    <p style="color: white;" align="center"></p>
-                                                    <div align="center">
-                                                        <a href="https://www.linkedin.com/in/olmerg/" target="_blank"
-                                                            text-align="center"><img
-                                                                src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
-                                                                width=50 height=32 /> </a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-
-                                                    <img src="/static/assets/images/jairo.jpg" alt="Image"
-                                                        style="max-width:100%;" width="250" height="250">
-
-                                                    <h4 style="color: white;" align="center">Jairo Sojo</h4>
-                                                    <h6 style="color: white;" align="center">Profesor Asociado I
-                                                    </h6>
-                                                    <p style="color: white;" align="center"></p>
-                                                    <div align="center">
-                                                        <a href="https://www.linkedin.com/in/jairo-sojo-995891145/"
-                                                            target="_blank" text-align="center"><img
-                                                                src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
-                                                                width=50 height=32 /> </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--.row-->
-                                        </div>
-                                        <!--.item-->
-
-                                        <div class="carousel-item">
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <a href="#">
-                                                        <img src="/static/assets/images/victor.png" alt="Image"
-                                                            style="max-width:100%;" width="250" height="250">
-                                                    </a>
-                                                    <h4 style="color: white;" align="center">Victor Castañeda</h4>
-                                                    <h6 style="color: rgb(243, 233, 233);" align="center">Ingeniería
-                                                        de
-                                                        sistemas</h6>
-                                                    <p style="color: white;" align="center"></p>
-                                                    <div align="center">
-                                                        <a href="https://www.linkedin.com/in/victor-danilo-casta%C3%B1eda-pinzon-7b4a16171/"
-                                                            target="_blank" text-align="center"><img
-                                                                src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
-                                                                width=50 height=32 /> </a>
-                                                    </div>
-
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <a href="#">
-                                                        <img src="/static/assets/images/luisa.jpeg" alt="Image"
-                                                            style="max-width:100%;" width="250" height="250">
-                                                    </a>
-                                                    <h4 style="color: white;" align="center">Luisa Rodriguez</h4>
-                                                    <h6 style="color: white;" align="center">Ingeniería de sistemas
-                                                    </h6>
-                                                    <p style="color: white;" align="center"></p>
-                                                    <div align="center">
-                                                        <a href="https://www.linkedin.com/in/luisa-fernanda-rodriguez-sarmiento-2309611b6/"
-                                                            target="_blank" text-align="center"><img
-                                                                src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
-                                                                width=50 height=32 /> </a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <a href="#">
-                                                        <img src="http://placehold.it/250x250" alt="Image"
-                                                            style="max-width:100%;">
-                                                    </a>
-                                                    <h4 style="color: white;" align="center">Isabel Enriquez</h4>
-                                                    <h6 style="color: white;" align="center">Publicidad</h6>
-                                                    <p style="color: white;" align="center"></p>
-                                                    <div align="center">
-                                                        <a href="https://www.linkedin.com/in/isabel-sof%C3%ADa-enriquez-avilez-276720125/"
-                                                            target="_blank" text-align="center"><img
-                                                                src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
-                                                                width=50 height=32 /> </a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <a href="#">
-                                                        <img src="/static/assets/images/gabriela.jpeg" alt="Image"
-                                                            style="max-width:100%;" width="250" height="250">
-                                                    </a>
-                                                    <h4 style="color: white;" align="center">Gabriela Andrade</h4>
-                                                    <h6 style="color: white;" align="center">Mercadeo</h6>
-                                                    <p style="color: white;" align="center"></p>
-                                                    <div align="center">
-                                                        <a href="https://www.linkedin.com/in/gabriela-andrade-4ab393120/"
-                                                            target="_blank" text-align="center"><img
-                                                                src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
-                                                                width=50 height=32 /> </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--.row-->
-                                        </div>
-                                        <!--.item-->
-                                    </div>
-                                    <div class="col-md-12">
-                                        <ol class="carousel-indicators">
-                                            <li data-target="#blogCarousel" data-slide-to="0" class="active"
-                                                style="width: 4px;  bottom: 10px; height: 0%;"></li>
-                                            <li data-target="#blogCarousel" data-slide-to="1" style="width: 4px;
-                                             bottom: 10px; height: 0%"></li>
-                                        </ol>
-                                    </div>
-                                    <!--.carousel-inner-->
-                                </div>
-                                <!--.Carousel-->
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-body" style="background-image: linear-gradient(to bottom,#ffffff80, #73b4ff);"
-                align="center">
-                <h1 style="color:#001233;">S-mood</h1>
-                <h4 style="color:#ffffff;">Software de planeación estratégica</h4>
-            </div>
-            <div class="card-body" style="background-image: linear-gradient(to right, #001233, #73b4ff);">
-                <div class="row">
-                    <div class="container">
                         <div class="row">
-                            <div class="col-sm-6 align-self-center" align="center">
-                                <img src="/static/assets/images/3logo.png" width="300" height="300">
+                            <div class="col-xl-1 col-md-1">
                             </div>
-                            <div class="col-sm-6 align-self-center">
-                                <p style="color:#ffffff;font-size: 1rem; text-align: justify;">
-                                    S-mood es un software piloto de planeación estratégica para el campo de la
-                                    publicidad y el mercado del cual mediante técnicas de Inteligencia
-                                    artificial y NLP (Natural Language Processing o en español Procesamiento de
-                                    Lenguaje Natural) se busca obtener información relevante con respecto a una
-                                    marca y su competencia por medio de las redes sociales. <br><br>
-                                    La principal funcionalidad del software es sistematizar las variables de entrada
-                                    y
-                                    definir las unidades hermenéuticas de búsqueda. A grandes rasgos el
-                                    funcionamiento
-                                    del software se puede dividir de la siguiente manera: <br>
+
+                            <div class="col-xl-5 col-md-5">
+                                <h4 class="custom_center">Objetivo</h4>
+                                <p class="custom_center">
+                                    Automatizar la etapa diagnóstica de planeación a través de un Software Piloto con siete variables (mercado, target,
+                                    comunicación, tendencias, verbatims, enciclopedias y cadenas de significación) con el
+                                    objetivo de obtener análisis correlacional procesado a través de Digital methods pero
+                                    con necesariedad de intervención de la inteligencia humana para la toma de
+                                    decisiones
                                 </p>
                             </div>
-                            <div class="col-sm-12 align-self-center">
-                                <p style="color: #ffffff;font-size: 1rem; text-align: justify;">
-                                    El control de usuarios y permisos, obtención de información de redes sociales,
-                                    la participación de la
-                                    inteligencia humana para toma de decisiones y la visualización de la información
-                                    procesada y lista para el control y seguimiento del modelo semiótico. <br>
-                                    Al ser el resultado de la fusión de la investigación de mercados y la planeación
-                                    estratégica publicitaria, se propone el nombre S-mood para el software.
-                                    Para llegar a él se parte de las dos palabras “Semiotic” y “Model”, pero se
-                                    realizan combinaciones de términos como La S de semiótica y se le agrega una
-                                    “o” a la palabra “model” con lo cual se gana sonoridad (dinamismo sonoro),
-                                    pero además se agrega la significación de Mood del “humor” como estado de
-                                    animo. Al final, la combinación implica el estudio del estado de ánimo, los
-                                    comportamientos de las personas y las estrategias que de allí se pueden
-                                    generar para resolver casos de Publicidad y de Marketing, el cual es el
-                                    objetivo principal de la Investigación y del Software.
+                            <div class="col-xl-5 col-md-5">
+                                <h4 class="custom_center">Funciones del Software</h4>
+                                <p class="custom_center">
+                                    El control de usuarios y permisos, obtención de información de redes sociales, la participación de la inteligencia 
+                                    humana para toma de decisiones y la visualización de la información procesada y lista para el control y seguimiento 
+                                    del modelo semiótico.
+                            </div>
                                 </p>
+
+                            <div class="col-xl-1 col-md-1">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        </br>
+        </br>
+        <div class="row">
+            <div class="col-xl-2 col-md-2">
+            </div>
+            
+            <div class="col-xl-8 col-md-8">
+                <div class="row" style="align-items:center;">
+                    <div class="col-md-3 col-lg-3">
+                        <div class="card align-items-center">
+                            <img src="/static/assets/images/catherine.jpg" alt="Image"
+                                style="max-width:100%;" width="250" height="250">
+                            <h4>Catherine Suarez</h4>
+                            <h6>Directora del programa de Mercadeo</h6>
+                            <div>
+                                <a href="https://www.linkedin.com/in/catherinesu%C3%A1rez/"
+                                    target="_blank" text-align="center"><img
+                                        src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
+                                        width=50 height=32 /> </a>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="col-md-3 col-lg-3">
+                        <div class="card align-items-center">
+                            <img src="/static/assets/images/vladimir.jpg" alt="Image" style="max-width:100%;" width="250" height="250">
+                            <h4>Vladimir Sánchez</h4>
+                            <h6>Profesor Asociado e investigador</h6>
+                            <div>
+                                <a href="https://www.linkedin.com/in/vladimir-sanchez-ria%C3%B1o-a4402a94/"
+                                    target="_blank" text-align="center"><img
+                                        src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
+                                        width=50 height=32 /> </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-lg-3">
+                        <div class="card align-items-center">
+                            <img src="/static/assets/images/olmer.jpg" alt="Image" style="max-width:100%;" width="250" height="250">
+                            <h4>Olmer García</h4>
+                            <h6>Profesor Asociado</h6>
+                            <div>
+                                <a href="https://www.linkedin.com/in/olmerg/"
+                                    target="_blank" text-align="center"><img
+                                        src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
+                                        width=50 height=32 /> </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-lg-3">
+                        <div class="card align-items-center">
+                            <img src="/static/assets/images/jairo.jpg" alt="Image" style="max-width:100%;" width="250" height="250">
+                            <h4>Jairo Sojo</h4>
+                            <h6>Profesor Asociado</h6>
+                            <div>
+                                <a href="https://www.linkedin.com/in/jairo-sojo-995891145/"
+                                    target="_blank" text-align="center"><img
+                                        src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
+                                        width=50 height=32 /> </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="align-items:center;">
+                    <div class="col-md-3 col-lg-3">
+                        <div class="card align-items-center">
+                            <img src="/static/assets/images/victor.png" alt="Image"
+                                style="max-width:100%;" width="250" height="250">
+                            <h4>Victor Castañeda</h4>
+                            <h6>Ingeniería de sistemas</h6>
+                            <div>
+                                <a href="https://www.linkedin.com/in/victor-danilo-casta%C3%B1eda-pinzon-7b4a16171/"
+                                    target="_blank" text-align="center"><img
+                                        src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
+                                        width=50 height=32 /> </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-lg-3">
+                        <div class="card align-items-center">
+                            <img src="/static/assets/images/luisa.jpeg" alt="Image" style="max-width:100%;" width="250" height="250">
+                            <h4>Luisa Rodriguez</h4>
+                            <h6>Ingeniería de sistemas</h6>
+                            <div>
+                                <a href="https://www.linkedin.com/in/luisa-fernanda-rodriguez-sarmiento-2309611b6/"
+                                    target="_blank" text-align="center"><img
+                                        src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
+                                        width=50 height=32 /> </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-lg-3">
+                        <div class="card align-items-center">
+                            <img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;" width="250" height="250">
+                            <h4>Isabel Enriquez</h4>
+                            <h6>Publicidad</h6>
+                            <div>
+                                <a href="https://www.linkedin.com/in/isabel-sof%C3%ADa-enriquez-avilez-276720125/"
+                                    target="_blank" text-align="center"><img
+                                        src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
+                                        width=50 height=32 /> </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-lg-3">
+                        <div class="card align-items-center">
+                            <img src="/static/assets/images/gabriela.jpeg" alt="Image" style="max-width:100%;" width="250" height="250">
+                            <h4>Gabriela Andrade</h4>
+                            <h6>Mercadeo</h6>
+                            <div>
+                                <a href="https://www.linkedin.com/in/gabriela-andrade-4ab393120/"
+                                    target="_blank" text-align="center"><img
+                                        src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-s%C3%ADmbolo.png"
+                                        width=50 height=32 /> </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-2 col-md-2">
+            </div>
+        </div>
+        <div class="row">
+                
+                <div id="Test" style="display:none;">
+                    <a class="float_4" href="/campanas/">
+                        <i class="fa my-float feather icon-bookmark"></i>
+                    </a>
+
+                    <a class="float_3" href="/empresas/">
+                        <i class="fa my-float feather icon-navigation"></i>
+                    </a>
+
+                    <a class="float_2" href="/">
+                        <i class="fa my-float feather icon-home"></i>
+                    </a>
+                </div>
+
+                
+                <a class="float" onclick="return showDiv();">
+                    <i class="fa my-float feather icon-menu"></i>
+                </a>
+            
+        </div>
+        </br>
+        </br>
+        <div class="row">
+            <div class="col-xl-2 col-md-2">
+            </div>
+            <div class="col-xl-8 col-md-8" align="center">
+                <h1 style="color:#001233;">S-mood</h1>
+                <h4 style="color:#001233;">Software de planeación estratégica</h4>
+            </div>
+            <div class="col-xl-2 col-md-2">
+            </div>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-xl-2 col-md-2">
+            </div>
+            <div class="col-xl-8 col-md-8" align="center">
+                <p style="color:#001233;font-size: 1rem; text-align: center;">
+                    S-mood es un software piloto de planeación estratégica para el campo de la
+                    publicidad y el mercado del cual mediante técnicas de Inteligencia
+                    artificial y NLP (Natural Language Processing o en español Procesamiento de
+                    Lenguaje Natural) se busca obtener información relevante con respecto a una
+                    marca y su competencia por medio de las redes sociales. <br><br>
+                    La principal funcionalidad del software es sistematizar las variables de entrada
+                    y
+                    definir las unidades hermenéuticas de búsqueda. A grandes rasgos el
+                    funcionamiento
+                    del software se puede dividir de la siguiente manera: <br>
+                </p>
+            </div>
+            <div class="col-xl-2 col-md-2">
+            </div>
+        
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-xl-2 col-md-2">
+            </div>
+            <div class="col-xl-8 col-md-8" align="center">
+                <img src="/static/assets/images/3logo.png" width="300" height="300">
+            </div>
+            <div class="col-xl-2 col-md-2">
+            </div>
+        
+        </div>
+        </br>
+        </br>
     </div>
-</section>>
+</body>
 
+{% include 'includes/scripts.html' %}
 
-
-{% endblock content %}
-
-<!-- Specific Page JS goes HERE  -->
-{% block javascripts %}
-<script>
-    $('#blogCarousel').carousel({
-        interval: 5000
-    });
-</script>
+<!-- Particles -->
+<script src="/static/assets/js/acerca_de/particles.js"></script>
+<script src="/static/assets/js/acerca_de/menu.js"></script>
 <!-- Apex Chart -->
 <script src="/static/assets/js/plugins/apexcharts.min.js"></script>
 <!-- custom-chart js -->
 <script src="/static/assets/js/pages/dashboard-main.js"></script>
 
-{% endblock javascripts %}
+<script src="/static/assets/js/plugins/prism.js"></script>
+<script src="/static/assets/js/horizontal-menu.js"></script>
+<script src="/static/assets/js/analytics.js"></script>
