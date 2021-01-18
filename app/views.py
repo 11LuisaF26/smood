@@ -515,7 +515,7 @@ def add_empresas(request, id=0):
                 form = empresa_form(request.POST, instance = emp)
             if form.is_valid():
                 edit_empresa = form.save()
-                msg     = 'Empresa guardada.'
+                msg     = messages.success(request, 'Empresa guardada.')
                 success = True
                 return render(request, 'crear_empresa.html', {'form': form, "msg" : msg, "success" : success })
         return render(request, 'crear_empresa.html', {'form': form, "msg" : msg, "success" : success }) 

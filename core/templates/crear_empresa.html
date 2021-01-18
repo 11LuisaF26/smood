@@ -35,13 +35,13 @@
                     <div class="card-header">
                         <h3>Crear empresa</h3>
                     </div>
-                    <span class="card-body table-border-style">
+                    <div class="card-body table-border-style">
                         {% if msg %}
-                            {{ msg | safe }}
+                            {{ msg | safe }}                                 
                         {% else %}
                             <h5>Ingresa la siguiente información</h5>
                         {% endif %} 
-                    </span>                   
+                    </div>                   
                     
                     {% if not success %}  
                         <div class="card-body table-border-style">
@@ -67,6 +67,9 @@
                                 <button type="submit" name="crearempresa" class="btn btn-primary btn-block mb-4">Guardar</button>
                             </form>
                         </div>
+
+
+                        
                     {% endif %} 
                 </div>
             </div>
@@ -75,11 +78,11 @@
     </div>
 </section>
 
+
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
-
 <!-- Apex Chart -->
 <script src="/static/assets/js/plugins/apexcharts.min.js"></script>
 <!-- custom-chart js -->

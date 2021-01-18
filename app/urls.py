@@ -50,7 +50,11 @@ urlpatterns = [
     re_path(r'^nube/twitter/(?P<id>\w+)/$', nube.cloud_gen_t, name='nube_de_palabras_twitter'),
     re_path(r'^nube/facebook/(?P<id>\w+)/$', nube.cloud_gen_fb, name='nube_de_palabras_fb'),
     re_path(r'^nube/instagram/(?P<id>\w+)/$', nube.cloud_gen_ig, name='nube_de_palabras_ig'),
-    
 
+    #Red de palabras
+    re_path(r'^red/twitter/(?P<id>\w+)/$',  nube.red_palabras_t, name='red_de_palabras_twitter'),
+    re_path(r'^red/facebook/(?P<id>\w+)/$',  nube.red_palabras_fb, name='red_de_palabras_fb'),
+    re_path(r'^red/instagram/(?P<id>\w+)/$',  nube.red_palabras_ig, name='red_de_palabras_ig'),
+    
     
 ]
