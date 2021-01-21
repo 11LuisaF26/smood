@@ -13,10 +13,10 @@
         <!--Innit campaings-->
         <div class="row">
             {% for campana_publicitaria in campanas_publicitarias %}
-            <div class="col-sm-4">
+            <div class="col-sm-4 col-md-4 col-xl-4">
                 <div class="card border border-primary mb-3">
                     <div class="card-header bg-transparent border border-primary">
-                        <h5 class="card-title">{{campana_publicitaria.nombre_campana}}</h5>
+                        <h5 class="card-title">Campaña: {{campana_publicitaria.nombre_campana}}</h5>
                         <div class="card-header-right">
                             <div class="btn-group card-option">
                                 <button type="button" class="btn dropdown-toggle btn-icon" data-toggle="dropdown"
@@ -34,13 +34,21 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="card-body text-success border border-primary">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6 col-xl-6">
+                                <h5 class="card-title">Campaña</h5>
+                            </div>
+
+                            <div class="col-sm-6 col-md-6 col-xl-6">
+                                <h5 class="card-title">Campaña</h5>
+                            </div>
+                        </div>
                         </br>
-                        <div class="card-footer bg-white border-success">
-                            <div>
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6 col-xl-6">
                                 <div align="center">
-                                    <a style="color: #6c757d;"><i class="fa fa-cloud" style="font-size:20px"></i> Nube
-                                        de palabras</a>
                                     <div>
                                         <a href="{% url 'nube_de_palabras_twitter' campana_publicitaria.id %}"
                                             class="btn btn-outline-secondary" style="align-content: initial;"><i
@@ -54,12 +62,11 @@
                                             class="btn btn-outline-secondary" align="left"><i class="fab fa-instagram"
                                                 style="color: #C13584;"></i></a>
                                     </div>
+                                    <a style="color: #6c757d;"><i class="fa fa-cloud" style="font-size:20px"></i> Nube de palabras</a>
                                 </div>
-                                <br>
+                            </div>
+                            <div class="col-sm-6 col-md-6 col-xl-6">
                                 <div align="center">
-
-                                    <a style="color: #6c757d;"><i class="fas fa-project-diagram"
-                                            style="font-size:20px"></i> Nube de palabras</a>
                                     <div>
                                         <a href="{% url 'red_de_palabras_twitter' campana_publicitaria.id %}"
                                             class="btn btn-outline-secondary" style="align-content: initial;"><i
@@ -73,10 +80,13 @@
                                             class="btn btn-outline-secondary" align="left"><i class="fab fa-instagram"
                                                 style="color: #C13584;"></i></a>
                                     </div>
+                                    <a style="color: #6c757d;"><i class="fas fa-project-diagram"
+                                            style="font-size:20px"></i> Nube de palabras</a>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                     <div class="card-footer bg-transparent border-success">
                         <div align="center">
                             </br>
