@@ -276,7 +276,124 @@ def campanas_publicitarias(request):
     context = {}
     user = request.user
     if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists():
+        facebook = red_social.objects.get(nombre_red_social="Facebook")
+        instagram = red_social.objects.get(nombre_red_social="Instagram")
+        twitter = red_social.objects.get(nombre_red_social="Twitter")
+
         campanas_publicitarias_to_list = campana_publicitaria.objects.all()
+        
+        campains_list_dicts = []
+        for campain in campanas_publicitarias_to_list:
+            official_escuchas_list_dicts = []
+            official_escuchas_values = escucha.objects.filter(campana_publicitaria_red_social__id=campain.id, es_competencia=False).values()            
+            if official_escuchas_values:
+                for official_escucha_value in official_escuchas_values:
+                    official_facebook_account_values = cuentas_empresa.objects.filter(data_red_escucha__id=official_escucha_value['id'], data_red_social__id=facebook.id).values()
+                    if official_facebook_account_values:
+                        for official_facebook_account_value in official_facebook_account_values:
+                            official_facebook_dict = {
+                                'identifier': official_facebook_account_value['identifier'],
+                                'username': official_facebook_account_value['username'],
+                                'created_at': official_facebook_account_value['created_at'], 
+                                'location': official_facebook_account_value['location'],
+                                'followers_count':official_facebook_account_value['followers_count'],
+                                'following_count':official_facebook_account_value['following_count'],
+                                'post_count': official_facebook_account_value['post_count'],
+                                'listed_count': official_facebook_account_value['listed_count']
+                            }
+                            official_escuchas_list_dicts.append(official_facebook_dict)
+
+                    official_instagram_account_values = cuentas_empresa.objects.filter(data_red_escucha__id=official_escucha_value['id'], data_red_social__id=instagram.id).values()
+                    if official_instagram_account_values:
+                        for official_instagram_account_value in official_instagram_account_values:
+                            official_instagram_dict = {
+                                'identifier': official_instagram_account_value['identifier'],
+                                'username': official_instagram_account_value['username'],
+                                'created_at': official_instagram_account_value['created_at'],
+                                'location': official_instagram_account_value['location'],
+                                'followers_count':official_instagram_account_value['followers_count'],
+                                'following_count':official_instagram_account_value['following_count'],
+                                'post_count': official_instagram_account_value['post_count'],
+                                'listed_count': official_instagram_account_value['listed_count']
+                            }
+                            official_escuchas_list_dicts.append(official_instagram_dict)
+
+                    official_twitter_account_values = cuentas_empresa.objects.filter(data_red_escucha__id=official_escucha_value['id'], data_red_social__id=twitter.id).values()
+                    
+                    if official_twitter_account_values:
+                        for official_twitter_account_value in official_twitter_account_values:
+                            official_twitter_dict = {
+                                'identifier': official_twitter_account_value['identifier'],
+                                'username': official_twitter_account_value['username'],
+                                'created_at': official_twitter_account_value['created_at'],
+                                'location': official_twitter_account_value['location'],
+                                'followers_count':official_twitter_account_value['followers_count'],
+                                'following_count':official_twitter_account_value['following_count'],
+                                'post_count': official_twitter_account_value['post_count'],
+                                'listed_count': official_twitter_account_value['listed_count']
+                            }
+                            official_escuchas_list_dicts.append(official_twitter_dict)
+
+            unofficial_escuchas_list_dicts = []
+            unofficial_escuchas_values = escucha.objects.filter(campana_publicitaria_red_social=campain.id, es_competencia=True).values()
+            if unofficial_escuchas_values:
+                for unofficial_escucha_value in unofficial_escuchas_values:     
+                    unofficial_facebook_account_values = cuentas_empresa.objects.filter(data_red_escucha__id=unofficial_escucha_value['id'], data_red_social=facebook.id).values()
+                    if unofficial_facebook_account_values:
+                        for unofficial_facebook_account_value in unofficial_facebook_account_values:
+                            unofficial_facebook_dict = {
+                                'identifier': unofficial_facebook_account_value['identifier'],
+                                'username': unofficial_facebook_account_value['username'],
+                                'created_at': unofficial_facebook_account_value['created_at'], 
+                                'location': unofficial_facebook_account_value['location'],
+                                'followers_count':unofficial_facebook_account_value['followers_count'],
+                                'following_count':unofficial_facebook_account_value['following_count'],
+                                'post_count': unofficial_facebook_account_value['post_count'],
+                                'listed_count': unofficial_facebook_account_value['listed_count'],
+                            }
+                            unofficial_escuchas_list_dicts.append(unofficial_facebook_dict)
+                    
+                    unofficial_instagram_account_values = cuentas_empresa.objects.filter(data_red_escucha__id=unofficial_escucha_value['id'], data_red_social=instagram.id).values()
+                    if unofficial_instagram_account_values:
+                        for unofficial_instagram_account_value in unofficial_instagram_account_values:
+                            unofficial_instagram_dict = {
+                                'identifier': unofficial_instagram_account_value['identifier'],
+                                'username': unofficial_instagram_account_value['username'],
+                                'created_at': unofficial_instagram_account_value['created_at'], 
+                                'location': unofficial_instagram_account_value['location'],
+                                'followers_count':unofficial_instagram_account_value['followers_count'],
+                                'following_count':unofficial_instagram_account_value['following_count'],
+                                'post_count': unofficial_instagram_account_value['post_count'],
+                                'listed_count': unofficial_instagram_account_value['listed_count'],
+                            }
+                            unofficial_escuchas_list_dicts.append(unofficial_instagram_dict)
+                    
+                    unofficial_twitter_account_values = cuentas_empresa.objects.filter(data_red_escucha__id=unofficial_escucha_value['id'], data_red_social=twitter.id).values()
+                    if unofficial_twitter_account_values:
+                        for unofficial_twitter_account_value in unofficial_twitter_account_values:
+                            official_twitter_dict = {
+                                'identifier': unofficial_twitter_account_value['identifier'],
+                                'username': unofficial_twitter_account_value['username'],
+                                'created_at': unofficial_twitter_account_value['created_at'], 
+                                'location': unofficial_twitter_account_value['location'],
+                                'followers_count':unofficial_twitter_account_value['followers_count'],
+                                'following_count':unofficial_twitter_account_value['following_count'],
+                                'post_count': unofficial_twitter_account_value['post_count'],
+                                'listed_count': unofficial_twitter_account_value['listed_count'],
+                            }
+                            unofficial_escuchas_list_dicts.append(official_twitter_dict)
+
+            campain_dict = {
+                'campain_id': campain.id,
+                'campain_name': campain.nombre_campana,
+                'oficcial_escuchas': official_escuchas_list_dicts,
+                'unofficial_escuchas': unofficial_escuchas_list_dicts
+            }
+            campains_list_dicts.append(campain_dict)
+        
+        logger.error(campains_list_dicts)
+
+        
         try:
             return render(request, "campanas.html",{"campanas_publicitarias":campanas_publicitarias_to_list})
         except template.TemplateDoesNotExist:
