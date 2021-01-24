@@ -86,13 +86,12 @@
                                 </div>
                                 <div class="form-group">
                                     <label><strong>Presupuesto</strong></label>
-                                    <input type="number" placeholder="$" class="form-control" id="presupuesto_campana" {{ form.presupuesto_campana }}
+                                    <input type="number" placeholder="$1200000" class="form-control" id="presupuesto_campana" {{ form.presupuesto_campana }}
                                     </input>    
                                 </div>
                                 <div class="form-group">
                                     <label><strong>Eficacia</strong></label>
-                                    <input type="text" placeholder="%" class="form-control" id="eficacia_camapana" {{ form.eficacia_camapana }}
-                                    </input>    
+                                    <input type="number" min="0" max="100" placeholder="20 %" class="form-control" id="eficacia_camapana" {{ form.eficacia_camapana }}</input>
                                 </div>
                                 <div class="form-group">
                                     <label><strong>Usuario</strong></label>
