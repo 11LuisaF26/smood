@@ -21,8 +21,8 @@ SECRET_KEY = config('SECRET_KEY', default='S#perS3crEt_1122')
 DEBUG = config('DEBUG', default=True)
 
 # load production server from .env
-ALLOWED_HOSTS = ['localhost', '127.0.0.1','150.136.241.89', config('SERVER', default='127.0.0.1')]
-
+#ALLOWED_HOSTS = ['localhost', '127.0.0.1','150.136.241.89', config('SERVER', default='127.0.0.1')]
+ALLOWED_HOSTS = ['www.s-mood.co','localhost', '127.0.0.1', '10.0.0.2','150.136.241.89',config('SERVER', default='127.0.0.1')]
 # Application definition
 
 INSTALLED_APPS = [

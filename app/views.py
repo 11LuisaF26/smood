@@ -48,6 +48,7 @@ def index(request):
         datas = []
         colors = ['bg-c-blue', 'bg-c-green', 'bg-c-yellow', 'bg-c-red']
         top_post = (cuentas_empresa.objects
+                    .filter(is_competition=False)
                     .order_by('-post_count')
                     .values_list('post_count', 'username')
                     .distinct()).values()[:4]
@@ -511,6 +512,7 @@ def escuchas_campana(request, campana_id):
             
             if data_finish >= today:
                 escucha_id = escucha_record['id']
+                escucha_type = escucha_record['es_competencia']
 
                 search_user = escucha_record['usuario_red_social']
                 if search_user.startswith('@'):
@@ -542,7 +544,7 @@ def escuchas_campana(request, campana_id):
                 for red in redes_sociales:
                     id_red = red['id']
                     nombre_red = red['nombre_red_social']
-                    
+
                     if nombre_red == "Facebook":
                         facebook_posts = get_facebook_post(
                             nombre_pagina=search_user, 
@@ -557,6 +559,7 @@ def escuchas_campana(request, campana_id):
                         twitter_data = {
                             'nombre_usuario':search_user, 
                             'bearer_token':twitter_bearer_token, 
+                            'escucha_type': escucha_type,
                             'id_campana':campana_id, 
                             'id_escucha':escucha_id,
                             'id_red':id_red
