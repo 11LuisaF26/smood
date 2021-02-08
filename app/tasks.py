@@ -19,10 +19,15 @@ def get_facebook_post(nombre_pagina, numero_paginas, id_campana, id_escucha, id_
         if publicacion and publicacion["post_id"]:
             data_red_escucha = data_red.objects.filter(publicacion_id=publicacion["post_id"],data_red_escucha=data_escucha, data_red_campana=data_campana).values()
             if not data_red_escucha:
+                if not publicacion["post_text"] or publicacion["post_text"]==None:
+                    publicacion_texto = ""
+                else:
+                    publicacion_texto = publicacion["post_text"][:200]
+                
                 new_publication = data_red(
                     publicacion_id = publicacion["post_id"], 
                     publicacion_fecha = publicacion["time"],
-                    publicacion_texto = publicacion["post_text"][:200], 
+                    publicacion_texto = publicacion_texto, 
                     publicacion_likes = publicacion["likes"],
                     publicacion_comentarios = publicacion["comments"],
                     publicacion_compartidos = publicacion["shares"],
@@ -34,28 +39,29 @@ def get_facebook_post(nombre_pagina, numero_paginas, id_campana, id_escucha, id_
                 new_publication.save()
     logger.error('Task get facebook post completed succesfully')
     
-@background(schedule=5)
+@background(schedule=60)
 def obtener_account_user(data):
     data_escucha = escucha.objects.get(id=data['id_escucha'])
     data_campana = campana_publicitaria.objects.get(id=data['id_campana'])
     data_red_social = red_social.objects.get(id=data['id_red'])
+    escucha_type = data['escucha_type']
     conn = twitter_conn.TwitterConn(access_token=data['bearer_token'])
     try:
         response_account_user = conn.obtener_cuenta_user(nombre_usuario=data['nombre_usuario'])
         response_account_user.raise_for_status()
     except (ConnectionError, TimeoutError) as e:
         logger.error(str(e))
-        raise ValidationError("ConnectionError or TimeoutError")
     except HTTPError as e:
-        logger.error(str(e))
-        raise ValidationError("HTTP Error")
+        logger.error(str(e))        
     except Exception as e:
         logger.error(str(e))
-        raise ValidationError("Exception")
     else:
+        list_data = []
         content_response_user_account = response_account_user.content.decode("utf-8")
         data_response_user_account = json.loads(content_response_user_account)
-        list_data = data_response_user_account["data"]        
+        if data_response_user_account["data"]:
+            list_data = data_response_user_account["data"]
+
         for data in list_data:
             if data and data["id"]:
                 data_cuentas_empresa = cuentas_empresa.objects.filter(identifier=data["id"],data_red_escucha=data_escucha, data_red_campana=data_campana)
@@ -84,7 +90,6 @@ def obtener_account_user(data):
                     except:
                         display_url = ""
 
-
                     new_cuenta = cuentas_empresa(
                         identifier = data["id"],
                         username = data["username"],
@@ -97,6 +102,7 @@ def obtener_account_user(data):
                         post_count = data["public_metrics"]["tweet_count"],
                         listed_count = data["public_metrics"]["tweet_count"],
                         web_site = display_url,
+                        is_competition = escucha_type, 
                         data_red_escucha = data_escucha,
                         data_red_campana = data_campana,
                         data_red_social = data_red_social
@@ -114,17 +120,16 @@ def obtener_twitters_user(data):
         response_user_tweets.raise_for_status()
     except (ConnectionError, TimeoutError) as e:
         logger.error(str(e))
-        raise ValidationError("ConnectionError or TimeoutError")
     except HTTPError as e:
         logger.error(str(e))
-        raise ValidationError("HTTP Error")
     except Exception as e:
         logger.error(str(e))
-        raise ValidationError("Exception")
     else:
+        list_data = []
         content_response_user_tweets = response_user_tweets.content.decode("utf-8")
         data_response_user_tweets = json.loads(content_response_user_tweets)
-        list_data = data_response_user_tweets["data"]
+        if data_response_user_tweets["data"]:
+            list_data = data_response_user_tweets["data"]
 
         for data in list_data:
             if data and data["id"]:
@@ -155,36 +160,37 @@ def obtener_twitters_query(data):
         response_query_tweets.raise_for_status()
     except (ConnectionError, TimeoutError) as e:
         logger.error(str(e))
-        raise ValidationError("ConnectionError or TimeoutError")
     except HTTPError as e:
         logger.error(str(e))
-        raise ValidationError("HTTP Error")
     except Exception as e:
         logger.error(str(e))
-        raise ValidationError("Exception")
     else:
         content_response_query_tweets = response_query_tweets.content.decode("utf-8")
         data_response_query_tweets = json.loads(content_response_query_tweets)
-        list_data = data_response_query_tweets["data"]
 
-        for data in list_data:
-            if data and data["id"]:
-                data_red_escucha = data_red.objects.filter(publicacion_id=data["id"],data_red_escucha=data_escucha, data_red_campana=data_campana).values()
-                if not data_red_escucha:
-                    new_publication = data_red(
-                        publicacion_id = data["id"], 
-                        publicacion_fecha = data["created_at"],
-                        publicacion_texto = data["text"][:200], 
-                        publicacion_likes = data["public_metrics"]["like_count"],
-                        publicacion_comentarios = data["public_metrics"]["retweet_count"],
-                        publicacion_compartidos = data["public_metrics"]["retweet_count"],
-                        publicacion_user = data["author_id"],
-                        is_from_hashtag = True,
-                        data_red_escucha = data_escucha,
-                        data_red_campana = data_campana,
-                        data_red_social = data_red_social
-                    )
-                    new_publication.save()
+        try:
+            list_data = data_response_query_tweets["data"]
+        except:
+            list_data = []
+        else:
+            for data in list_data:
+                if data and data["id"]:
+                    data_red_escucha = data_red.objects.filter(publicacion_id=data["id"],data_red_escucha=data_escucha, data_red_campana=data_campana).values()
+                    if not data_red_escucha:
+                        new_publication = data_red(
+                            publicacion_id = data["id"], 
+                            publicacion_fecha = data["created_at"],
+                            publicacion_texto = data["text"][:200], 
+                            publicacion_likes = data["public_metrics"]["like_count"],
+                            publicacion_comentarios = data["public_metrics"]["retweet_count"],
+                            publicacion_compartidos = data["public_metrics"]["retweet_count"],
+                            publicacion_user = data["author_id"],
+                            is_from_hashtag = True,
+                            data_red_escucha = data_escucha,
+                            data_red_campana = data_campana,
+                            data_red_social = data_red_social
+                        )
+                        new_publication.save()
 
 '''
 @background(schedule=5)

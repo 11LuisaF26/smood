@@ -28,5 +28,29 @@
         "fields": {
             "estado_nombre_empresa": "Inactivo"
         }
+    },
+    {
+        "model": "app.ubicacion",
+        "fields": {
+            "nombre_ubicacion": "Colombia"
+        }
+    },
+    {
+        "model": "app.ubicacion",
+        "fields": {
+            "nombre_ubicacion": "Bogota"
+        }
+    },
+    {
+        "model": "app.ubicacion",
+        "fields": {
+            "nombre_ubicacion": "Medellin"
+        }
+    },
+    {
+        "model": "app.ubicacion",
+        "fields": {
+            "nombre_ubicacion": "Cali"
+        }
     }
 ]

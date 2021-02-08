@@ -147,6 +147,7 @@ class cuentas_empresa(models.Model):
     fullname = models.CharField(null=True, max_length=30, verbose_name='Fullname')
     profile_pic_url = models.CharField(null=True, max_length=500, verbose_name='Url foto perfil')
     web_site = models.CharField(null=True, max_length=500, verbose_name='Url')
+    is_competition = models.BooleanField(default=False)
     data_red_escucha = models.ForeignKey(escucha, on_delete=models.CASCADE, null=True)
     data_red_campana = models.ForeignKey(campana_publicitaria, on_delete=models.CASCADE, null=True) 
     data_red_social = models.ForeignKey(red_social, on_delete=models.CASCADE, null=True) 
