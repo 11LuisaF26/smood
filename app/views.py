@@ -588,20 +588,34 @@ def escuchas_campana(request, campana_id):
                                 data = hashtag_data
                             )
                     
-                    '''
+                    
                     if nombre_red == "Instagram":
-                        search_accounts = search_accounts_by_username(
-                            nombre_pagina=search_user, 
-                            #empresa_id=empresa_id, 
-                            username=instagram_user, 
-                            password=instagram_pass, 
-                            path=instagram_path,
-                            hashtag_list = hastags_ids_list,
-                            id_campana=campana_id, 
-                            id_escucha=escucha_id,
-                            id_red = id_red
+                        instagram_data = {
+                            'nombre_usuario':search_user,
+                            'escucha_type': escucha_type,
+                            'id_campana':campana_id,
+                            'id_escucha':escucha_id,
+                            'id_red':id_red
+                        }
+                        search_account = search_account_by_username(
+                            data=instagram_data
                         )
-                    '''
+                        
+                        search_account_medias = get_instagram_medias_by_user(
+                            data=instagram_data
+                        )
+
+                        for escucha_hashtag in escucha_hashtags:
+                            nombre_hashtag = escucha_hashtag['nombre_hastag']
+                            instagram_hashtag_data = {
+                                'query': nombre_hashtag,
+                                'id_campana': campana_id, 
+                                'id_escucha': escucha_id,
+                                'id_red': id_red
+                            }
+                            get_instagram_medias_by_tag(
+                                data = instagram_hashtag_data
+                            )
 
         try:
             return render(request, "escuchas_empresa.html", {"escuchas":escuchas})
