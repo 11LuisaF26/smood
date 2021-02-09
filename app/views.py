@@ -300,7 +300,8 @@ def campanas_publicitarias(request):
                                 'followers_count':official_facebook_account_value['followers_count'],
                                 'following_count':official_facebook_account_value['following_count'],
                                 'post_count': official_facebook_account_value['post_count'],
-                                'listed_count': official_facebook_account_value['listed_count']
+                                'listed_count': official_facebook_account_value['listed_count'],
+                                'red_social': "facebook"
                             }
                             official_escuchas_list_dicts.append(official_facebook_dict)
 
@@ -315,7 +316,8 @@ def campanas_publicitarias(request):
                                 'followers_count':official_instagram_account_value['followers_count'],
                                 'following_count':official_instagram_account_value['following_count'],
                                 'post_count': official_instagram_account_value['post_count'],
-                                'listed_count': official_instagram_account_value['listed_count']
+                                'listed_count': official_instagram_account_value['listed_count'],
+                                'red_social': "Instagram"
                             }
                             official_escuchas_list_dicts.append(official_instagram_dict)
 
@@ -331,7 +333,8 @@ def campanas_publicitarias(request):
                                 'followers_count':official_twitter_account_value['followers_count'],
                                 'following_count':official_twitter_account_value['following_count'],
                                 'post_count': official_twitter_account_value['post_count'],
-                                'listed_count': official_twitter_account_value['listed_count']
+                                'listed_count': official_twitter_account_value['listed_count'],
+                                'red_social': "Twitter"
                             }
                             official_escuchas_list_dicts.append(official_twitter_dict)
 
@@ -351,6 +354,7 @@ def campanas_publicitarias(request):
                                 'following_count':unofficial_facebook_account_value['following_count'],
                                 'post_count': unofficial_facebook_account_value['post_count'],
                                 'listed_count': unofficial_facebook_account_value['listed_count'],
+                                'red_social': "Facebook"
                             }
                             unofficial_escuchas_list_dicts.append(unofficial_facebook_dict)
                     
@@ -366,6 +370,7 @@ def campanas_publicitarias(request):
                                 'following_count':unofficial_instagram_account_value['following_count'],
                                 'post_count': unofficial_instagram_account_value['post_count'],
                                 'listed_count': unofficial_instagram_account_value['listed_count'],
+                                'red_social': "Instagram"
                             }
                             unofficial_escuchas_list_dicts.append(unofficial_instagram_dict)
                     
@@ -381,6 +386,7 @@ def campanas_publicitarias(request):
                                 'following_count':unofficial_twitter_account_value['following_count'],
                                 'post_count': unofficial_twitter_account_value['post_count'],
                                 'listed_count': unofficial_twitter_account_value['listed_count'],
+                                'red_social': "Twitter"
                             }
                             unofficial_escuchas_list_dicts.append(official_twitter_dict)
 
@@ -394,9 +400,8 @@ def campanas_publicitarias(request):
         
         logger.error(campains_list_dicts)
 
-        
         try:
-            return render(request, "campanas.html",{"campanas_publicitarias":campanas_publicitarias_to_list})
+            return render(request, "campanas.html",{"campanas_publicitarias":campains_list_dicts})
         except template.TemplateDoesNotExist:
             html_template = loader.get_template( 'page-404.html' )
             return HttpResponse(html_template.render(context, request))
