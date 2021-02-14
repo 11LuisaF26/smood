@@ -311,8 +311,6 @@ def campanas_publicitarias(request):
                             official_instagram_dict = {
                                 'identifier': official_instagram_account_value['identifier'],
                                 'username': official_instagram_account_value['username'],
-                                'created_at': official_instagram_account_value['created_at'],
-                                'location': official_instagram_account_value['location'],
                                 'followers_count':official_instagram_account_value['followers_count'],
                                 'following_count':official_instagram_account_value['following_count'],
                                 'post_count': official_instagram_account_value['post_count'],
@@ -364,8 +362,6 @@ def campanas_publicitarias(request):
                             unofficial_instagram_dict = {
                                 'identifier': unofficial_instagram_account_value['identifier'],
                                 'username': unofficial_instagram_account_value['username'],
-                                'created_at': unofficial_instagram_account_value['created_at'], 
-                                'location': unofficial_instagram_account_value['location'],
                                 'followers_count':unofficial_instagram_account_value['followers_count'],
                                 'following_count':unofficial_instagram_account_value['following_count'],
                                 'post_count': unofficial_instagram_account_value['post_count'],

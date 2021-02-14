@@ -39,16 +39,55 @@
                         <div class="row">
                             <div class="col-sm-6 col-md-6 col-xl-6">
                                 </br>
-                                <h5>Escuchas oficiales</h5>
+                                <h5>Empresa</h5>
                                 {% for oficcial_escucha in campana_publicitaria.oficcial_escuchas %}
+                                    {% if oficcial_escucha.red_social == "Facebook" %}
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div align="left">
+                                                    <h6>{{oficcial_escucha.username}}</h6>
+                                                    <h6>Seguidores: {{oficcial_escucha.followers_count}}</h6>
+                                                    <h6>Seguidos: {{oficcial_escucha.following_count}}</h6>
+                                                    <h6>Publicaciones: {{oficcial_escucha.post_count}}</h6>
+                                                    <h6>Fecha de creación: {{oficcial_escucha.created_at}}</h6>
+                                                    <h6>Lugar de creación: {{oficcial_escucha.location}}</h6>
+                                                <div class="card-body">
+                                                <i class="fab fa-facebook text-c-blue d-block f-40"></i>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+
+                                    {% if oficcial_escucha.red_social == "Instagram" %}
+                                        <div class="card">
+                                            <div class="card-body text-center">
+                                                <div align="left">
+                                                    <h6>{{oficcial_escucha.username}}</h6>
+                                                    <h6>Seguidores: {{oficcial_escucha.followers_count}}</h6>
+                                                    <h6>Seguidos: {{oficcial_escucha.following_count}}</h6>
+                                                    <h6>Publicaciones: {{oficcial_escucha.post_count}}</h6>
+                                                </div>
+                                                <i class="fab fa-instagram text-c-red d-block f-40"></i>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+
+                                    {% if oficcial_escucha.red_social == "Twitter" %}
+                                        <div class="card">
+                                            <div class="card-body text-center">
+                                                <div align="left">
+                                                    <h6>{{oficcial_escucha.username}}</h6>
+                                                    <h6>Seguidores: {{oficcial_escucha.followers_count}}</h6>
+                                                    <h6>Seguidos: {{oficcial_escucha.following_count}}</h6>
+                                                    <h6>Publicaciones: {{oficcial_escucha.post_count}}</h6>
+                                                    <h6>Fecha de creación: {{oficcial_escucha.created_at}}</h6>
+                                                    <h6>Lugar de creación: {{oficcial_escucha.location}}</h6>
+                                                </div>
+                                                <i class="fab fa-twitter text-c-green d-block f-40"></i>
+                                            </div>
+                                        </div>
+                                    {% endif %}
                                     </br>
-                                    <h6>Red social: {{oficcial_escucha.red_social}}</h6>
-                                    <h6>Usuario: {{oficcial_escucha.username}}</h6>
-                                    <h6>Fecha de creación: {{oficcial_escucha.created_at}}</h6>
-                                    <h6>Lugar de creación: {{oficcial_escucha.location}}</h6>
-                                    <h6>Seguidores: {{oficcial_escucha.followers_count}}</h6>
-                                    <h6>Seguidos: {{oficcial_escucha.following_count}}</h6>
-                                    <h6>Publicaciones: {{oficcial_escucha.post_count}}</h6>
+                                    
                                 {% endfor %}
                             </div>
 
@@ -56,14 +95,52 @@
                                 </br>
                                 <h5>Competencia</h5>
                                 {% for unoficcial_escucha in campana_publicitaria.unofficial_escuchas %}
+                                    {% if unoficcial_escucha.red_social == "Facebook" %}
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div align="left">
+                                                    <h6>{{unoficcial_escucha.username}}</h6>
+                                                    <h6>Seguidores: {{unoficcial_escucha.followers_count}}</h6>
+                                                    <h6>Seguidos: {{unoficcial_escucha.following_count}}</h6>
+                                                    <h6>Publicaciones: {{unoficcial_escucha.post_count}}</h6>
+                                                    <h6>Fecha de creación: {{unoficcial_escucha.created_at}}</h6>
+                                                    <h6>Lugar de creación: {{unoficcial_escucha.location}}</h6>
+                                                <div class="card-body">
+                                                <i class="fab fa-facebook text-c-blue d-block f-40"></i>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+
+                                    {% if unoficcial_escucha.red_social == "Instagram" %}
+                                        <div class="card">
+                                            <div class="card-body text-center">
+                                                <div align="left">
+                                                    <h6>{{unoficcial_escucha.username}}</h6>
+                                                    <h6>Seguidores: {{unoficcial_escucha.followers_count}}</h6>
+                                                    <h6>Seguidos: {{unoficcial_escucha.following_count}}</h6>
+                                                    <h6>Publicaciones: {{unoficcial_escucha.post_count}}</h6>
+                                                </div>
+                                                <i class="fab fa-instagram text-c-red d-block f-40"></i>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+
+                                    {% if unoficcial_escucha.red_social == "Twitter" %}
+                                        <div class="card">
+                                            <div class="card-body text-center">
+                                                <div align="left">
+                                                    <h6>{{unoficcial_escucha.username}}</h6>
+                                                    <h6>Seguidores: {{unoficcial_escucha.followers_count}}</h6>
+                                                    <h6>Seguidos: {{unoficcial_escucha.following_count}}</h6>
+                                                    <h6>Publicaciones: {{unoficcial_escucha.post_count}}</h6>
+                                                    <h6>Fecha de creación: {{unoficcial_escucha.created_at}}</h6>
+                                                    <h6>Lugar de creación: {{unoficcial_escucha.location}}</h6>
+                                                </div>
+                                                <i class="fab fa-twitter text-c-green d-block f-40"></i>
+                                            </div>
+                                        </div>
+                                    {% endif %}
                                     </br>
-                                    <h6>Red social: {{unoficcial_escucha.red_social}}</h6>
-                                    <h6>Usuario: {{unoficcial_escucha.username}}</h6>
-                                    <h6>Fecha de creación: {{unoficcial_escucha.created_at}}</h6>
-                                    <h6>Lugar de creación: {{unoficcial_escucha.location}}</h6>
-                                    <h6>Seguidores: {{unoficcial_escucha.followers_count}}</h6>
-                                    <h6>Seguidos: {{unoficcial_escucha.following_count}}</h6>
-                                    <h6>Publicaciones: {{unoficcial_escucha.post_count}}</h6>
                                 {% endfor %}
                             </div>
                         </div>
