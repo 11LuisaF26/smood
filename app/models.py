@@ -118,7 +118,7 @@ class escucha(models.Model):
 class data_red(models.Model):
     publicacion_id = models.CharField(null=True, max_length=30, verbose_name='Id')
     publicacion_fecha = models.CharField(null=True, blank=True, max_length=60, verbose_name='Fecha')
-    publicacion_texto = models.CharField(null=True, blank=True, max_length=300, verbose_name='Text')
+    publicacion_texto = models.TextField(null=True) 
     publicacion_likes = models.IntegerField(null=True, verbose_name='Likes')
     publicacion_comentarios = models.IntegerField(null=True, verbose_name='Comentarios')
     publicacion_compartidos = models.IntegerField(null=True, verbose_name='Veces compartido')

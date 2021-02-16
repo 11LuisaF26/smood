@@ -23,7 +23,7 @@ def get_facebook_post(nombre_pagina, numero_paginas, id_campana, id_escucha, id_
                 if not publicacion["post_text"] or publicacion["post_text"]==None:
                     publicacion_texto = ""
                 else:
-                    publicacion_texto = publicacion["post_text"][:200]
+                    publicacion_texto = publicacion["post_text"]
                 
                 new_publication = data_red(
                     publicacion_id = publicacion["post_id"], 
@@ -138,7 +138,7 @@ def obtener_twitters_user(data):
                 if not data_red_escucha:
                     new_publication = data_red(
                         publicacion_id = data["id"],
-                        publicacion_texto = data["text"][:200],
+                        publicacion_texto = data["text"],
                         publicacion_fecha = data["created_at"],
                         publicacion_likes = data["public_metrics"]["like_count"],
                         publicacion_comentarios = data["public_metrics"]["reply_count"],
@@ -181,7 +181,7 @@ def obtener_twitters_query(data):
                         new_publication = data_red(
                             publicacion_id = data["id"], 
                             publicacion_fecha = data["created_at"],
-                            publicacion_texto = data["text"][:200], 
+                            publicacion_texto = data["text"], 
                             publicacion_likes = data["public_metrics"]["like_count"],
                             publicacion_comentarios = data["public_metrics"]["retweet_count"],
                             publicacion_compartidos = data["public_metrics"]["retweet_count"],
@@ -248,7 +248,7 @@ def get_instagram_medias_by_user(data):
                 if not data_red_escucha:
 
                     try:
-                        texto = media.caption[:200]
+                        texto = media.caption
                     except:
                         texto = ""
 
@@ -291,7 +291,7 @@ def get_instagram_medias_by_tag(data):
                 data_red_tag = data_red.objects.filter(publicacion_id=media.identifier,data_red_escucha=data_escucha, data_red_campana=data_campana).values()
                 if not data_red_tag:
                     try:
-                        texto = media.caption[:200]
+                        texto = media.caption
                     except:
                         texto = ""
 
