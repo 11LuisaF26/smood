@@ -4,6 +4,20 @@
   <img src="https://i.pinimg.com/originals/ae/06/64/ae06647022c506cd7541fec434f607ad.jpg" />
 </p>
 
+## ¿Qué es S-mood?
+Al ser el resultado de la fusión de la investigación de mercados y la planeación estratégica publicitaria,
+se propone el nombre S-mood para el software.  
+Para llegar a él se parte de las dos palabras “Semiotic” y “Model”, 
+pero se realizan  combinaciones de términos como  La S de semiótica y 
+se le agrega una “o” a la palabra “model” con lo cual se gana sonoridad, 
+pero además se agrega la significación de Mood del “humor” como estado de animo.  
+Al final, la combinación implica el estudio del estado de ánimo, 
+los comportamientos de las personas y las estrategias que de allí 
+se pueden generar para resolver casos de Publicidad y de Marketing, 
+el cual es el objetivo principal de la Investigación y del Software.
+
+![GitHub Logo](/core/static/assets/images/logo.png)
+Format: ![Alt Text](url)
 
 ## ¿Cómo usarlo?
 
@@ -93,70 +107,3 @@ El proyecto usa la siguiente estructura:
    |-- ************************************************************************
 ```
 <br />
-
-## Deployment
-
-Esta aplicación provee una configuración báscia para ser ejecutada en: [Docker](https://www.docker.com/), [Gunicorn](https://gunicorn.org/), y[Waitress](https://docs.pylonsproject.org/projects/waitress/en/stable/).
-
-### [Docker](https://www.docker.com/)
----
-
-La aplicación puede ser ejecutada siguiendo estos pasos:
-
-> Obtener el código
-
-```bash
-$ git clone https://github.com/app-generator/django-dashboard-gradientable.git
-$ cd django-dashboard-gradientable
-```
-
-> Iniciar la aplicación en Docker
-
-```bash
-$ sudo docker-compose pull && sudo docker-compose build && sudo docker-compose up -d
-```
-
-Visitar `http://localhost:5005` en el navegador. La aplicación debería estar lista para ser usada.
-
-<br />
-
-### [Gunicorn](https://gunicorn.org/)
----
-
-Gunicorn 'Green Unicorn' es un servidor WSGI HTTP de Python para UNIX.
-
-> Instalar usando pip
-
-```bash
-$ pip install gunicorn
-```
-> Iniciar la aplicación usando gunicorn binary
-
-```bash
-$ gunicorn --bind=0.0.0.0:8001 core.wsgi:application
-Serivicio en http://localhost:8001
-```
-
-Visitar `http://localhost:8001` en el navegador. La aplicación debería estar lista para ser usada.
-
-
-<br />
-
-### [Waitress](https://docs.pylonsproject.org/projects/waitress/en/stable/)
----
-
-Waitress es el Gunicorn equivalente para Windows
-
-> Instalar usando pip
-
-```bash
-$ pip install waitress
-```
-> Iniciar la aplicación usando: [waitress-serve](https://docs.pylonsproject.org/projects/waitress/en/stable/runner.html)
-
-```bash
-$ waitress-serve --port=8001 core.wsgi:application
-Servicio en http://localhost:8001
-```
-
-Visitar `http://localhost:8001` en el navegador. La aplicación debería estar lista para ser usada.
