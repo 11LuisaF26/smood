@@ -16,15 +16,20 @@ los comportamientos de las personas y las estrategias que de allí
 se pueden generar para resolver casos de Publicidad y de Marketing, 
 el cual es el objetivo principal de la Investigación y del Software.
 
-![GitHub Logo](/core/static/assets/images/logo.png)
-Format: ![Alt Text](url)
+![GitHub Logo](/core/static/assets/images/1logo.png)
+
+
+## PREREQUISITOS
+python 3
+virtualenv
+requirements.txt.
 
 ## ¿Cómo usarlo?
 
 ```bash
 $ # Obtener el código
-$ git clone https://github.com/app-generator/django-dashboard-gradientable.git
-$ cd django-dashboard-gradientable
+$ git clone https://github.com/11LuisaF26/smood.git
+$ cd smood
 $
 $ # Virtualenv (Para sistemas Unix)
 $ virtualenv env
@@ -98,6 +103,12 @@ El proyecto usa la siguiente estructura:
    |    |
    |    |-- views.py
    |    |-- urls.py
+   |    |-- test.py
+   |    |-- forms.py
+   |    |-- models.py
+   |    |-- nube.py
+   |    |-- tasks.py
+   |    |-- twitter_conn.py
    |
    |-- requirements.txt
    |
@@ -107,3 +118,16 @@ El proyecto usa la siguiente estructura:
    |-- ************************************************************************
 ```
 <br />
+
+## AUTORES 
+
+*   Olmer Garcia Bedoya 
+*   Victor Danilo Castañeda Pinzón
+*   Luisa Fernanda Rodriguez Sarmiento
+
+    ##  CONTRIBUYENTES
+    *   Isabel Sofía Enriquez Avilez
+    *   Vladimir Sánchez Riaño
+    *   Gabriela Andrade Caicedo
+    *   Catherine Suarez Báez
+	  *	  Jairo Sojo
