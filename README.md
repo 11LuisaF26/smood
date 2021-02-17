@@ -1,10 +1,15 @@
-<h1 align="center" color="blue">SMOOD - Software de planeación estratégica </H1>
+<h1 align="center" color="blue">Universidad de Bogotá Jorge Tadeo Lozano</H1>
 
 <p align="center">
   <img src="https://i.pinimg.com/originals/ae/06/64/ae06647022c506cd7541fec434f607ad.jpg" />
 </p>
 
+<h1 align="center" color="blue">SMOOD - Software de planeación estratégica </H1>
+
 ## ¿Qué es S-mood?
+Es un software piloto para la automatización de la construcción de la variable de Comunicación en modelo semiótico de cuatro variables.
+
+## ¿Por qué S-mood?
 Al ser el resultado de la fusión de la investigación de mercados y la planeación estratégica publicitaria,
 se propone el nombre S-mood para el software.  
 Para llegar a él se parte de las dos palabras “Semiotic” y “Model”, 
@@ -19,10 +24,10 @@ el cual es el objetivo principal de la Investigación y del Software.
 ![GitHub Logo](/core/static/assets/images/1logo.png)
 
 
-## PREREQUISITOS
-python 3
-virtualenv
-requirements.txt.
+## Requisitos
+* python 3
+* virtualenv
+* requirements.txt.
 
 ## ¿Cómo usarlo?
 
@@ -125,7 +130,7 @@ El proyecto usa la siguiente estructura:
 *   Victor Danilo Castañeda Pinzón
 *   Luisa Fernanda Rodriguez Sarmiento
 
-    ##  CONTRIBUYENTES
+    ###  CONTRIBUYENTES
     *   Isabel Sofía Enriquez Avilez
     *   Vladimir Sánchez Riaño
     *   Gabriela Andrade Caicedo
