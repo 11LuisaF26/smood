@@ -9,6 +9,8 @@ from . import twitter_conn
 from datetime import datetime
 import logging
 import json
+import nltk
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
 logger = logging.getLogger(__name__)
 
 @background(schedule=5)
@@ -193,7 +195,6 @@ def obtener_twitters_query(data):
                         )
                         new_publication.save()
 
-
 @background(schedule=5)
 def search_account_by_username(data):
     data_escucha = escucha.objects.get(id=data['id_escucha'])
@@ -312,3 +313,55 @@ def get_instagram_medias_by_tag(data):
 
         logger.error('Task get instagram medias by tag has finished succesfully')
 
+@background(schedule=2)
+def analyze_text(account):
+    analyze_list = []
+    account_datas = data_red.objects.filter(publicacion_user=account['identifier']).values()
+    if account_datas:
+        for account_data in account_datas:
+            if account_data['publicacion_texto']:
+                language = _get_language(text=account_data['publicacion_texto'])
+                logger.error(language)
+                if language and language=="spanish":
+                    #analyze = _analyze_spanish_text(text=account_data['publicacion_texto'])
+                    #analyze_list.append(analyze)
+                    pass
+                elif language and language=="english":
+                    analyze = _analyze_english_text(text=account_data['publicacion_texto'])
+                    analyze_list.append(analyze)
+                else:
+                    continue
+    
+    analysis = _get_analysis(analyze_list=analyze_list)
+    return analysis
+
+def _get_language(text):
+    languages = ['spanish', 'english']
+    tokens = nltk.tokenize.word_tokenize(text)
+    tokens = [t.strip().lower() for t in tokens]
+    lang_count = {}
+    for lang in languages:
+        stop_words = nltk.corpus.stopwords.words(lang)
+        lang_count[lang] = 0
+        for word in tokens:
+            if word in stop_words:
+                lang_count[lang] += 1
+                
+    detected_language = max(lang_count, key=lang_count.get)
+
+    return detected_language
+
+def _analyze_spanish_text(text):
+    pass
+
+def _analyze_english_text(text):
+    sid = SentimentIntensityAnalyzer()
+    polarity = sid.polarity_scores(text)
+    return polarity
+
+def _get_analysis(analyze_list):
+    compound = list([analyze['compound'] for analyze in analyze_list])
+    if len(compound) !=0:
+        return sum(compound) / len(compound)
+    else:
+        return 0

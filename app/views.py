@@ -31,7 +31,6 @@ from sentiment_analysis_spanish import sentiment_analysis
 
 logger = logging.getLogger(__name__)
 
-
 @login_required(login_url="/login/")
 def index(request):
     context = {}
@@ -298,6 +297,8 @@ def campanas_publicitarias(request):
                     official_facebook_account_values = cuentas_empresa.objects.filter(data_red_escucha__id=official_escucha_value['id'], data_red_social__id=facebook.id).values()
                     if official_facebook_account_values:
                         for official_facebook_account_value in official_facebook_account_values:
+                            text_analysis_task = analyze_text(account=official_facebook_account_value)
+
                             official_facebook_dict = {
                                 'identifier': official_facebook_account_value['identifier'],
                                 'username': official_facebook_account_value['username'],
@@ -314,6 +315,7 @@ def campanas_publicitarias(request):
                     official_instagram_account_values = cuentas_empresa.objects.filter(data_red_escucha__id=official_escucha_value['id'], data_red_social__id=instagram.id).values()
                     if official_instagram_account_values:
                         for official_instagram_account_value in official_instagram_account_values:
+                            text_analysis_task = analyze_text(account=official_instagram_account_value)
                             official_instagram_dict = {
                                 'identifier': official_instagram_account_value['identifier'],
                                 'username': official_instagram_account_value['username'],
@@ -399,47 +401,6 @@ def campanas_publicitarias(request):
                 'unofficial_escuchas': unofficial_escuchas_list_dicts
             }
             campains_list_dicts.append(campain_dict)
-
-            ##### Grafica
-            languages = ["spanish","english"]
-            official_escuchas_dict_values = escucha.objects.filter(campana_publicitaria_red_social__id=campain.id, es_competencia=False).values()
-            if official_escuchas_dict_values:
-                for official_escuchas_dict_value in official_escuchas_dict_values:
-                    official_accounts = cuentas_empresa.objects.filter(data_red_escucha__id=official_escuchas_dict_value['id']).values()
-                    if official_accounts:
-                        polarity_list = []
-                        spanish_sentiment = []
-                        for official_account in official_accounts:
-                            if official_account['identifier']:
-                                official_datas = data_red.objects.filter(publicacion_user=official_account['identifier']).values()
-                                if official_datas:
-                                    for official_data in official_datas:
-                                        if official_data['publicacion_texto']:
-                                            tokens = nltk.tokenize.word_tokenize(official_data['publicacion_texto'])
-                                            tokens = [t.strip().lower() for t in tokens]
-                                            lang_count = {}
-                                            for lang in languages:
-                                                stop_words = nltk.corpus.stopwords.words(lang)
-                                                lang_count[lang] = 0
-                                                for word in tokens:
-                                                    if word in stop_words:
-                                                        lang_count[lang] += 1
-                                            detected_language = max(lang_count, key=lang_count.get)
-                                            
-                                            if detected_language and detected_language=="spanish":
-                                                sentiment = sentiment_analysis.SentimentAnalysisSpanish()
-                                                spanish_sentiment.append(sentiment.sentiment(official_data['publicacion_texto']))
-
-
-                                            if detected_language and detected_language=="english":
-                                                sid = SentimentIntensityAnalyzer()
-                                                polarity = sid.polarity_scores(official_data['publicacion_texto'])
-                                                polarity_list.append(polarity['compound'])
-                        logger.error(polarity_list)
-                        logger.error(spanish_sentiment)
-
-        
-        logger.error(campains_list_dicts)
 
         try:
             return render(request, "campanas.html",{"campanas_publicitarias":campains_list_dicts})
