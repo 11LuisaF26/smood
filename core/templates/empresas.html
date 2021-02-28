@@ -30,57 +30,52 @@
 
             <div class="row">
                 <!-- [ stiped-table ] start -->
-                <div class="col-xl-12">
+                <div class="col-xl-1">
+                </div>
+                <div class="col-xl-10 ">
                     <div class="card">
-                        <div class="card-header">
-                            <h5>Empresas</h5>
-                            <span class="d-block m-t-5">Empresas registradas</span>
-                        </div>                        
-                        <div class="card-body table-border-style">
-                            <div class="table-responsive">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr> 
-                                            <th>#</th>
-                                            <th>NIT</th>
-                                            <th>Nombre</th>
-                                            <th>Estado</th>                             
-                                            <th>Acciones</th>                             
-                                        </tr>
-                                    </thead>
-                                    
-                                    <tbody>                                        
-                                       {% for empresa in empresas %}
-                                        <tr> 
-                                            <td>{{ forloop.counter }}</td>
-                                            <td>{{empresa.nit_empresa}} </td>
-                                            <td>{{empresa.nombre_empresa}}</td>
-                                            <td>{{empresa.estado_empresa}}</td>
-                                            <td>
-                                                <a href="{% url 'editar_empresa' empresa.id %}" class="btn text-secondary px-0">
-                                                    <i class="far fa-edit fa-lg"></i>
-                                                </a>
-                                                <form action="{% url 'eliminar_empresa' empresa.id %}" method="POST" class="d-inline">
-                                                    {% csrf_token %}
-                                                    <button type="submit" class="btn">
-                                                        <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
-                                                    </button>
-                                                    
-                                                </form>                                                
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                    
-                                </table>
-                            </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered">
+                                <thead class="thead-dark">
+                                    <tr> 
+                                        <th style="text-align: center; vertical-align: middle;">#</th>
+                                        <th style="text-align: center; vertical-align: middle;">NIT</th>
+                                        <th style="text-align: center; vertical-align: middle;">Nombre</th>
+                                        <th style="text-align: center; vertical-align: middle;">Estado</th>                             
+                                        <th style="text-align: center; vertical-align: middle;">Acciones</th>                             
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>                                        
+                                    {% for empresa in empresas %}
+                                    <tr> 
+                                        <td style="text-align: center; vertical-align: middle;">{{ forloop.counter }}</td>
+                                        <td style="text-align: center; vertical-align: middle;">{{empresa.nit_empresa}} </td>
+                                        <td style="text-align: center; vertical-align: middle;">{{empresa.nombre_empresa}}</td>
+                                        <td style="text-align: center; vertical-align: middle;">{{empresa.estado_empresa}}</td>
+                                        <td style="text-align: center; vertical-align: middle;">
+                                            <a href="{% url 'editar_empresa' empresa.id %}" class="btn text-secondary px-0">
+                                                <i class="far fa-edit fa-lg"></i>
+                                            </a>
+                                            <form action="{% url 'eliminar_empresa' empresa.id %}" method="POST" class="d-inline">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn">
+                                                    <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+                                                </button>
+                                                
+                                            </form>                                                
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>                             
+                            </table>
                         </div>
                     </div>
                 </div>
                 <!-- [ stiped-table ] end -->
             </div>
         </div>
-    </section>>
+    </section>
             <!-- [ br]end -->
 {% endblock content %}
 
