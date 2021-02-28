@@ -321,7 +321,6 @@ def analyze_text(account):
         for account_data in account_datas:
             if account_data['publicacion_texto']:
                 language = _get_language(text=account_data['publicacion_texto'])
-                logger.error(language)
                 if language and language=="spanish":
                     #analyze = _analyze_spanish_text(text=account_data['publicacion_texto'])
                     #analyze_list.append(analyze)
@@ -331,10 +330,13 @@ def analyze_text(account):
                     analyze_list.append(analyze)
                 else:
                     continue
+            
+            analysis = _get_analysis(analyze_list=analyze_list)
     
-    analysis = _get_analysis(analyze_list=analyze_list)
-    return analysis
-
+    account_object = cuentas_empresa.objects.get(identifier=account['identifier'])
+    account_object.avg_compound = analysis
+    account_object.save()
+            
 def _get_language(text):
     languages = ['spanish', 'english']
     tokens = nltk.tokenize.word_tokenize(text)
