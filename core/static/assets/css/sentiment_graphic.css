@@ -20,7 +20,7 @@
     width: 0;
 }
 .progress:before {
-    content: attr(data-amount)"% Complete";
+    content: attr(data-amount)"% Positive";
     position: absolute;
     top: 0;
     left: 0;

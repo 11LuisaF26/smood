@@ -1,8 +1,4 @@
 # -*- encoding: utf-8 -*-
-"""
-MIT License
-Copyright (c) 2019 - present AppSeed.us
-"""
 import io
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, get_object_or_404, redirect
@@ -286,7 +282,7 @@ def campanas_publicitarias(request):
         instagram = red_social.objects.get(nombre_red_social="Instagram")
         twitter = red_social.objects.get(nombre_red_social="Twitter")
 
-        campanas_publicitarias_to_list = campana_publicitaria.objects.all()
+        campanas_publicitarias_to_list = campana_publicitaria.objects.filter(usuario_campana=request.user)
         
         campains_list_dicts = []
         for campain in campanas_publicitarias_to_list:
@@ -303,7 +299,7 @@ def campanas_publicitarias(request):
 
                             official_facebook_dict = {
                                 'identifier': official_facebook_account_value['identifier'],
-                                'username': official_facebook_account_value['username'],
+                                'username': official_facebook_account_value['username'].capitalize(),
                                 'created_at': official_facebook_account_value['created_at'], 
                                 'location': official_facebook_account_value['location'],
                                 'followers_count':official_facebook_account_value['followers_count'],
@@ -311,7 +307,7 @@ def campanas_publicitarias(request):
                                 'post_count': official_facebook_account_value['post_count'],
                                 'listed_count': official_facebook_account_value['listed_count'],
                                 'red_social': "facebook",
-                                'compound': official_facebook_account_value['avg_compound']
+                                'compound': round(compund, 2)
                             }
                             official_escuchas_list_dicts.append(official_facebook_dict)
 
@@ -323,13 +319,13 @@ def campanas_publicitarias(request):
                             compund = get_compund(official_instagram_account_value['avg_compound'])
                             official_instagram_dict = {
                                 'identifier': official_instagram_account_value['identifier'],
-                                'username': official_instagram_account_value['username'],
+                                'username': official_instagram_account_value['username'].capitalize(),
                                 'followers_count':official_instagram_account_value['followers_count'],
                                 'following_count':official_instagram_account_value['following_count'],
                                 'post_count': official_instagram_account_value['post_count'],
                                 'listed_count': official_instagram_account_value['listed_count'],
                                 'red_social': "Instagram",
-                                'compound': compund
+                                'compound': round(compund, 2)
                             }
                             official_escuchas_list_dicts.append(official_instagram_dict)
 
@@ -342,7 +338,7 @@ def campanas_publicitarias(request):
                             compund = get_compund(official_twitter_account_value['avg_compound'])
                             official_twitter_dict = {
                                 'identifier': official_twitter_account_value['identifier'],
-                                'username': official_twitter_account_value['username'],
+                                'username': official_twitter_account_value['username'].capitalize(),
                                 'created_at': official_twitter_account_value['created_at'],
                                 'location': official_twitter_account_value['location'],
                                 'followers_count':official_twitter_account_value['followers_count'],
@@ -350,7 +346,7 @@ def campanas_publicitarias(request):
                                 'post_count': official_twitter_account_value['post_count'],
                                 'listed_count': official_twitter_account_value['listed_count'],
                                 'red_social': "Twitter",
-                                'compound': compund
+                                'compound': round(compund, 2)
                             }
                             official_escuchas_list_dicts.append(official_twitter_dict)
 
@@ -366,7 +362,7 @@ def campanas_publicitarias(request):
                             compund = get_compund(unofficial_facebook_account_value['avg_compound'])
                             unofficial_facebook_dict = {
                                 'identifier': unofficial_facebook_account_value['identifier'],
-                                'username': unofficial_facebook_account_value['username'],
+                                'username': unofficial_facebook_account_value['username'].capitalize(),
                                 'created_at': unofficial_facebook_account_value['created_at'], 
                                 'location': unofficial_facebook_account_value['location'],
                                 'followers_count':unofficial_facebook_account_value['followers_count'],
@@ -374,7 +370,7 @@ def campanas_publicitarias(request):
                                 'post_count': unofficial_facebook_account_value['post_count'],
                                 'listed_count': unofficial_facebook_account_value['listed_count'],
                                 'red_social': "Facebook",
-                                'compound': compund
+                                'compound': round(compund, 2)
                             }
                             unofficial_escuchas_list_dicts.append(unofficial_facebook_dict)
                     
@@ -386,13 +382,13 @@ def campanas_publicitarias(request):
                             compund = get_compund(unofficial_instagram_account_value['avg_compound'])
                             unofficial_instagram_dict = {
                                 'identifier': unofficial_instagram_account_value['identifier'],
-                                'username': unofficial_instagram_account_value['username'],
+                                'username': unofficial_instagram_account_value['username'].capitalize(),
                                 'followers_count':unofficial_instagram_account_value['followers_count'],
                                 'following_count':unofficial_instagram_account_value['following_count'],
                                 'post_count': unofficial_instagram_account_value['post_count'],
                                 'listed_count': unofficial_instagram_account_value['listed_count'],
                                 'red_social': "Instagram",
-                                'compound': compund
+                                'compound': round(compund, 2)
                             }
                             unofficial_escuchas_list_dicts.append(unofficial_instagram_dict)
                     
@@ -404,7 +400,7 @@ def campanas_publicitarias(request):
                             compund = get_compund(unofficial_twitter_account_value['avg_compound'])
                             official_twitter_dict = {
                                 'identifier': unofficial_twitter_account_value['identifier'],
-                                'username': unofficial_twitter_account_value['username'],
+                                'username': unofficial_twitter_account_value['username'].capitalize(),
                                 'created_at': unofficial_twitter_account_value['created_at'], 
                                 'location': unofficial_twitter_account_value['location'],
                                 'followers_count':unofficial_twitter_account_value['followers_count'],
@@ -412,7 +408,7 @@ def campanas_publicitarias(request):
                                 'post_count': unofficial_twitter_account_value['post_count'],
                                 'listed_count': unofficial_twitter_account_value['listed_count'],
                                 'red_social': "Twitter",
-                                'compound': unofficial_twitter_account_value['avg_compound']
+                                'compound': round(compund, 2)
                             }
                             unofficial_escuchas_list_dicts.append(official_twitter_dict)
 
