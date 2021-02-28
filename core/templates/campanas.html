@@ -3,7 +3,11 @@
 {% block title %} Campanas {% endblock %}
 
 <!-- Specific CSS goes HERE -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}
+    
+    <link rel="stylesheet" href="/static/assets/css/sentiment_graphic.css">
+    
+{% endblock stylesheets %}
 
 {% block content %}
 
@@ -51,8 +55,15 @@
                                                     <h6>Publicaciones: {{oficcial_escucha.post_count}}</h6>
                                                     <h6>Fecha de creación: {{oficcial_escucha.created_at}}</h6>
                                                     <h6>Lugar de creación: {{oficcial_escucha.location}}</h6>
-                                                <div class="card-body">
+                                                <div>
                                                 <i class="fab fa-facebook text-c-blue d-block f-40"></i>
+                                            </div>
+                                            <div class="card-footer" style="color:#000000">
+                                                <div class="progress" data-amount="{{oficcial_escucha.compound}}">
+                                                    <div class="amount"></div>
+                                                </div>
+                                                <span style='font-size:20px;float:left;'>&#128545;</span>
+                                                <span style='font-size:20px;float:right;'>&#128512;</span>
                                             </div>
                                         </div>
                                     {% endif %}
@@ -67,6 +78,13 @@
                                                     <h6>Publicaciones: {{oficcial_escucha.post_count}}</h6>
                                                 </div>
                                                 <i class="fab fa-instagram text-c-red d-block f-40"></i>
+                                            </div>
+                                            <div class="card-footer" style="color:#000000">
+                                                <div class="progress" data-amount="{{oficcial_escucha.compound}}">
+                                                    <div class="amount"></div>
+                                                </div>
+                                                <span style='font-size:20px;float:left;'>&#128545;</span>
+                                                <span style='font-size:20px;float:right;'>&#128512;</span>
                                             </div>
                                         </div>
                                     {% endif %}
@@ -83,6 +101,13 @@
                                                     <h6>Lugar de creación: {{oficcial_escucha.location}}</h6>
                                                 </div>
                                                 <i class="fab fa-twitter text-c-green d-block f-40"></i>
+                                            </div>
+                                            <div class="card-footer" style="color:#000000">
+                                                <div class="progress" data-amount="{{oficcial_escucha.compound}}">
+                                                    <div class="amount"></div>
+                                                </div>
+                                                <span style='font-size:20px;float:left;'>&#128545;</span>
+                                                <span style='font-size:20px;float:right;'>&#128512;</span>
                                             </div>
                                         </div>
                                     {% endif %}
@@ -105,8 +130,15 @@
                                                     <h6>Publicaciones: {{unoficcial_escucha.post_count}}</h6>
                                                     <h6>Fecha de creación: {{unoficcial_escucha.created_at}}</h6>
                                                     <h6>Lugar de creación: {{unoficcial_escucha.location}}</h6>
-                                                <div class="card-body">
+                                                <div>
                                                 <i class="fab fa-facebook text-c-blue d-block f-40"></i>
+                                            </div>
+                                            <div class="card-footer" style="color:#000000">
+                                                <div class="progress" data-amount="{{unoficcial_escucha.compound}}">
+                                                    <div class="amount"></div>
+                                                </div>
+                                                <span style='font-size:20px;float:left;'>&#128545;</span>
+                                                <span style='font-size:20px;float:right;'>&#128512;</span>
                                             </div>
                                         </div>
                                     {% endif %}
@@ -121,6 +153,13 @@
                                                     <h6>Publicaciones: {{unoficcial_escucha.post_count}}</h6>
                                                 </div>
                                                 <i class="fab fa-instagram text-c-red d-block f-40"></i>
+                                            </div>
+                                            <div class="card-footer" style="color:#000000">
+                                                <div class="progress" data-amount="{{unoficcial_escucha.compound}}">
+                                                    <div class="amount"></div>
+                                                </div>
+                                                <span style='font-size:20px;float:left;'>&#128545;</span>
+                                                <span style='font-size:20px;float:right;'>&#128512;</span>
                                             </div>
                                         </div>
                                     {% endif %}
@@ -137,6 +176,13 @@
                                                     <h6>Lugar de creación: {{unoficcial_escucha.location}}</h6>
                                                 </div>
                                                 <i class="fab fa-twitter text-c-green d-block f-40"></i>
+                                            </div>
+                                            <div class="card-footer" style="color:#000000">
+                                                <div class="progress" data-amount="{{unoficcial_escucha.compound}}">
+                                                    <div class="amount"></div>
+                                                </div>
+                                                <span style='font-size:20px;float:left;'>&#128545;</span>
+                                                <span style='font-size:20px;float:right;'>&#128512;</span>
                                             </div>
                                         </div>
                                     {% endif %}
@@ -216,5 +262,14 @@
 <script src="/static/assets/js/plugins/apexcharts.min.js"></script>
 <!-- custom-chart js -->
 <script src="/static/assets/js/pages/dashboard-main.js"></script>
+
+<script>
+    $(document).ready(function () {
+    var dataval = parseInt($('.progress').attr("data-amount"));
+        if (dataval < 100) {
+            $('.progress .amount').css("width", 100 - dataval + "%");
+        }
+    });
+</script>
 
 {% endblock javascripts %}

@@ -298,6 +298,9 @@ def campanas_publicitarias(request):
                     if official_facebook_account_values:
                         for official_facebook_account_value in official_facebook_account_values:
                             text_analysis_task = analyze_text(account=official_facebook_account_value)
+                            get_compund = lambda x: 50*x + 50
+                            compund = get_compund(official_facebook_account_value['avg_compound'])
+
                             official_facebook_dict = {
                                 'identifier': official_facebook_account_value['identifier'],
                                 'username': official_facebook_account_value['username'],
@@ -316,6 +319,8 @@ def campanas_publicitarias(request):
                     if official_instagram_account_values:
                         for official_instagram_account_value in official_instagram_account_values:
                             text_analysis_task = analyze_text(account=official_instagram_account_value)
+                            get_compund = lambda x: 50*x + 50
+                            compund = get_compund(official_instagram_account_value['avg_compound'])
                             official_instagram_dict = {
                                 'identifier': official_instagram_account_value['identifier'],
                                 'username': official_instagram_account_value['username'],
@@ -324,7 +329,7 @@ def campanas_publicitarias(request):
                                 'post_count': official_instagram_account_value['post_count'],
                                 'listed_count': official_instagram_account_value['listed_count'],
                                 'red_social': "Instagram",
-                                'compound': official_instagram_account_value['avg_compound']
+                                'compound': compund
                             }
                             official_escuchas_list_dicts.append(official_instagram_dict)
 
@@ -332,8 +337,9 @@ def campanas_publicitarias(request):
                     
                     if official_twitter_account_values:
                         for official_twitter_account_value in official_twitter_account_values:
-                            #official_escuchas_list_dicts.append(official_twitter_account_value)
                             text_analysis_task = analyze_text(account=official_twitter_account_value)
+                            get_compund = lambda x: 50*x + 50
+                            compund = get_compund(official_twitter_account_value['avg_compound'])
                             official_twitter_dict = {
                                 'identifier': official_twitter_account_value['identifier'],
                                 'username': official_twitter_account_value['username'],
@@ -344,7 +350,7 @@ def campanas_publicitarias(request):
                                 'post_count': official_twitter_account_value['post_count'],
                                 'listed_count': official_twitter_account_value['listed_count'],
                                 'red_social': "Twitter",
-                                'compound': official_twitter_account_value['avg_compound']
+                                'compound': compund
                             }
                             official_escuchas_list_dicts.append(official_twitter_dict)
 
@@ -356,7 +362,8 @@ def campanas_publicitarias(request):
                     if unofficial_facebook_account_values:
                         for unofficial_facebook_account_value in unofficial_facebook_account_values:
                             text_analysis_task = analyze_text(account=unofficial_facebook_account_value)
-                            #official_escuchas_list_dicts.append(unofficial_facebook_account_value)
+                            get_compund = lambda x: 50*x + 50
+                            compund = get_compund(unofficial_facebook_account_value['avg_compound'])
                             unofficial_facebook_dict = {
                                 'identifier': unofficial_facebook_account_value['identifier'],
                                 'username': unofficial_facebook_account_value['username'],
@@ -367,7 +374,7 @@ def campanas_publicitarias(request):
                                 'post_count': unofficial_facebook_account_value['post_count'],
                                 'listed_count': unofficial_facebook_account_value['listed_count'],
                                 'red_social': "Facebook",
-                                'compound': unofficial_facebook_account_value['avg_compound']
+                                'compound': compund
                             }
                             unofficial_escuchas_list_dicts.append(unofficial_facebook_dict)
                     
@@ -375,7 +382,8 @@ def campanas_publicitarias(request):
                     if unofficial_instagram_account_values:
                         for unofficial_instagram_account_value in unofficial_instagram_account_values:
                             text_analysis_task = analyze_text(account=unofficial_instagram_account_value)
-                            #official_escuchas_list_dicts.append(unofficial_instagram_account_value)
+                            get_compund = lambda x: 50*x + 50
+                            compund = get_compund(unofficial_instagram_account_value['avg_compound'])
                             unofficial_instagram_dict = {
                                 'identifier': unofficial_instagram_account_value['identifier'],
                                 'username': unofficial_instagram_account_value['username'],
@@ -384,7 +392,7 @@ def campanas_publicitarias(request):
                                 'post_count': unofficial_instagram_account_value['post_count'],
                                 'listed_count': unofficial_instagram_account_value['listed_count'],
                                 'red_social': "Instagram",
-                                'compound': unofficial_instagram_account_value['avg_compound']
+                                'compound': compund
                             }
                             unofficial_escuchas_list_dicts.append(unofficial_instagram_dict)
                     
@@ -392,7 +400,8 @@ def campanas_publicitarias(request):
                     if unofficial_twitter_account_values:
                         for unofficial_twitter_account_value in unofficial_twitter_account_values:
                             text_analysis_task = analyze_text(account=unofficial_twitter_account_value)
-                            #official_escuchas_list_dicts.append(unofficial_twitter_account_value)
+                            get_compund = lambda x: 50*x + 50
+                            compund = get_compund(unofficial_twitter_account_value['avg_compound'])
                             official_twitter_dict = {
                                 'identifier': unofficial_twitter_account_value['identifier'],
                                 'username': unofficial_twitter_account_value['username'],
