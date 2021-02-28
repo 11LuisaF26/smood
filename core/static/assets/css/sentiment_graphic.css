@@ -20,7 +20,7 @@
     width: 0;
 }
 .progress:before {
-    content: attr(data-amount)"% Positive";
+    content: attr(data-amount)"";
     position: absolute;
     top: 0;
     left: 0;
@@ -28,5 +28,6 @@
     height: 100%;
     z-index: 10;
     text-align: center;
-    line-height: 31px;
+    line-height: 100%;
+    vertical-align: middle;
 }
