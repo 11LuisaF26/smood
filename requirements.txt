@@ -94,4 +94,3 @@ Wikipedia-API==0.5.4
 wordcloud==1.8.0
 wrapt==1.12.1
 zipp==3.1.0
-spanish-sentiment-analysis
