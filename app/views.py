@@ -23,7 +23,7 @@ import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 #nltk.download('punkt')
 #nltk.download('vader_lexicon')
-from sentiment_analysis_spanish import sentiment_analysis
+#from sentiment_analysis_spanish import sentiment_analysis
 
 logger = logging.getLogger(__name__)
 
