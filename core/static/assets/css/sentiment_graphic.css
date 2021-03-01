@@ -1,0 +1,33 @@
+.progress {
+    position: relative;
+    height: 31px;
+    background: rgb(255, 0, 0);
+    background: -moz-linear-gradient(left, rgba(255, 0, 0, 1) 0%, rgba(0, 255, 0, 1) 100%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(255, 0, 0, 1)), color-stop(100%, rgba(0, 255, 0, 1)));
+    background: -webkit-linear-gradient(left, rgba(255, 0, 0, 1) 0%, rgba(0, 255, 0, 1) 100%);
+    background: -o-linear-gradient(left, rgba(255, 0, 0, 1) 0%, rgba(0, 255, 0, 1) 100%);
+    background: -ms-linear-gradient(left, rgba(255, 0, 0, 1) 0%, rgba(0, 255, 0, 1) 100%);
+    background: linear-gradient(to right, rgba(255, 0, 0, 1) 0%, rgba(0, 255, 0, 1) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ff0000', endColorstr='#00ff00', GradientType=1);
+}
+.amount {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    transition: all 0.8s;
+    background: white;
+    width: 0;
+}
+.progress:before {
+    content: attr(data-amount)"";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    text-align: center;
+    line-height: 100%;
+    vertical-align: middle;
+}

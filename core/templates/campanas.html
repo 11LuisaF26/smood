@@ -1,143 +1,406 @@
-{% extends "layouts/base.html" %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block title %} Campanas {% endblock %}
+<head>
 
-<!-- Specific CSS goes HERE -->
-{% block stylesheets %}{% endblock stylesheets %}
+    <title>
+        Dashboard
+    </title> 
 
-{% block content %}
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="">
+    <meta name="author" content="Utadeo" />
+    <link rel="stylesheet" href="/static/assets/css/plugins/Chart.min.css">
+    <link rel="stylesheet" href="/static/assets/css/sentiment_graphic.css">
+    <script src="/static/assets/js/chart_js/Chart.bundle.min.js"></script>
+    <script src="/static/assets/js/chart_js/Chart.min.js"></script>
+    <!-- Favicon icon -->
+    <link rel="icon" href="/static/assets/images/favicon.ico" type="image/x-icon">
 
-<!-- [ Main Content ] start -->
-<section class="pcoded-main-container">
-    <div class="pcoded-content">
-        <!--Innit campaings-->
-        <div class="row">
-            {% for campana_publicitaria in campanas_publicitarias %}
-            <div class="col-sm-4 col-md-4 col-xl-4">
-                <div class="card border border-primary mb-3">
-                    <div class="card-header bg-transparent border border-primary">
-                        <h5 class="card-title">{{campana_publicitaria.campain_name}}</h5>
-                        <div class="card-header-right">
-                            <div class="btn-group card-option">
-                                <button type="button" class="btn dropdown-toggle btn-icon" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    <i class="feather icon-more-horizontal"></i>
-                                </button>
-                                <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right">
-                                    <li class="dropdown-item reload-card"><a
-                                            href="{% url 'editar_campana' campana_publicitaria.campain_id %}"><i
-                                                class="feather icon-edit"></i> Editar</a></li>
-                                    <li class="dropdown-item close-card"><a
-                                            href="{% url 'eliminar_campana' campana_publicitaria.campain_id %}"><i
-                                                class="feather icon-trash"></i> Eliminar</a></li>
+    <!-- prism css -->
+    <link rel="stylesheet" href="/static/assets/css/plugins/prism-coy.css">
+    <!-- vendor css -->
+    <link rel="stylesheet" href="/static/assets/css/style.css">
+
+</head>
+<body>
+
+    <!-- [ Pre-loader ] start -->
+    <div class="loader-bg">
+        <div class="loader-track">
+            <div class="loader-fill"></div>
+        </div>
+    </div>
+    <!-- [ Pre-loader ] End -->
+
+    <!-- [ navigation menu ] start -->
+    <nav class="pcoded-navbar theme-horizontal menu-light brand-blue">
+        <div class="navbar-wrapper container">
+            <div class="navbar-content sidenav-horizontal" id="layout-sidenav">
+                <ul class="nav pcoded-inner-navbar sidenav-inner">
+                    <li class="nav-item pcoded-menu-caption">
+                    	<label>Navigation</label>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
+                    </li>
+                    <li class="nav-item pcoded-hasmenu">
+                        <a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Empresas</span></a>
+                        <ul class="pcoded-submenu">
+                            {% if perms.app.view_empresa %}
+                            <li><a href="/empresas/">Empresas</a></li>					        
+                            {% endif %}
+                            {% if perms.app.add_empresa %}
+                            <li><a href="/empresas/save/">Crear empresa</a></li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item pcoded-hasmenu">
+                        <a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Campañas</span></a>
+                        <!--ul class="pcoded-submenu">
+                            {% if perms.app.view_campana_publicitaria %}
+							<li><a href="/campanas/">Campañas</a></li>
+							{% endif %}	
+							{% if perms.app.add_campana_publicitaria %}
+							<li><a href="/campanas/save/">Crear campaña</a></li>					        
+							{% endif %}	
+                        </ul-->
+                        <ul class="pcoded-submenu">
+							{% if perms.app.add_campana_publicitaria %}
+							<li><a href="/campanas/save/">Crear campaña</a></li>					        
+							{% endif %}	
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/acercade/ " class="nav-link ">
+                            <span class="pcoded-micon">
+                                <i class="feather icon-layers"></i>
+                            </span>
+                            <span class="pcoded-mtext">
+                                Acerca de
+                            </span>
+                        </a>
+					</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- [ navigation menu ] end -->
+
+    <!-- [ Header ] start -->
+    <header class="navbar pcoded-header navbar-expand-lg navbar-light header-blue">
+        <div class="container">
+            <div class="m-header">
+                <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
+                <a href="#!" class="b-brand">
+                    <!-- ========   change your logo hear   ============ -->
+                    <img src="/static/assets/images/3logo.png" alt="" class="logo" width="35" height="35">
+                    <img src="/static/assets/images/logo-icon.png" alt="" class="logo-thumb">
+                </a>
+                <a href="#!" class="mob-toggler">
+                    <i class="feather icon-more-vertical"></i>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li>
+                        <div class="dropdown drp-user">
+                            <a href="#!" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="/static/assets/images/utadeo.png" class="img-radius wid-70" alt="User-Profile-Image">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right profile-notification">
+                                <div class="pro-head">
+                                    <img src="/static/assets/images/utadeo.png" class="img-radius" alt="User-Profile-Image">
+                                    <span>
+                                        {{ request.user.username }}
+                                    </span>
+                                    <a href={% url 'logout' %} class="dud-logout" title="Logout">
+                                        <i class="feather icon-log-out"></i>
+                                    </a>
+                                </div>
+                                <ul class="pro-body">
+                                    <li><a href="user-profile.html" class="dropdown-item"><i class="feather icon-user"></i>{{ request.user.email }}</a></li>
+                                    <!--li><a href="email_inbox.html" class="dropdown-item"><i class="feather icon-mail"></i> My Messages</a></li-->
+                                    <li><a href={% url 'logout' %} class="dropdown-item"><i class="feather icon-lock"></i> Logout</a></li>
                                 </ul>
                             </div>
                         </div>
-                    </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper container">
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <!--Innit campaings-->
+                            <div class="row">
+                                {% for campana_publicitaria in campanas_publicitarias %}
+                                <div class="col-sm-4 col-md-4 col-xl-4">
+                                    <div class="card border border-primary mb-3">
+                                        <div class="card-header bg-transparent border border-primary">
+                                            <h5 class="card-title">{{campana_publicitaria.campain_name}}</h5>
+                                            <div class="card-header-right">
+                                                <div class="btn-group card-option">
+                                                    <button type="button" class="btn dropdown-toggle btn-icon" data-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                        <i class="feather icon-more-horizontal"></i>
+                                                    </button>
+                                                    <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right">
+                                                        <li class="dropdown-item reload-card"><a
+                                                                href="{% url 'editar_campana' campana_publicitaria.campain_id %}"><i
+                                                                    class="feather icon-edit"></i> Editar</a></li>
+                                                        <li class="dropdown-item close-card"><a
+                                                                href="{% url 'eliminar_campana' campana_publicitaria.campain_id %}"><i
+                                                                    class="feather icon-trash"></i> Eliminar</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                    <div class="card-body text-success border border-primary">
-                        <div class="row">
-                            <div class="col-sm-6 col-md-6 col-xl-6">
-                                </br>
-                                <h5>Escuchas oficiales</h5>
-                                {% for oficcial_escucha in campana_publicitaria.oficcial_escuchas %}
-                                    </br>
-                                    <h6>Red social: {{oficcial_escucha.red_social}}</h6>
-                                    <h6>Usuario: {{oficcial_escucha.username}}</h6>
-                                    <h6>Fecha de creación: {{oficcial_escucha.created_at}}</h6>
-                                    <h6>Lugar de creación: {{oficcial_escucha.location}}</h6>
-                                    <h6>Seguidores: {{oficcial_escucha.followers_count}}</h6>
-                                    <h6>Seguidos: {{oficcial_escucha.following_count}}</h6>
-                                    <h6>Publicaciones: {{oficcial_escucha.post_count}}</h6>
+                                        <div class="card-body text-success border border-primary">
+                                            <div class="row">
+                                                <div class="col-sm-6 col-md-6 col-xl-6">
+                                                    </br>
+                                                    <h5>Empresa</h5>
+                                                    {% for oficcial_escucha in campana_publicitaria.oficcial_escuchas %}
+                                                        {% if oficcial_escucha.red_social == "Facebook" %}
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div align="left">
+                                                                        <h6>{{oficcial_escucha.username}}</h6>
+                                                                        <h6>Seguidores: {{oficcial_escucha.followers_count}}</h6>
+                                                                        <h6>Seguidos: {{oficcial_escucha.following_count}}</h6>
+                                                                        <h6>Publicaciones: {{oficcial_escucha.post_count}}</h6>
+                                                                        <h6>Fecha de creación: {{oficcial_escucha.created_at}}</h6>
+                                                                        <h6>Lugar de creación: {{oficcial_escucha.location}}</h6>
+                                                                    <div>
+                                                                    <i class="fab fa-facebook text-c-blue d-block f-40"></i>
+                                                                </div>
+                                                                <div class="card-footer" style="color:#000000">
+                                                                    <div class="progress" data-amount="{{oficcial_escucha.compound}}">
+                                                                        <div class="amount"></div>
+                                                                    </div>
+                                                                    <span style='font-size:20px;float:left;'>&#128545;</span>
+                                                                    <span style='font-size:20px;float:right;'>&#128512;</span>
+                                                                </div>
+                                                            </div>
+                                                        {% endif %}
+
+                                                        {% if oficcial_escucha.red_social == "Instagram" %}
+                                                            <div class="card">
+                                                                <div class="card-body text-center">
+                                                                    <div align="left">
+                                                                        <h6>{{oficcial_escucha.username}}</h6>
+                                                                        <h6>Seguidores: {{oficcial_escucha.followers_count}}</h6>
+                                                                        <h6>Seguidos: {{oficcial_escucha.following_count}}</h6>
+                                                                        <h6>Publicaciones: {{oficcial_escucha.post_count}}</h6>
+                                                                    </div>
+                                                                    <i class="fab fa-instagram text-c-red d-block f-40"></i>
+                                                                </div>
+                                                                <div class="card-footer" style="color:#000000">
+                                                                    <div class="progress" data-amount="{{oficcial_escucha.compound}}">
+                                                                        <div class="amount"></div>
+                                                                    </div>
+                                                                    <span style='font-size:20px;float:left;'>&#128545;</span>
+                                                                    <span style='font-size:20px;float:right;'>&#128512;</span>
+                                                                </div>
+                                                            </div>
+                                                        {% endif %}
+
+                                                        {% if oficcial_escucha.red_social == "Twitter" %}
+                                                            <div class="card">
+                                                                <div class="card-body text-center">
+                                                                    <div align="left">
+                                                                        <h6>{{oficcial_escucha.username}}</h6>
+                                                                        <h6>Seguidores: {{oficcial_escucha.followers_count}}</h6>
+                                                                        <h6>Seguidos: {{oficcial_escucha.following_count}}</h6>
+                                                                        <h6>Publicaciones: {{oficcial_escucha.post_count}}</h6>
+                                                                        <h6>Fecha de creación: {{oficcial_escucha.created_at}}</h6>
+                                                                        <h6>Lugar de creación: {{oficcial_escucha.location}}</h6>
+                                                                    </div>
+                                                                    <i class="fab fa-twitter text-c-green d-block f-40"></i>
+                                                                </div>
+                                                                <div class="card-footer" style="color:#000000">
+                                                                    <div class="progress" data-amount="{{oficcial_escucha.compound}}">
+                                                                        <div class="amount"></div>
+                                                                    </div>
+                                                                    <span style='font-size:20px;float:left;'>&#128545;</span>
+                                                                    <span style='font-size:20px;float:right;'>&#128512;</span>
+                                                                </div>
+                                                            </div>
+                                                        {% endif %}
+                                                        </br>
+                                                        
+                                                    {% endfor %}
+                                                </div>
+
+                                                <div class="col-sm-6 col-md-6 col-xl-6">
+                                                    </br>
+                                                    <h5>Competencia</h5>
+                                                    {% for unoficcial_escucha in campana_publicitaria.unofficial_escuchas %}
+                                                        {% if unoficcial_escucha.red_social == "Facebook" %}
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div align="left">
+                                                                        <h6>{{unoficcial_escucha.username}}</h6>
+                                                                        <h6>Seguidores: {{unoficcial_escucha.followers_count}}</h6>
+                                                                        <h6>Seguidos: {{unoficcial_escucha.following_count}}</h6>
+                                                                        <h6>Publicaciones: {{unoficcial_escucha.post_count}}</h6>
+                                                                        <h6>Fecha de creación: {{unoficcial_escucha.created_at}}</h6>
+                                                                        <h6>Lugar de creación: {{unoficcial_escucha.location}}</h6>
+                                                                    <div>
+                                                                    <i class="fab fa-facebook text-c-blue d-block f-40"></i>
+                                                                </div>
+                                                                <div class="card-footer" style="color:#000000">
+                                                                    <div class="progress" data-amount="{{unoficcial_escucha.compound}}">
+                                                                        <div class="amount"></div>
+                                                                    </div>
+                                                                    <span style='font-size:20px;float:left;'>&#128545;</span>
+                                                                    <span style='font-size:20px;float:right;'>&#128512;</span>
+                                                                </div>
+                                                            </div>
+                                                        {% endif %}
+
+                                                        {% if unoficcial_escucha.red_social == "Instagram" %}
+                                                            <div class="card">
+                                                                <div class="card-body text-center">
+                                                                    <div align="left">
+                                                                        <h6>{{unoficcial_escucha.username}}</h6>
+                                                                        <h6>Seguidores: {{unoficcial_escucha.followers_count}}</h6>
+                                                                        <h6>Seguidos: {{unoficcial_escucha.following_count}}</h6>
+                                                                        <h6>Publicaciones: {{unoficcial_escucha.post_count}}</h6>
+                                                                    </div>
+                                                                    <i class="fab fa-instagram text-c-red d-block f-40"></i>
+                                                                </div>
+                                                                <div class="card-footer" style="color:#000000">
+                                                                    <div class="progress" data-amount="{{unoficcial_escucha.compound}}">
+                                                                        <div class="amount"></div>
+                                                                    </div>
+                                                                    <span style='font-size:20px;float:left;'>&#128545;</span>
+                                                                    <span style='font-size:20px;float:right;'>&#128512;</span>
+                                                                </div>
+                                                            </div>
+                                                        {% endif %}
+
+                                                        {% if unoficcial_escucha.red_social == "Twitter" %}
+                                                            <div class="card">
+                                                                <div class="card-body text-center">
+                                                                    <div align="left">
+                                                                        <h6>{{unoficcial_escucha.username}}</h6>
+                                                                        <h6>Seguidores: {{unoficcial_escucha.followers_count}}</h6>
+                                                                        <h6>Seguidos: {{unoficcial_escucha.following_count}}</h6>
+                                                                        <h6>Publicaciones: {{unoficcial_escucha.post_count}}</h6>
+                                                                        <h6>Fecha de creación: {{unoficcial_escucha.created_at}}</h6>
+                                                                        <h6>Lugar de creación: {{unoficcial_escucha.location}}</h6>
+                                                                    </div>
+                                                                    <i class="fab fa-twitter text-c-green d-block f-40"></i>
+                                                                </div>
+                                                                <div class="card-footer" style="color:#000000">
+                                                                    <div class="progress" data-amount="{{unoficcial_escucha.compound}}">
+                                                                        <div class="amount"></div>
+                                                                    </div>
+                                                                    <span style='font-size:20px;float:left;'>&#128545;</span>
+                                                                    <span style='font-size:20px;float:right;'>&#128512;</span>
+                                                                </div>
+                                                            </div>
+                                                        {% endif %}
+                                                        </br>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                            </br>
+                                            </br>
+                                            <div class="row">
+                                                <div class="col-sm-6 col-md-6 col-xl-6">
+                                                    <div align="center">
+                                                        <div>
+                                                            <a href="{% url 'nube_de_palabras_twitter' campana_publicitaria.campain_id %}"
+                                                                class="btn btn-outline-secondary" style="align-content: initial;"><i
+                                                                    class="fab fa-twitter" style="color: #00acee;"></i></a>
+
+                                                            <a href="{% url 'nube_de_palabras_fb' campana_publicitaria.campain_id %}"
+                                                                class="btn btn-outline-secondary" align="left"><i class="fab fa-facebook"
+                                                                    style="color: #3b5998;"></i></a>
+
+                                                            <a href="{% url 'nube_de_palabras_ig' campana_publicitaria.campain_id %}"
+                                                                class="btn btn-outline-secondary" align="left"><i class="fab fa-instagram"
+                                                                    style="color: #C13584;"></i></a>
+                                                        </div>
+                                                        <a style="color: #6c757d;"><i class="fa fa-cloud" style="font-size:20px"></i> Nube de palabras</a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 col-md-6 col-xl-6">
+                                                    <div align="center">
+                                                        <div>
+                                                            <a href="{% url 'red_de_palabras_twitter' campana_publicitaria.campain_id %}"
+                                                                class="btn btn-outline-secondary" style="align-content: initial;"><i
+                                                                    class="fab fa-twitter" style="color: #00acee;"></i></a>
+
+                                                            <a href="{% url 'red_de_palabras_fb' campana_publicitaria.campain_id %}"
+                                                                class="btn btn-outline-secondary" align="left"><i class="fab fa-facebook"
+                                                                    style="color: #3b5998;"></i></a>
+
+                                                            <a href="{% url 'red_de_palabras_ig' campana_publicitaria.campain_id %}"
+                                                                class="btn btn-outline-secondary" align="left"><i class="fab fa-instagram"
+                                                                    style="color: #C13584;"></i></a>
+                                                        </div>
+                                                        <a style="color: #6c757d;"><i class="fas fa-project-diagram"
+                                                                style="font-size:20px"></i> Nube de palabras</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card-footer bg-transparent border-success">
+                                            <div align="center">
+                                                </br>
+                                                <a href="{% url 'escuchas_campana' campana_publicitaria.campain_id %}"
+                                                    class="btn btn-outline-secondary"><i class="feather mr-2 icon-list"></i>Ver
+                                                    escuchas</a>
+                                                <a href="/escucha/save" class="btn btn-outline-success"><i
+                                                        class="feather mr-2 icon-plus-square"></i>Escuchas</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 {% endfor %}
                             </div>
-
-                            <div class="col-sm-6 col-md-6 col-xl-6">
-                                </br>
-                                <h5>Competencia</h5>
-                                {% for unoficcial_escucha in campana_publicitaria.unofficial_escuchas %}
-                                    </br>
-                                    <h6>Red social: {{unoficcial_escucha.red_social}}</h6>
-                                    <h6>Usuario: {{unoficcial_escucha.username}}</h6>
-                                    <h6>Fecha de creación: {{unoficcial_escucha.created_at}}</h6>
-                                    <h6>Lugar de creación: {{unoficcial_escucha.location}}</h6>
-                                    <h6>Seguidores: {{unoficcial_escucha.followers_count}}</h6>
-                                    <h6>Seguidos: {{unoficcial_escucha.following_count}}</h6>
-                                    <h6>Publicaciones: {{unoficcial_escucha.post_count}}</h6>
-                                {% endfor %}
-                            </div>
-                        </div>
-                        </br>
-                        </br>
-                        <div class="row">
-                            <div class="col-sm-6 col-md-6 col-xl-6">
-                                <div align="center">
-                                    <div>
-                                        <a href="{% url 'nube_de_palabras_twitter' campana_publicitaria.campain_id %}"
-                                            class="btn btn-outline-secondary" style="align-content: initial;"><i
-                                                class="fab fa-twitter" style="color: #00acee;"></i></a>
-
-                                        <a href="{% url 'nube_de_palabras_fb' campana_publicitaria.campain_id %}"
-                                            class="btn btn-outline-secondary" align="left"><i class="fab fa-facebook"
-                                                style="color: #3b5998;"></i></a>
-
-                                        <a href="{% url 'nube_de_palabras_ig' campana_publicitaria.campain_id %}"
-                                            class="btn btn-outline-secondary" align="left"><i class="fab fa-instagram"
-                                                style="color: #C13584;"></i></a>
-                                    </div>
-                                    <a style="color: #6c757d;"><i class="fa fa-cloud" style="font-size:20px"></i> Nube de palabras</a>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-md-6 col-xl-6">
-                                <div align="center">
-                                    <div>
-                                        <a href="{% url 'red_de_palabras_twitter' campana_publicitaria.campain_id %}"
-                                            class="btn btn-outline-secondary" style="align-content: initial;"><i
-                                                class="fab fa-twitter" style="color: #00acee;"></i></a>
-
-                                        <a href="{% url 'red_de_palabras_fb' campana_publicitaria.campain_id %}"
-                                            class="btn btn-outline-secondary" align="left"><i class="fab fa-facebook"
-                                                style="color: #3b5998;"></i></a>
-
-                                        <a href="{% url 'red_de_palabras_ig' campana_publicitaria.campain_id %}"
-                                            class="btn btn-outline-secondary" align="left"><i class="fab fa-instagram"
-                                                style="color: #C13584;"></i></a>
-                                    </div>
-                                    <a style="color: #6c757d;"><i class="fas fa-project-diagram"
-                                            style="font-size:20px"></i> Nube de palabras</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card-footer bg-transparent border-success">
-                        <div align="center">
-                            </br>
-                            <a href="{% url 'escuchas_campana' campana_publicitaria.campain_id %}"
-                                class="btn btn-outline-secondary"><i class="feather mr-2 icon-list"></i>Ver
-                                escuchas</a>
-                            <a href="/escucha/save" class="btn btn-outline-success"><i
-                                    class="feather mr-2 icon-plus-square"></i>Escuchas</a>
                         </div>
                     </div>
                 </div>
             </div>
-            {% endfor %}
         </div>
-
-
-
     </div>
-</section>
-<!-- [ br]end -->
-{% endblock content %}
+    <!-- [ Main Content ] end -->
 
-<!-- Specific Page JS goes HERE  -->
-{% block javascripts %}
+    {% include 'includes/scripts.html' %}
 
-<!-- Apex Chart -->
-<script src="/static/assets/js/plugins/apexcharts.min.js"></script>
-<!-- custom-chart js -->
-<script src="/static/assets/js/pages/dashboard-main.js"></script>
+    <!-- prism Js -->
+    <script src="/static/assets/js/plugins/prism.js"></script>
+    <script src="/static/assets/js/horizontal-menu.js"></script>
+    <script>
+        $(document).ready(function () {
+        var dataval = parseInt($('.progress').attr("data-amount"));
+            if (dataval < 100) {
+                $('.progress .amount').css("width", 100 - dataval + "%");
+            }
+        });
+    </script>
+    <script src="/static/assets/js/analytics.js"></script>
 
-{% endblock javascripts %}
+</body>
+</html>
+

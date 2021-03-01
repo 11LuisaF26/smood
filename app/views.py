@@ -1,8 +1,4 @@
 # -*- encoding: utf-8 -*-
-"""
-MIT License
-Copyright (c) 2019 - present AppSeed.us
-"""
 import io
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, get_object_or_404, redirect
@@ -23,8 +19,13 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from random import randint
 import logging
-logger = logging.getLogger(__name__)
+import nltk
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+#nltk.download('punkt')
+#nltk.download('vader_lexicon')
+from sentiment_analysis_spanish import sentiment_analysis
 
+logger = logging.getLogger(__name__)
 
 @login_required(login_url="/login/")
 def index(request):
@@ -42,7 +43,7 @@ def index(request):
             html_template = loader.get_template( 'horizontal-page-500.html' )
             return HttpResponse(html_template.render(context, request))
     '''
-    
+    '''
     if user.groups.filter(name='Publicista').exists() or user.groups.filter(name='Administrador').exists():
         # Data for the cards
         datas = []
@@ -111,6 +112,7 @@ def index(request):
                 }
             ]
         }
+    
 
         #Data social media
         instagram = red_social.objects.filter(nombre_red_social="Instagram").values()
@@ -145,6 +147,158 @@ def index(request):
             return HttpResponse(html_template.render(context, request))
         except:
             html_template = loader.get_template( 'horizontal-page-500.html' )
+            return HttpResponse(html_template.render(context, request))
+    '''
+    if user.groups.filter(name='Publicista').exists() or user.groups.filter(name='Administrador').exists():
+        facebook = red_social.objects.get(nombre_red_social="Facebook")
+        instagram = red_social.objects.get(nombre_red_social="Instagram")
+        twitter = red_social.objects.get(nombre_red_social="Twitter")
+
+        campanas_publicitarias_to_list = campana_publicitaria.objects.filter(usuario_campana=request.user)
+        
+        campains_list_dicts = []
+        for campain in campanas_publicitarias_to_list:
+            official_escuchas_list_dicts = []
+            official_escuchas_values = escucha.objects.filter(campana_publicitaria_red_social__id=campain.id, es_competencia=False).values()            
+            if official_escuchas_values:
+                for official_escucha_value in official_escuchas_values:
+                    official_facebook_account_values = cuentas_empresa.objects.filter(data_red_escucha__id=official_escucha_value['id'], data_red_social__id=facebook.id).values()
+                    if official_facebook_account_values:
+                        for official_facebook_account_value in official_facebook_account_values:
+                            text_analysis_task = analyze_text(account=official_facebook_account_value)
+                            get_compund = lambda x: 50*x + 50
+                            compund = get_compund(official_facebook_account_value['avg_compound'])
+
+                            official_facebook_dict = {
+                                'identifier': official_facebook_account_value['identifier'],
+                                'username': official_facebook_account_value['username'].capitalize(),
+                                'created_at': official_facebook_account_value['created_at'], 
+                                'location': official_facebook_account_value['location'],
+                                'followers_count':official_facebook_account_value['followers_count'],
+                                'following_count':official_facebook_account_value['following_count'],
+                                'post_count': official_facebook_account_value['post_count'],
+                                'listed_count': official_facebook_account_value['listed_count'],
+                                'red_social': "facebook",
+                                'compound': round(compund, 2)
+                            }
+                            official_escuchas_list_dicts.append(official_facebook_dict)
+
+                    official_instagram_account_values = cuentas_empresa.objects.filter(data_red_escucha__id=official_escucha_value['id'], data_red_social__id=instagram.id).values()
+                    if official_instagram_account_values:
+                        for official_instagram_account_value in official_instagram_account_values:
+                            text_analysis_task = analyze_text(account=official_instagram_account_value)
+                            get_compund = lambda x: 50*x + 50
+                            compund = get_compund(official_instagram_account_value['avg_compound'])
+                            official_instagram_dict = {
+                                'identifier': official_instagram_account_value['identifier'],
+                                'username': official_instagram_account_value['username'].capitalize(),
+                                'followers_count':official_instagram_account_value['followers_count'],
+                                'following_count':official_instagram_account_value['following_count'],
+                                'post_count': official_instagram_account_value['post_count'],
+                                'listed_count': official_instagram_account_value['listed_count'],
+                                'red_social': "Instagram",
+                                'compound': round(compund, 2)
+                            }
+                            official_escuchas_list_dicts.append(official_instagram_dict)
+
+                    official_twitter_account_values = cuentas_empresa.objects.filter(data_red_escucha__id=official_escucha_value['id'], data_red_social__id=twitter.id).values()
+                    
+                    if official_twitter_account_values:
+                        for official_twitter_account_value in official_twitter_account_values:
+                            text_analysis_task = analyze_text(account=official_twitter_account_value)
+                            get_compund = lambda x: 50*x + 50
+                            compund = get_compund(official_twitter_account_value['avg_compound'])
+                            official_twitter_dict = {
+                                'identifier': official_twitter_account_value['identifier'],
+                                'username': official_twitter_account_value['username'].capitalize(),
+                                'created_at': official_twitter_account_value['created_at'],
+                                'location': official_twitter_account_value['location'],
+                                'followers_count':official_twitter_account_value['followers_count'],
+                                'following_count':official_twitter_account_value['following_count'],
+                                'post_count': official_twitter_account_value['post_count'],
+                                'listed_count': official_twitter_account_value['listed_count'],
+                                'red_social': "Twitter",
+                                'compound': round(compund, 2)
+                            }
+                            official_escuchas_list_dicts.append(official_twitter_dict)
+
+            unofficial_escuchas_list_dicts = []
+            unofficial_escuchas_values = escucha.objects.filter(campana_publicitaria_red_social=campain.id, es_competencia=True).values()
+            if unofficial_escuchas_values:
+                for unofficial_escucha_value in unofficial_escuchas_values:     
+                    unofficial_facebook_account_values = cuentas_empresa.objects.filter(data_red_escucha__id=unofficial_escucha_value['id'], data_red_social=facebook.id).values()
+                    if unofficial_facebook_account_values:
+                        for unofficial_facebook_account_value in unofficial_facebook_account_values:
+                            text_analysis_task = analyze_text(account=unofficial_facebook_account_value)
+                            get_compund = lambda x: 50*x + 50
+                            compund = get_compund(unofficial_facebook_account_value['avg_compound'])
+                            unofficial_facebook_dict = {
+                                'identifier': unofficial_facebook_account_value['identifier'],
+                                'username': unofficial_facebook_account_value['username'].capitalize(),
+                                'created_at': unofficial_facebook_account_value['created_at'], 
+                                'location': unofficial_facebook_account_value['location'],
+                                'followers_count':unofficial_facebook_account_value['followers_count'],
+                                'following_count':unofficial_facebook_account_value['following_count'],
+                                'post_count': unofficial_facebook_account_value['post_count'],
+                                'listed_count': unofficial_facebook_account_value['listed_count'],
+                                'red_social': "Facebook",
+                                'compound': round(compund, 2)
+                            }
+                            unofficial_escuchas_list_dicts.append(unofficial_facebook_dict)
+                    
+                    unofficial_instagram_account_values = cuentas_empresa.objects.filter(data_red_escucha__id=unofficial_escucha_value['id'], data_red_social=instagram.id).values()
+                    if unofficial_instagram_account_values:
+                        for unofficial_instagram_account_value in unofficial_instagram_account_values:
+                            text_analysis_task = analyze_text(account=unofficial_instagram_account_value)
+                            get_compund = lambda x: 50*x + 50
+                            compund = get_compund(unofficial_instagram_account_value['avg_compound'])
+                            unofficial_instagram_dict = {
+                                'identifier': unofficial_instagram_account_value['identifier'],
+                                'username': unofficial_instagram_account_value['username'].capitalize(),
+                                'followers_count':unofficial_instagram_account_value['followers_count'],
+                                'following_count':unofficial_instagram_account_value['following_count'],
+                                'post_count': unofficial_instagram_account_value['post_count'],
+                                'listed_count': unofficial_instagram_account_value['listed_count'],
+                                'red_social': "Instagram",
+                                'compound': round(compund, 2)
+                            }
+                            unofficial_escuchas_list_dicts.append(unofficial_instagram_dict)
+                    
+                    unofficial_twitter_account_values = cuentas_empresa.objects.filter(data_red_escucha__id=unofficial_escucha_value['id'], data_red_social=twitter.id).values()
+                    if unofficial_twitter_account_values:
+                        for unofficial_twitter_account_value in unofficial_twitter_account_values:
+                            text_analysis_task = analyze_text(account=unofficial_twitter_account_value)
+                            get_compund = lambda x: 50*x + 50
+                            compund = get_compund(unofficial_twitter_account_value['avg_compound'])
+                            official_twitter_dict = {
+                                'identifier': unofficial_twitter_account_value['identifier'],
+                                'username': unofficial_twitter_account_value['username'].capitalize(),
+                                'created_at': unofficial_twitter_account_value['created_at'], 
+                                'location': unofficial_twitter_account_value['location'],
+                                'followers_count':unofficial_twitter_account_value['followers_count'],
+                                'following_count':unofficial_twitter_account_value['following_count'],
+                                'post_count': unofficial_twitter_account_value['post_count'],
+                                'listed_count': unofficial_twitter_account_value['listed_count'],
+                                'red_social': "Twitter",
+                                'compound': round(compund, 2)
+                            }
+                            unofficial_escuchas_list_dicts.append(official_twitter_dict)
+
+            campain_dict = {
+                'campain_id': campain.id,
+                'campain_name': campain.nombre_campana,
+                'oficcial_escuchas': official_escuchas_list_dicts,
+                'unofficial_escuchas': unofficial_escuchas_list_dicts
+            }
+            campains_list_dicts.append(campain_dict)
+
+        try:
+            return render(request, "campanas.html",{"campanas_publicitarias":campains_list_dicts})
+        except template.TemplateDoesNotExist:
+            html_template = loader.get_template( 'page-404.html' )
+            return HttpResponse(html_template.render(context, request))
+        except:
+            html_template = loader.get_template( 'page-500.html' )
             return HttpResponse(html_template.render(context, request))
 
     if user.groups.filter(name='Cliente').exists():
@@ -281,7 +435,7 @@ def campanas_publicitarias(request):
         instagram = red_social.objects.get(nombre_red_social="Instagram")
         twitter = red_social.objects.get(nombre_red_social="Twitter")
 
-        campanas_publicitarias_to_list = campana_publicitaria.objects.all()
+        campanas_publicitarias_to_list = campana_publicitaria.objects.filter(usuario_campana=request.user)
         
         campains_list_dicts = []
         for campain in campanas_publicitarias_to_list:
@@ -292,32 +446,39 @@ def campanas_publicitarias(request):
                     official_facebook_account_values = cuentas_empresa.objects.filter(data_red_escucha__id=official_escucha_value['id'], data_red_social__id=facebook.id).values()
                     if official_facebook_account_values:
                         for official_facebook_account_value in official_facebook_account_values:
+                            text_analysis_task = analyze_text(account=official_facebook_account_value)
+                            get_compund = lambda x: 50*x + 50
+                            compund = get_compund(official_facebook_account_value['avg_compound'])
+
                             official_facebook_dict = {
                                 'identifier': official_facebook_account_value['identifier'],
-                                'username': official_facebook_account_value['username'],
+                                'username': official_facebook_account_value['username'].capitalize(),
                                 'created_at': official_facebook_account_value['created_at'], 
                                 'location': official_facebook_account_value['location'],
                                 'followers_count':official_facebook_account_value['followers_count'],
                                 'following_count':official_facebook_account_value['following_count'],
                                 'post_count': official_facebook_account_value['post_count'],
                                 'listed_count': official_facebook_account_value['listed_count'],
-                                'red_social': "facebook"
+                                'red_social': "facebook",
+                                'compound': round(compund, 2)
                             }
                             official_escuchas_list_dicts.append(official_facebook_dict)
 
                     official_instagram_account_values = cuentas_empresa.objects.filter(data_red_escucha__id=official_escucha_value['id'], data_red_social__id=instagram.id).values()
                     if official_instagram_account_values:
                         for official_instagram_account_value in official_instagram_account_values:
+                            text_analysis_task = analyze_text(account=official_instagram_account_value)
+                            get_compund = lambda x: 50*x + 50
+                            compund = get_compund(official_instagram_account_value['avg_compound'])
                             official_instagram_dict = {
                                 'identifier': official_instagram_account_value['identifier'],
-                                'username': official_instagram_account_value['username'],
-                                'created_at': official_instagram_account_value['created_at'],
-                                'location': official_instagram_account_value['location'],
+                                'username': official_instagram_account_value['username'].capitalize(),
                                 'followers_count':official_instagram_account_value['followers_count'],
                                 'following_count':official_instagram_account_value['following_count'],
                                 'post_count': official_instagram_account_value['post_count'],
                                 'listed_count': official_instagram_account_value['listed_count'],
-                                'red_social': "Instagram"
+                                'red_social': "Instagram",
+                                'compound': round(compund, 2)
                             }
                             official_escuchas_list_dicts.append(official_instagram_dict)
 
@@ -325,16 +486,20 @@ def campanas_publicitarias(request):
                     
                     if official_twitter_account_values:
                         for official_twitter_account_value in official_twitter_account_values:
+                            text_analysis_task = analyze_text(account=official_twitter_account_value)
+                            get_compund = lambda x: 50*x + 50
+                            compund = get_compund(official_twitter_account_value['avg_compound'])
                             official_twitter_dict = {
                                 'identifier': official_twitter_account_value['identifier'],
-                                'username': official_twitter_account_value['username'],
+                                'username': official_twitter_account_value['username'].capitalize(),
                                 'created_at': official_twitter_account_value['created_at'],
                                 'location': official_twitter_account_value['location'],
                                 'followers_count':official_twitter_account_value['followers_count'],
                                 'following_count':official_twitter_account_value['following_count'],
                                 'post_count': official_twitter_account_value['post_count'],
                                 'listed_count': official_twitter_account_value['listed_count'],
-                                'red_social': "Twitter"
+                                'red_social': "Twitter",
+                                'compound': round(compund, 2)
                             }
                             official_escuchas_list_dicts.append(official_twitter_dict)
 
@@ -345,48 +510,58 @@ def campanas_publicitarias(request):
                     unofficial_facebook_account_values = cuentas_empresa.objects.filter(data_red_escucha__id=unofficial_escucha_value['id'], data_red_social=facebook.id).values()
                     if unofficial_facebook_account_values:
                         for unofficial_facebook_account_value in unofficial_facebook_account_values:
+                            text_analysis_task = analyze_text(account=unofficial_facebook_account_value)
+                            get_compund = lambda x: 50*x + 50
+                            compund = get_compund(unofficial_facebook_account_value['avg_compound'])
                             unofficial_facebook_dict = {
                                 'identifier': unofficial_facebook_account_value['identifier'],
-                                'username': unofficial_facebook_account_value['username'],
+                                'username': unofficial_facebook_account_value['username'].capitalize(),
                                 'created_at': unofficial_facebook_account_value['created_at'], 
                                 'location': unofficial_facebook_account_value['location'],
                                 'followers_count':unofficial_facebook_account_value['followers_count'],
                                 'following_count':unofficial_facebook_account_value['following_count'],
                                 'post_count': unofficial_facebook_account_value['post_count'],
                                 'listed_count': unofficial_facebook_account_value['listed_count'],
-                                'red_social': "Facebook"
+                                'red_social': "Facebook",
+                                'compound': round(compund, 2)
                             }
                             unofficial_escuchas_list_dicts.append(unofficial_facebook_dict)
                     
                     unofficial_instagram_account_values = cuentas_empresa.objects.filter(data_red_escucha__id=unofficial_escucha_value['id'], data_red_social=instagram.id).values()
                     if unofficial_instagram_account_values:
                         for unofficial_instagram_account_value in unofficial_instagram_account_values:
+                            text_analysis_task = analyze_text(account=unofficial_instagram_account_value)
+                            get_compund = lambda x: 50*x + 50
+                            compund = get_compund(unofficial_instagram_account_value['avg_compound'])
                             unofficial_instagram_dict = {
                                 'identifier': unofficial_instagram_account_value['identifier'],
-                                'username': unofficial_instagram_account_value['username'],
-                                'created_at': unofficial_instagram_account_value['created_at'], 
-                                'location': unofficial_instagram_account_value['location'],
+                                'username': unofficial_instagram_account_value['username'].capitalize(),
                                 'followers_count':unofficial_instagram_account_value['followers_count'],
                                 'following_count':unofficial_instagram_account_value['following_count'],
                                 'post_count': unofficial_instagram_account_value['post_count'],
                                 'listed_count': unofficial_instagram_account_value['listed_count'],
-                                'red_social': "Instagram"
+                                'red_social': "Instagram",
+                                'compound': round(compund, 2)
                             }
                             unofficial_escuchas_list_dicts.append(unofficial_instagram_dict)
                     
                     unofficial_twitter_account_values = cuentas_empresa.objects.filter(data_red_escucha__id=unofficial_escucha_value['id'], data_red_social=twitter.id).values()
                     if unofficial_twitter_account_values:
                         for unofficial_twitter_account_value in unofficial_twitter_account_values:
+                            text_analysis_task = analyze_text(account=unofficial_twitter_account_value)
+                            get_compund = lambda x: 50*x + 50
+                            compund = get_compund(unofficial_twitter_account_value['avg_compound'])
                             official_twitter_dict = {
                                 'identifier': unofficial_twitter_account_value['identifier'],
-                                'username': unofficial_twitter_account_value['username'],
+                                'username': unofficial_twitter_account_value['username'].capitalize(),
                                 'created_at': unofficial_twitter_account_value['created_at'], 
                                 'location': unofficial_twitter_account_value['location'],
                                 'followers_count':unofficial_twitter_account_value['followers_count'],
                                 'following_count':unofficial_twitter_account_value['following_count'],
                                 'post_count': unofficial_twitter_account_value['post_count'],
                                 'listed_count': unofficial_twitter_account_value['listed_count'],
-                                'red_social': "Twitter"
+                                'red_social': "Twitter",
+                                'compound': round(compund, 2)
                             }
                             unofficial_escuchas_list_dicts.append(official_twitter_dict)
 
@@ -397,8 +572,6 @@ def campanas_publicitarias(request):
                 'unofficial_escuchas': unofficial_escuchas_list_dicts
             }
             campains_list_dicts.append(campain_dict)
-        
-        logger.error(campains_list_dicts)
 
         try:
             return render(request, "campanas.html",{"campanas_publicitarias":campains_list_dicts})
@@ -588,20 +761,34 @@ def escuchas_campana(request, campana_id):
                                 data = hashtag_data
                             )
                     
-                    '''
+                    
                     if nombre_red == "Instagram":
-                        search_accounts = search_accounts_by_username(
-                            nombre_pagina=search_user, 
-                            #empresa_id=empresa_id, 
-                            username=instagram_user, 
-                            password=instagram_pass, 
-                            path=instagram_path,
-                            hashtag_list = hastags_ids_list,
-                            id_campana=campana_id, 
-                            id_escucha=escucha_id,
-                            id_red = id_red
+                        instagram_data = {
+                            'nombre_usuario':search_user,
+                            'escucha_type': escucha_type,
+                            'id_campana':campana_id,
+                            'id_escucha':escucha_id,
+                            'id_red':id_red
+                        }
+                        search_account = search_account_by_username(
+                            data=instagram_data
                         )
-                    '''
+                        
+                        search_account_medias = get_instagram_medias_by_user(
+                            data=instagram_data
+                        )
+
+                        for escucha_hashtag in escucha_hashtags:
+                            nombre_hashtag = escucha_hashtag['nombre_hastag']
+                            instagram_hashtag_data = {
+                                'query': nombre_hashtag,
+                                'id_campana': campana_id, 
+                                'id_escucha': escucha_id,
+                                'id_red': id_red
+                            }
+                            get_instagram_medias_by_tag(
+                                data = instagram_hashtag_data
+                            )
 
         try:
             return render(request, "escuchas_empresa.html", {"escuchas":escuchas})

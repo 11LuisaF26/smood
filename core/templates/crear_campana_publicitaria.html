@@ -31,17 +31,6 @@
             <!-- [ stiped-table ] start -->
             <div class="col-xl-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h3>Crear Campaña Publicitaría</h3>
-                    </div>
-                    <span class="card-body table-border-style">
-                        {% if msg %}
-                            {{ msg | safe }}
-                        {% else %}
-                            <h5>Ingresa la siguiente información</h5>
-                        {% endif %} 
-                    </span>                   
-                    
                     {% if not success %}  
                         <div class="card-body table-border-style">                        
                             <form action="" method="post" role="form">
