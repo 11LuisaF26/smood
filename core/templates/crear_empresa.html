@@ -32,17 +32,6 @@
             <!-- [ stiped-table ] start -->
             <div class="col-xl-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h3>Crear empresa</h3>
-                    </div>
-                    <div class="card-body table-border-style">
-                        {% if msg %}
-                            {{ msg | safe }}                                 
-                        {% else %}
-                            <h5>Ingresa la siguiente información</h5>
-                        {% endif %} 
-                    </div>                   
-                    
                     {% if not success %}  
                         <div class="card-body table-border-style">
                             <form action="" method="post" role="form">
