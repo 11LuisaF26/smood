@@ -32,8 +32,8 @@ from django.db.models import Q
 
 nltk.download('stopwords')
 # pip install spacy_spanish_lemmatizer
-python -m spacy_spanish_lemmatizer download wiki
-python -m spacy download es_core_news_sm 
+# python -m spacy_spanish_lemmatizer download wiki
+# python -m spacy download es_core_news_sm 
 
 
 STOPLIST = set(stopwords.words('spanish'))

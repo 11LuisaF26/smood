@@ -6,7 +6,7 @@ from .models import *
 class campana_publicitaria_form(ModelForm):
     class Meta():
         model = campana_publicitaria
-        fields = ('nombre_campana', 'descripcion_campana', 'objetivo_campana', 'publico_campana','ubicacion_campana', 'presupuesto_campana', 'eficacia_camapana', 'empresa_campana', 'usuario_campana')
+        fields = ('nombre_campana', 'objetivo_campana', 'publico_campana','ubicacion_campana', 'presupuesto_campana', 'eficacia_camapana', 'empresa_campana', 'usuario_campana')
 
 class empresa_form(ModelForm): 
     class Meta():

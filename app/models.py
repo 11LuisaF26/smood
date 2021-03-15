@@ -41,7 +41,6 @@ class ubicacion(models.Model):
         
 class campana_publicitaria(models.Model):
     nombre_campana = models.CharField(blank=True, max_length=100, verbose_name='Nombre')
-    descripcion_campana = models.CharField(blank=True, max_length=100, verbose_name='Descripcion')
     objetivo_campana = models.CharField(blank=True, max_length=100, verbose_name='Objetivo')
     publico_campana = models.CharField(blank=True, max_length=100, verbose_name='Publico')
     ubicacion_campana = models.ForeignKey(ubicacion, on_delete=models.CASCADE, null=True)
