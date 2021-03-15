@@ -26,7 +26,7 @@ import urllib, base64
 import json
 import string
 import spacy
-from spacy_spanish_lemmatizer import SpacyCustomLemmatizer
+# from spacy_spanish_lemmatizer import SpacyCustomLemmatizer
 from django.db.models import Q
 
 
@@ -39,10 +39,10 @@ from django.db.models import Q
 STOPLIST = set(stopwords.words('spanish'))
 SYMBOLS = " ".join(string.punctuation).split(" ")+ ["-", "...", "..","'"]
 
-nlp = spacy.load('en_core_web_sm')
+nlp = spacy.load('es_core_news_sm')
 
-lemmatizer = SpacyCustomLemmatizer()
-nlp.add_pipe(lemmatizer, name="lemmatizer", after="tagger")
+# lemmatizer = SpacyCustomLemmatizer()
+# nlp.add_pipe(lemmatizer, name="lemmatizer", after="tagger")
 
 
 
