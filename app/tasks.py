@@ -202,6 +202,14 @@ def search_account_by_username(data):
     data_red_social = red_social.objects.get(id=data['id_red'])
     escucha_type = data['escucha_type']
     instagram = Instagram()
+    
+    logger.error(f'data_escucha: {data_escucha}')
+    logger.error(f'data_campana: {data_campana}')
+    logger.error(f'data_red_social: {data_red_social}')
+    logger.error(f'escucha_type: {escucha_type}')
+    logger.error(f'instagram: {instagram}')
+    logger.error('--------------------')
+    account = instagram.get_account(data['nombre_usuario'])
 
     try:
         account = instagram.get_account(data['nombre_usuario'])
