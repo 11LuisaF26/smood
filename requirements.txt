@@ -48,7 +48,7 @@ matplotlib==3.3.2
 mccabe==0.6.1
 murmurhash==1.0.2
 networkx==2.5
-neuralcoref==4.0
+#neuralcoref==4.0
 nltk==3.5
 numpy==1.19.0
 pandas==1.0.5
@@ -94,4 +94,5 @@ Wikipedia-API==0.5.4
 wordcloud==1.8.0
 wrapt==1.12.1
 zipp==3.1.0
-deep-translator
+psycopg2-binary==2.8.6
+deep-translator==1.4.1

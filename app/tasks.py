@@ -325,7 +325,6 @@ def analyze_text(account):
                 if language and language=="spanish":
                     analyze = _analyze_spanish_text(text=account_data['publicacion_texto'])
                     analyze_list.append(analyze)
-                    pass
                 elif language and language=="english":
                     analyze = _analyze_english_text(text=account_data['publicacion_texto'])
                     analyze_list.append(analyze)
