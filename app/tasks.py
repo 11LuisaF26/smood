@@ -210,6 +210,7 @@ def search_account_by_username(data):
     logger.error(f'instagram: {instagram}')
     logger.error('--------------------')
     account = instagram.get_account(data['nombre_usuario'])
+    logger.error(data['nombre_usuario'])
 
     try:
         account = instagram.get_account(data['nombre_usuario'])
