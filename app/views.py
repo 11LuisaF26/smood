@@ -55,15 +55,15 @@ def index(request):
                     .distinct()).values()[:4]
 
         for idx, value in enumerate(top_post):
-            campana_id = value['data_red_campana_id']
+            red_social_id = value['data_red_social_id']
             post_account = value['post_count']
-            campana = campana_publicitaria.objects.filter(id=campana_id).values()
-            for campana_value in campana:
-                campana_name = campana_value['nombre_campana']
-
+            account_name = value['username']
+            red_social_values = red_social.objects.filter(id=red_social_id).values()
+            for red_social_value in red_social_values:
+                red_name = red_social_value['nombre_red_social']
             data = {
-                'campana_name': campana_name,
-                'post_account':post_account,
+                'campana_name': f'{account_name} - {red_name}',
+                'post_account': post_account,
                 'color': colors[idx]
             }
 
