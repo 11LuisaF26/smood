@@ -9,6 +9,7 @@ from . import twitter_conn
 from datetime import datetime
 import logging
 import json
+from deep_translator import GoogleTranslator
 import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 logger = logging.getLogger(__name__)
@@ -322,8 +323,8 @@ def analyze_text(account):
             if account_data['publicacion_texto']:
                 language = _get_language(text=account_data['publicacion_texto'])
                 if language and language=="spanish":
-                    #analyze = _analyze_spanish_text(text=account_data['publicacion_texto'])
-                    #analyze_list.append(analyze)
+                    analyze = _analyze_spanish_text(text=account_data['publicacion_texto'])
+                    analyze_list.append(analyze)
                     pass
                 elif language and language=="english":
                     analyze = _analyze_english_text(text=account_data['publicacion_texto'])
@@ -354,7 +355,10 @@ def _get_language(text):
     return detected_language
 
 def _analyze_spanish_text(text):
-    pass
+    translated = GoogleTranslator(source='es', target='en').translate(text)
+    sid = SentimentIntensityAnalyzer()
+    polarity = sid.polarity_scores(translated)
+    return polarity
 
 def _analyze_english_text(text):
     sid = SentimentIntensityAnalyzer()
