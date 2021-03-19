@@ -557,12 +557,14 @@ def escuchas_campana(request, campana_id):
                 for escucha_campana_value in escucha_campana_values:
                     campana_id = escucha_campana_value['id']
 
+                '''
                 escucha_credenciales = escucha_credencial.objects.filter(escucha__id=escucha_record['id']).values()
                 for credencial in escucha_credenciales:
                     twitter_bearer_token = credencial['twitter_bearer_token']
                     instagram_user = credencial['instagram_username']
                     instagram_pass = credencial['instagram_password']
                     instagram_path = credencial['instagram_path']
+                '''
 
                 redes_sociales = red_social.objects.filter(escucha__id=escucha_record['id']).values()
 
@@ -580,7 +582,8 @@ def escuchas_campana(request, campana_id):
                         )
                     
                     if nombre_red == "Twitter":
-                        
+                        twitter_bearer_token = 'AAAAAAAAAAAAAAAAAAAAAKo0IwEAAAAAgLgNscNbgAvyv%2F%2FT09pRJ%2BtKc84%3DCBIzVzsS4gPUdReAlqFp0ukcALWMDLwX1TefU34s8qVo0UYEZ7'
+
                         twitter_data = {
                             'nombre_usuario':search_user, 
                             'bearer_token':twitter_bearer_token, 
