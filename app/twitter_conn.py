@@ -16,6 +16,35 @@ class TwitterConn:
     def __init__(self, access_token):
         self.access_token = access_token
 
+    def obtener_cuenta_user(self, nombre_usuario):
+        """
+        Este metodo utilizado para obtener la cuenta del usuario de búsqueda
+        :nombre_usuario: Nombre de usuario sobre el que se va a hacer la peticion
+        :return: Objeto response con los datos de la cuenta consultada.
+        """
+
+        endpoint = "https://api.twitter.com/2/users/by"
+
+        payload = {
+            "user.fields": "created_at,description,entities,id,location,name,pinned_tweet_id,profile_image_url,protected,url,username,verified,withheld,public_metrics",
+            "tweet.fields": "author_id,context_annotations,created_at,entities,geo,id,in_reply_to_user_id,lang,possibly_sensitive,public_metrics,referenced_tweets,source,text,withheld",
+            "expansions": "pinned_tweet_id",
+            "usernames": nombre_usuario
+        }
+
+        headers = {
+            "Authorization": f"Bearer {self.access_token}"
+        }
+
+        response = requests.get(url=endpoint, params=payload, headers=headers)
+        
+        if response.ok:
+            logger.error('Task get twiiter account completed succesfuly')
+
+        logger.error(response)
+
+        return response
+
     def obtener_twiiter_user(self, nombre_usuario):
         """
         Este metodo utilizado para obtener tweets utilizando un username
@@ -29,6 +58,7 @@ class TwitterConn:
         payload = {
             "tweet.fields": "author_id,context_annotations,created_at,entities,geo,id,in_reply_to_user_id,lang,possibly_sensitive,public_metrics,referenced_tweets,source,text,withheld",
             "expansions": "referenced_tweets.id",
+            "max_results": 99,
             "query": f"from:{nombre_usuario}"
         }
 
@@ -38,6 +68,9 @@ class TwitterConn:
 
         response = requests.get(url=endpoint, params=payload, headers=headers)
         
+        if response.ok:
+            logger.error('Task get twiiter user completed succesfuly')
+
         logger.error(response)
 
         return response
@@ -54,6 +87,7 @@ class TwitterConn:
         payload = {
             "tweet.fields": "author_id,context_annotations,created_at,entities,geo,id,in_reply_to_user_id,lang,possibly_sensitive,public_metrics,referenced_tweets,source,text,withheld",
             "expansions": "referenced_tweets.id",
+            "max_results": 99,
             "query": query
         }
 
@@ -63,6 +97,9 @@ class TwitterConn:
 
         response = requests.get(url=endpoint, params=payload, headers=headers)
         
+        if response.ok:
+            logger.error('Task get twiiter query completed succesfully')
+
         logger.error(response)
 
         return response

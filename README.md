@@ -1,217 +1,138 @@
-# [Django Dashboard - GradientAble Design](https://appseed.us/admin-dashboards/django-dashboard-gradientable)
+<h1 align="center" color="blue">Universidad de Bogotá Jorge Tadeo Lozano</H1>
 
-> **Open-Source Admin Dashboard** coded in **Django Framework** by **AppSeed** [Web App Generator](https://appseed.us/app-generator) - Features:
+<p align="center">
+  <img src="https://i.pinimg.com/originals/ae/06/64/ae06647022c506cd7541fec434f607ad.jpg" />
+</p>
 
-- Sample UI Kit: **GradientAble Dashboard** (Lite Version) provided by **CodedThemes**
-- UI-Ready app, SQLite Database, Django Native ORM
-- Modular design, clean code-base
-- Session-Based Authentication, Forms validation
-- Deployment scripts: Docker, Gunicorn / Nginx
-- **MIT License**
-- Free support via **Github** issues tracker
-- Paid 24/7 Live Support via [Discord](https://discord.gg/fZC6hup).
+<h1 align="center" color="blue">SMOOD - Software de planeación estratégica </H1>
 
-> Links
+## ¿Qué es S-mood?
+Es un software piloto para la automatización de la construcción de la variable de Comunicación en modelo semiótico de cuatro variables.
 
-- [Django Dashboard - GradientAble Design](https://appseed.us/admin-dashboards/django-dashboard-gradientable) - Official product page
-- [Django Dashboard GradientAble Demo](https://django-dashboard-gradientable.appseed.us/) - LIVE App
-- More [Django Dashboards](https://appseed.us/admin-dashboards/django) - index hosted by **AppSeed**
-- More [Admin Dashboards](https://appseed.us/admin-dashboards) - index hosted by **AppSeed**
+## ¿Por qué S-mood?
+Al ser el resultado de la fusión de la investigación de mercados y la planeación estratégica publicitaria,
+se propone el nombre S-mood para el software.  
+Para llegar a él se parte de las dos palabras “Semiotic” y “Model”, 
+pero se realizan  combinaciones de términos como  La S de semiótica y 
+se le agrega una “o” a la palabra “model” con lo cual se gana sonoridad, 
+pero además se agrega la significación de Mood del “humor” como estado de animo.  
+Al final, la combinación implica el estudio del estado de ánimo, 
+los comportamientos de las personas y las estrategias que de allí 
+se pueden generar para resolver casos de Publicidad y de Marketing, 
+el cual es el objetivo principal de la Investigación y del Software.
 
-<br />
+![GitHub Logo](/core/static/assets/images/1logo.png)
 
-## Want more? Go PRO!
 
-PRO versions include **Premium UI Kits**, Lifetime updates and **24/7 LIVE Support** (via [Discord](https://discord.gg/fZC6hup))
+## Requisitos
+* python 3
+* virtualenv
+* requirements.txt.
 
-| [Django Gradient PRO](https://appseed.us/admin-dashboards/django-dashboard-gradient-pro) | [Django Dashboard Black PRO](https://appseed.us/admin-dashboards/django-dashboard-black-pro) | [Django Dashboard Argon PRO](https://appseed.us/admin-dashboards/django-dashboard-argon-pro) |
-| --- | --- | --- |
-| [![Django Gradient PRO](https://raw.githubusercontent.com/app-generator/django-dashboard-gradient-pro/master/media/django-dashboard-gradient-pro-screen.png)](https://appseed.us/admin-dashboards/django-dashboard-gradient-pro) | [![Django Dashboard Black PRO](https://raw.githubusercontent.com/app-generator/django-dashboard-black-pro/master/media/django-dashboard-black-pro-screen.png)](https://appseed.us/admin-dashboards/django-dashboard-black-pro) | [![Django Dashboard Argon PRO](https://raw.githubusercontent.com/app-generator/django-dashboard-argon-pro/master/media/django-dashboard-argon-pro-screen.png)](https://appseed.us/admin-dashboards/django-dashboard-argon-pro)
-
-<br />
-<br />
-
-![Django Dashboard GradientAble - Open-Source template project provided by AppSeed.](https://raw.githubusercontent.com/app-generator/django-dashboard-gradientable/master/media/django-dashboard-gradientable-screen.png)
-
-<br />
-
-## How to use it
+## ¿Cómo usarlo?
 
 ```bash
-$ # Get the code
-$ git clone https://github.com/app-generator/django-dashboard-gradientable.git
-$ cd django-dashboard-gradientable
+$ # Obtener el código
+$ git clone https://github.com/11LuisaF26/smood.git
+$ cd smood
 $
-$ # Virtualenv modules installation (Unix based systems)
+$ # Virtualenv (Para sistemas Unix)
 $ virtualenv env
 $ source env/bin/activate
 $
-$ # Virtualenv modules installation (Windows based systems)
+$ # Virtualenv (Para sistemas Windows)
 $ # virtualenv env
 $ # .\env\Scripts\activate
 $
-$ # Install modules - SQLite Storage
+$ # Instalar las dependencias necesarias
 $ pip3 install -r requirements.txt
 $
-$ # Create tables
+$ # Crear tablas
 $ python manage.py makemigrations
 $ python manage.py migrate
 $
-$ # Start the application (development mode)
-$ python manage.py runserver # default port 8000
+$ # Cargar datos para el funcionamiento en las modelos: red_social y estado_empresa
+$ python manage.py loaddata data.json
 $
-$ # Start the app - custom port
-$ # python manage.py runserver 0.0.0.0:<your_port>
-$
-$ # Access the web app in browser: http://127.0.0.1:8000/
+$ # Iniciar la aplicación (Modo de desarrollo)
+$ python manage.py runserver # Puerto por defecto 8000
 ```
 
-> Note: To use the app, please access the registration page and create a new user. After authentication, the app will unlock the private pages.
+> Nota: Para usar la aplicación es necesario registrar un nuevo usuario, después de esto la aplicación desbloqueará las vistas privadas.
 
 <br />
 
-## Code-base structure
+## Estructura base del código
 
-The project is coded using a simple and intuitive structure presented bellow:
+El proyecto usa la siguiente estructura:
 
 ```bash
 < PROJECT ROOT >
    |
-   |-- core/                               # Implements app logic and serve the static assets
-   |    |-- settings.py                    # Django app bootstrapper
-   |    |-- wsgi.py                        # Start the app in production
-   |    |-- urls.py                        # Define URLs served by all apps/nodes
+   |-- core/
+   |    |-- settings.py
+   |    |-- wsgi.py
+   |    |-- urls.py
    |    |
    |    |-- static/
-   |    |    |-- <css, JS, images>         # CSS files, Javascripts files
+   |    |    |-- <css, JS, images>
    |    |
-   |    |-- templates/                     # Templates used to render pages
+   |    |-- templates/
    |         |
-   |         |-- includes/                 # HTML chunks and components
-   |         |    |-- navigation.html      # Top menu component
-   |         |    |-- sidebar.html         # Sidebar component
-   |         |    |-- footer.html          # App Footer
-   |         |    |-- scripts.html         # Scripts common to all pages
+   |         |-- includes/
+   |         |    |-- navigation.html
+   |         |    |-- sidebar.html
+   |         |    |-- footer.html
+   |         |    |-- scripts.html
    |         |
-   |         |-- layouts/                  # Master pages
-   |         |    |-- base-fullscreen.html # Used by Authentication pages
-   |         |    |-- base.html            # Used by common pages
+   |         |-- layouts/
+   |         |    |-- base-fullscreen.html
+   |         |    |-- base.html
    |         |
-   |         |-- accounts/                 # Authentication pages
-   |         |    |-- login.html           # Login page
-   |         |    |-- register.html        # Register page
+   |         |-- accounts/
+   |         |    |-- login.html
+   |         |    |-- register.html
    |         |
-   |      index.html                       # The default page
-   |     page-404.html                     # Error 404 page
-   |     page-500.html                     # Error 404 page
-   |       *.html                          # All other HTML pages
+   |      index.html
+   |     page-404.html
+   |     page-500.html
+   |       *.html
    |
-   |-- authentication/                     # Handles auth routes (login and register)
+   |-- authentication/
    |    |
-   |    |-- urls.py                        # Define authentication routes  
-   |    |-- views.py                       # Handles login and registration  
-   |    |-- forms.py                       # Define auth forms  
+   |    |-- urls.py
+   |    |-- views.py
+   |    |-- forms.py
    |
-   |-- app/                                # A simple app that serve HTML files
+   |-- app/
    |    |
-   |    |-- views.py                       # Serve HTML pages for authenticated users
-   |    |-- urls.py                        # Define some super simple routes  
+   |    |-- views.py
+   |    |-- urls.py
+   |    |-- test.py
+   |    |-- forms.py
+   |    |-- models.py
+   |    |-- nube.py
+   |    |-- tasks.py
+   |    |-- twitter_conn.py
    |
-   |-- requirements.txt                    # Development modules - SQLite storage
+   |-- requirements.txt
    |
-   |-- .env                                # Inject Configuration via Environment
-   |-- manage.py                           # Start the app - Django default start script
+   |-- .env
+   |-- manage.py
    |
    |-- ************************************************************************
 ```
-
 <br />
 
-> The bootstrap flow
+## AUTORES 
 
-- Django bootstrapper `manage.py` uses `core/settings.py` as the main configuration file
-- `core/settings.py` loads the app magic from `.env` file
-- Redirect the guest users to Login page
-- Unlock the pages served by *app* node for authenticated users
+*   Olmer Garcia Bedoya 
+*   Victor Danilo Castañeda Pinzón
+*   Luisa Fernanda Rodriguez Sarmiento
 
-<br />
-
-## Deployment
-
-The app is provided with a basic configuration to be executed in [Docker](https://www.docker.com/), [Gunicorn](https://gunicorn.org/), and [Waitress](https://docs.pylonsproject.org/projects/waitress/en/stable/).
-
-### [Docker](https://www.docker.com/) execution
----
-
-The application can be easily executed in a docker container. The steps:
-
-> Get the code
-
-```bash
-$ git clone https://github.com/app-generator/django-dashboard-gradientable.git
-$ cd django-dashboard-gradientable
-```
-
-> Start the app in Docker
-
-```bash
-$ sudo docker-compose pull && sudo docker-compose build && sudo docker-compose up -d
-```
-
-Visit `http://localhost:5005` in your browser. The app should be up & running.
-
-<br />
-
-### [Gunicorn](https://gunicorn.org/)
----
-
-Gunicorn 'Green Unicorn' is a Python WSGI HTTP Server for UNIX.
-
-> Install using pip
-
-```bash
-$ pip install gunicorn
-```
-> Start the app using gunicorn binary
-
-```bash
-$ gunicorn --bind=0.0.0.0:8001 core.wsgi:application
-Serving on http://localhost:8001
-```
-
-Visit `http://localhost:8001` in your browser. The app should be up & running.
-
-
-<br />
-
-### [Waitress](https://docs.pylonsproject.org/projects/waitress/en/stable/)
----
-
-Waitress (Gunicorn equivalent for Windows) is meant to be a production-quality pure-Python WSGI server with very acceptable performance. It has no dependencies except ones that live in the Python standard library.
-
-> Install using pip
-
-```bash
-$ pip install waitress
-```
-> Start the app using [waitress-serve](https://docs.pylonsproject.org/projects/waitress/en/stable/runner.html)
-
-```bash
-$ waitress-serve --port=8001 core.wsgi:application
-Serving on http://localhost:8001
-```
-
-Visit `http://localhost:8001` in your browser. The app should be up & running.
-
-<br />
-
-## Credits & Links
-
-- [Django](https://www.djangoproject.com/) - The offcial website
-- [Boilerplate Code](https://appseed.us/boilerplate-code) - Index provided by **AppSeed**
-- [Boilerplate Code](https://github.com/app-generator/boilerplate-code) - Index published on Github
-
-<br />
-
----
-[Django Dashboard - GradientAble Design](https://appseed.us/admin-dashboards/django-dashboard-gradientable) - Provided by **AppSeed** [Web App Generator](https://appseed.us/app-generator).
+    ###  CONTRIBUYENTES
+    *   Isabel Sofía Enriquez Avilez
+    *   Vladimir Sánchez Riaño
+    *   Gabriela Andrade Caicedo
+    *   Catherine Suarez Báez
+	  *	  Jairo Sojo

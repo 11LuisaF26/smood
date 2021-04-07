@@ -1,0 +1,18 @@
+#webcoderskull{
+    position: absolute;
+    left: 0;
+    top: 10%;
+    width: 100%;
+    text-align: center;
+}
+
+canvas{
+    height:100vh;
+    background-color:#001233;
+}
+
+.custom_center{
+    text-align: center;
+    color:white;
+    padding:20px 35px;
+}

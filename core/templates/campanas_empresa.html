@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>
+        campanas-cliente
+    </title> 
+
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="">
+    <meta name="author" content="Utadeo" />
+    <link rel="stylesheet" href="/static/assets/css/plugins/Chart.min.css">
+    <script src="/static/assets/js/chart_js/Chart.bundle.min.js"></script>
+    <script src="/static/assets/js/chart_js/Chart.min.js"></script>
+
+    <!-- Favicon icon -->
+    <link rel="icon" href="/static/assets/images/favicon.ico" type="image/x-icon">
+
+    <!-- prism css -->
+    <link rel="stylesheet" href="/static/assets/css/plugins/prism-coy.css">
+    <!-- vendor css -->
+    <link rel="stylesheet" href="/static/assets/css/style.css">
+
+</head>
+
+<body>
+
+    <!-- [ Pre-loader ] start -->
+    <div class="loader-bg">
+        <div class="loader-track">
+            <div class="loader-fill"></div>
+        </div>
+    </div>
+
+    <!-- [ navigation menu ] start -->
+    <nav class="pcoded-navbar theme-horizontal menu-light brand-blue">
+        <div class="navbar-wrapper container">
+            <div class="navbar-content sidenav-horizontal" id="layout-sidenav">
+                <ul class="nav pcoded-inner-navbar sidenav-inner">
+                    <li class="nav-item pcoded-menu-caption">
+                        <label>Navigation</label>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Campañas</span></a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="navbar pcoded-header navbar-expand-lg navbar-light header-blue">
+        <div class="container">
+            <div class="m-header">
+                <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
+                <a href="#!" class="b-brand">
+                    <img src="/static/assets/images/3logo.png" alt="" class="logo" width="35" height="35">
+                    <img src="/static/assets/images/logo-icon.png" alt="" class="logo-thumb">
+                </a>
+                <a href="#!" class="mob-toggler">
+                    <i class="feather icon-more-vertical"></i>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ml-auto">
+                    <li>
+                        <div class="dropdown drp-user">
+                            <a href="#!" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="/static/assets/images/user/avatar-1.jpg" class="img-radius wid-40" alt="User-Profile-Image">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right profile-notification">
+                                <div class="pro-head">
+                                    <img src="/static/assets/images/user/avatar-1.jpg" class="img-radius" alt="User-Profile-Image">
+                                    <span>{{ request.user.username }}</span>
+                                    <a href={% url 'logout' %} class="dud-logout" title="Logout">
+                                        <i class="feather icon-log-out"></i>
+                                    </a>
+                                </div>
+                                <ul class="pro-body">
+                                    <li><a href="user-profile.html" class="dropdown-item"><i class="feather icon-user"></i> Profile</a></li>
+                                    <li><a href="email_inbox.html" class="dropdown-item"><i class="feather icon-mail"></i> My Messages</a></li>
+                                    <li><a href={% url 'logout' %} class="dropdown-item"><i class="feather icon-lock"></i> Lock Screen</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper container">
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <!-- [ Main Content ] start -->
+                            <div class="row">
+                                {% for campana in campanas %}
+                                    <div class="col-sm-4">
+                                        <div class="card border border-primary mb-3">
+                                            <div class="card-header bg-transparent border border-primary">
+                                                <h4 class="card-title">{{campana.nombre_campana}}</h4> 
+                                            </div>
+                                            <div class="card-body text-primary border border-primary">
+                                                </br>
+                                                <h5 class="card-title" style="text-align:center">Cuentas</h5> 
+                                                <ul class="list-group">
+                                                    {% for cuenta in cuentas %}
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            {{cuenta.account}}
+                                                            <span class="badge bg-success rounded-pill">Seguidores: {{cuenta.followers}}</span>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                                </br>
+                                                <canvas id="pie-chart" width="600 " height="400"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'includes/scripts.html' %}
+
+    <!-- prism Js -->
+    <script src="/static/assets/js/plugins/prism.js"></script>
+    <script src="/static/assets/js/horizontal-menu.js"></script>
+    <script>
+        (function() {
+            if ($('#layout-sidenav').hasClass('sidenav-horizontal') || window.layoutHelpers.isSmallScreen()) {
+                return;
+            }
+            try {
+                window.layoutHelpers._getSetting("Rtl")
+                window.layoutHelpers.setCollapsed(
+                    localStorage.getItem('layoutCollapsed') === 'true',
+                    false
+                );
+            } catch (e) {}
+        })();
+        $(function() {
+            $('#layout-sidenav').each(function() {
+                new SideNav(this, {
+                    orientation: $(this).hasClass('sidenav-horizontal') ? 'horizontal' : 'vertical'
+                });
+            });
+            $('body').on('click', '.layout-sidenav-toggle', function(e) {
+                e.preventDefault();
+                window.layoutHelpers.toggleCollapsed();
+                if (!window.layoutHelpers.isSmallScreen()) {
+                    try {
+                        localStorage.setItem('layoutCollapsed', String(window.layoutHelpers.isCollapsed()));
+                    } catch (e) {}
+                }
+            });
+        });
+        $(document).ready(function() {
+            $("#pcoded").pcodedmenu({
+                themelayout: 'horizontal',
+                MenuTrigger: 'hover',
+                SubMenuTrigger: 'hover',
+            });
+        });
+    </script>
+
+    <script src="/static/assets/js/analytics.js"></script>
+
+    <script>
+        new Chart(document.getElementById("pie-chart"), {
+            type: 'pie',
+            data: {{ pie_chart|safe }},
+            options: {
+            title: {
+                display: true,
+                text: 'Datos de la campaña',
+                fontSize: 20
+            }
+            }
+        });
+    </script>
+
+</body>
+</html>

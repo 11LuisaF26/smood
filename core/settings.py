@@ -21,8 +21,8 @@ SECRET_KEY = config('SECRET_KEY', default='S#perS3crEt_1122')
 DEBUG = config('DEBUG', default=True)
 
 # load production server from .env
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', config('SERVER', default='127.0.0.1')]
-
+#ALLOWED_HOSTS = ['localhost', '127.0.0.1','150.136.241.89', config('SERVER', default='127.0.0.1')]
+ALLOWED_HOSTS = ['www.s-mood.co','localhost', '127.0.0.1', '10.0.0.2','150.136.241.89',config('SERVER', default='127.0.0.1')]
 # Application definition
 
 INSTALLED_APPS = [
@@ -33,7 +33,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
-    'background_task',    
+    'background_task',
 ]
 
 MIDDLEWARE = [
@@ -81,7 +81,19 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+'''
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'smood',
+        'USER': 'smood',
+        'PASSWORD': 'smood',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
+'''
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 

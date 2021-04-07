@@ -151,6 +151,7 @@ File: style.css
     opacity: 0.9;
 }
 
+
 /*
  * Scrollbar thumb styles
  */
@@ -26487,3 +26488,34 @@ div.dtk-focus-alt table.dataTable tbody th.focus {
 
 /* image varient End */
 /**====== Authentication css end ======**/
+
+.blog .carousel-indicators {
+	left: 0;
+	top: auto;
+    bottom: -40px;
+
+}
+
+/* The colour of the indicators */
+.blog .carousel-indicators li {
+    background: #a3a3a3;
+    border-radius: 50%;
+    width: 8px;
+    height: 8px;
+}
+
+.blog .carousel-indicators .active {
+background: #707070;
+}
+
+
+.window-notice {
+    background: rgba(33, 41, 52, .85);
+    left: 0;
+    bottom: 0;
+    right: 0;
+    top: 0;
+    display: flex;
+    position: fixed;
+    z-index: 999;
+}

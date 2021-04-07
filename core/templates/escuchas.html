@@ -1,0 +1,105 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Social Listening {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}	
+
+    <!-- [ Main Content ] start -->
+    <section class="pcoded-main-container">
+        <div class="pcoded-content">
+            <!-- [ breadcrumb ] start -->
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10">Social Listening</h5>
+                            </div>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="#!">Social Listening</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <!-- [ stiped-table ] start -->
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Social Listening</h5>
+                            <span class="d-block m-t-5">Social Listening registrados</span>
+                        </div>
+                        <div class="card-body table-border-style">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr> 
+                                            <th>#</th>
+                                            <th>Nombre Social Listening</th>
+                                            <th>Fecha inicio red social</th>
+                                            <th>fecha final red social</th>
+                                            <th>Empresa red social</th>
+                                            <th>Campaña</th>
+                                            <th>Ubicación</th>
+                                            <th>Hashtags</th>
+                                            <th>Redes sociales</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                    {% for escucha in escuchas%}
+                                    <!-- url in view -->
+                                        <tr> 
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{escucha.nombre_escucha}}</td>
+                                            <td>{{escucha.fecha_inicio_red_social}}</td>
+                                            <td>{{escucha.fecha_final_red_social}}</td>
+                                            <td>{{escucha.empresa_red_social}}</td>
+                                            <td>{{escucha.campana_publicitaria_red_social}}</td>
+                                            <td>{{escucha.ubicacion_red_social}}</td>
+                                            <td>{{escucha.hashtag_red_social}}</td>
+                                            <td>{{escucha.red_social}}</td>
+                                            <td>
+                                                <a href="{% url 'editar_escucha' escucha.id %}" class="btn text-secondary px-0">
+                                                    <i class="far fa-edit fa-lg"></i>
+                                                </a>
+                                                <form action="{% url 'eliminar_escucha' escucha.id %}" method="POST" class="d-inline">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn">
+                                                        <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+                                                    </button>
+                                                    
+                                                </form>                                                
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- [ stiped-table ] end -->
+            </div>
+        </div>
+    </section>>
+            <!-- [ br]end -->
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+    <!-- Apex Chart -->
+    <script src="/static/assets/js/plugins/apexcharts.min.js"></script>
+    <!-- custom-chart js -->
+    <script src="/static/assets/js/pages/dashboard-main.js"></script>
+
+{% endblock javascripts %}

@@ -1,0 +1,180 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Crear social listening {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<!-- [ Main Content ] start -->
+<section class="pcoded-main-container">
+    <div class="pcoded-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">Social Listening</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/ "><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#!">Crear social listening</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <!-- [ stiped-table ] start -->
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Crear social listening</h3>
+                    </div>
+                    <span class="card-body table-border-style">
+                        {% if msg %}
+                            {{ msg | safe }}
+                        {% else %}
+                            <h5>Ingresa la siguiente información</h5>
+                        {% endif %} 
+                    </span>                   
+                    
+                    {% if not success %}  
+                        <div class="card-body table-border-style">
+                            <form action="{% url 'crear_escucha' %}" method="post" role="form">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label><strong>Nombre*</strong></label>
+                                    <input type="text" required="true" class="form-control" id="nombre_red_social" {{ form.nombre_escucha }} </input>
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Usuario de búsqueda*</strong></label>
+                                    <input type="text" required="true" class="form-control" id="nombre_red_social" {{ form.usuario_red_social }} </input>
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Fecha inicio</strong></label>
+                                    <input type="date"  id="fecha_inicio_red_social" {{ form.fecha_inicio_red_social }} 
+
+                                    <label><strong>Fecha Final</strong></label>
+                                    <input type="date"  id="fecha_final_red_social" onchange="CompareDate()" {{ form.fecha_final_red_social }} 
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Empresa</strong></label>
+                                    <select type="text" class="form-control" id="empresa" {{ form.empresa_red_social }} </select>
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Campaña</strong></label>
+                                    <select type="text" class="form-control" id="campana" {{ form.campana_publicitaria_red_social }} </input>
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Ubicación</strong></label>
+                                    <select type="text" class="form-control" id="ubicacion" {{ form.ubicacion_red_social }} </input>
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Hashtags</strong></label>
+                                    <select type="text" class="form-control" id="hashtaga" {{ form.hashtag_red_social }} </input>
+                                    <div>
+                                        </br>
+                                        <button type="button" class="btn  btn-icon btn-outline-primary" style="float: right;" data-toggle="modal" data-target="#hashtaghs_modal" >+ Agregar</button>
+                                    </div>
+                                </div>
+                                </br>
+                                </br>
+                                <div class="form-group">
+                                    <label><strong>Redes</strong></label>
+                                    <select type="text" class="form-control" id="redes" {{ form.red_social }} </input>
+                                </div>
+                                </br>
+                                </br>
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="es_competencia" {{ form.es_competencia }} </input>
+                                    <label class="custom-control-label" for="es_competencia"><strong>Es competencia</strong></label>
+                                </div>
+                                </br>
+                                <button type="submit" name="crearredsocial" class="btn btn-primary btn-block mb-4">Crear social listening</button>
+                            </form>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="credenciales_modal" tabindex="-1" role="dialog" aria-labelledby="credenciales_modal" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="credenciales_modal_label">Agregar Credenciales</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{% url 'guardar_credenciales' %}" method="post" role="form">
+                                                {% csrf_token %}                            
+                                                <div class="form-group">
+                                                    <label>Twitter bearer token</label>
+                                                    <input type="text" class="form-control" id="nombre_hastag" {{ form_credential.twitter_bearer_token }}</input>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Instagram username</label>
+                                                    <input type="text" class="form-control" id="nombre_hastag" {{ form_credential.instagram_username }}</input>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Instagram password</label>
+                                                    <input type="password" class="form-control" id="nombre_hastag" {{ form_credential.instagram_password }}</input>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Instagram path</label>
+                                                    <input type="text" class="form-control" id="nombre_hastag" {{ form_credential.instagram_path }}</input>
+                                                </div>
+                                                <button type="submit" name="crearhashtag" class="btn btn-primary btn-block mb-4">Guardar credenciales</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="hashtaghs_modal" tabindex="-1" role="dialog" aria-labelledby="hashtaghs_modal" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="hashtaghs_modal_label">Agregar hashtag</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{% url 'crear_hashtag' %}" method="post" role="form">
+                                                {% csrf_token %}                            
+                                                <div class="form-group">
+                                                    <label>Nombre</label>
+                                                    <input type="text" class="form-control" id="nombre_hastag" {{ hashtags_form.nombre_hastag }}</input>
+                                                </div>                     
+                                                <button type="submit" name="crearhashtag" class="btn btn-primary btn-block mb-4">Crear hashtag</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Fin Modals -->
+                        </div>
+                    {% endif %}
+                </div>
+            </div>    
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<!-- Apex Chart -->
+<script src="/static/assets/js/plugins/apexcharts.min.js"></script>
+<!-- custom-chart js -->
+<script src="/static/assets/js/pages/dashboard-main.js"></script>
+
+<script src="/static/assets/js/escuchas_save/dates.js"></script>
+
+{% endblock javascripts %}

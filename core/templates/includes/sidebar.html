@@ -13,7 +13,7 @@
                                 <i class="feather icon-layers"></i></span><span class="pcoded-mtext">Dashboard</span></a>
 					</li>
 					<li class="nav-item pcoded-hasmenu">
-					    <a class="nav-link ">
+						<a class="nav-link ">
 							<span class="pcoded-micon">
 								<i class="feather icon-layout"></i></span><span class="pcoded-mtext">Empresas</span></a>
 						<ul class="pcoded-submenu">
@@ -26,30 +26,17 @@
 						</ul>
 					</li>
 					<li class="nav-item pcoded-hasmenu">
-					    <a class="nav-link ">
+						<a class="nav-link ">
 							<span class="pcoded-micon">
 								<i class="feather icon-layout"></i></span><span class="pcoded-mtext">Campañas</span></a>
-					    <ul class="pcoded-submenu">
+						<ul class="pcoded-submenu">
 							{% if perms.app.view_campana_publicitaria %}
 							<li><a href="/campanas/">Consultar campañas publicitarias</a></li>					        
 							{% endif %}	
 							{% if perms.app.add_campana_publicitaria %}
 							<li><a href="/campanas/save/">Crear campaña publicitaria</a></li>					        
 							{% endif %}	
-					    </ul>
-					</li>
-					<li class="nav-item pcoded-hasmenu">
-					    <a class="nav-link ">
-							<span class="pcoded-micon">
-								<i class="feather icon-layout"></i></span><span class="pcoded-mtext">Redes Sociales</span></a>
-					    <ul class="pcoded-submenu">
-							{% if perms.app.view_red_social %}
-							<li><a href="/redes/">Consultar redes sociales</a></li>					        
-							{% endif %}
-							{% if perms.app.add_red_social %}
-							<li><a href="/redes/save/">Crear redes sociales</a></li>					        
-							{% endif %}
-					    </ul>
+						</ul>
 					</li>
 					<li class="nav-item">
                         <a href="/acercade/ " class="nav-link ">
