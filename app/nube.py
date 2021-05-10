@@ -122,9 +122,9 @@ def cloud_gen_ig(request, id=0):
 
 def tokenizeText(sample):    
     doc = nlp(sample)
-    stopwords = set(STOPWORDS)           
+    stopwords = set(STOPLIST)           
     stopwords.add("queryset")    
-    lemmas = [token.lemma_ for token in doc]
+    lemmas = [token.lemma_ for token in doc if not token.is_stop]
     a_lemmas = [lemma for lemma in lemmas if (lemma.isalpha()  and lemma != '-PRON-') and lemma not in stopwords and lemma not in SYMBOLS]    
     return a_lemmas
 
