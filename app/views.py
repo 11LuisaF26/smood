@@ -242,18 +242,18 @@ def pages(request):
 def acerca_de(request):
     context = {}
     user = request.user
-    if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists():
-        try:
-            return render(request, "acerca_de.html")
-        except template.TemplateDoesNotExist:
-            html_template = loader.get_template( 'page-404.html' )
-            return HttpResponse(html_template.render(context, request))
-        except:
-            html_template = loader.get_template( 'page-500.html' )
-            return HttpResponse(html_template.render(context, request))
-    else:
-        html_template = loader.get_template( 'page-403.html' )
+    # if user.groups.filter(name='Administrador').exists() or user.groups.filter(name='Publicista').exists():
+    try:
+        return render(request, "acerca_de.html")
+    except template.TemplateDoesNotExist:
+        html_template = loader.get_template( 'page-404.html' )
         return HttpResponse(html_template.render(context, request))
+    except:
+        html_template = loader.get_template( 'page-500.html' )
+        return HttpResponse(html_template.render(context, request))
+    #else:
+        #html_template = loader.get_template( 'page-403.html' )
+        #return HttpResponse(html_template.render(context, request))
 
 @login_required(login_url="/login/")
 def empresas(request):        
