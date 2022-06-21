@@ -582,7 +582,7 @@ def escuchas_campana(request, campana_id):
                         )
                     
                     if nombre_red == "Twitter":
-                        twitter_bearer_token = 'AAAAAAAAAAAAAAAAAAAAAKo0IwEAAAAAgLgNscNbgAvyv%2F%2FT09pRJ%2BtKc84%3DCBIzVzsS4gPUdReAlqFp0ukcALWMDLwX1TefU34s8qVo0UYEZ7'
+                        twitter_bearer_token = 'AAAAAAAAAAAAAAAAAAAAAI%2BidQEAAAAAnZ8Ty8sgVFk%2B6%2FMl1rWaQU%2B%2BNL4%3D3TbeAESvf4r0XyExnW96YgI1rrtEAOtFBpzchLZ5uYN6IOtKY4'
 
                         twitter_data = {
                             'nombre_usuario':search_user, 
