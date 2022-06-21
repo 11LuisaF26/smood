@@ -11,7 +11,7 @@ class campana_publicitaria_form(ModelForm):
 class empresa_form(ModelForm): 
     class Meta():
         model = empresa
-        fields = ('nit_empresa', 'nombre_empresa', 'estado_empresa', 'usuarios')
+        fields = ('nombre_empresa', 'estado_empresa', 'usuarios')
         
                 
 class red_social_form(ModelForm): 

@@ -13,7 +13,25 @@ se pueden generar para resolver casos de Publicidad y de Marketing,
 el cual es el objetivo principal de la Investigación y del Software.
 
 PREREQUISITOS
-Estos se pueden encontrar en el archivo requirements.txt. 
+Gracias a las herramientas que se utilizan en el software, el cual podemos decir estan basadas o 
+por defecto trabajan en base a el sistema operativo Linux. Se recomienda que para poder ejecutar
+el software de manera correcta en una maquina local, lo mejor es trabajar en un sistema operativo 
+a base de Linux. Para el sistema operativo Windows, vimos reflejados varios inconvenientes de 
+compatibilidad, y por lo tanto para este escenario se llegó a la conclusión que, la opción más óptima es 
+instalar el subsistema de Windows para Linux, de esta forma evitamos diferentes tipos de errores que el 
+sistema Windows nos arroja. 
+
+A continuación se mencionan los programas que deben ser instalados antes, para una instalación correcta 
+del software:
+
+Git 				--- 	https://git-scm.com/downloads
+Python 				--- 	https://www.python.org/downloads/
+Subsistema Linux 	--- 	Windows 10 trae la opción de habilitar el subsistema Linux desde configuraciones,
+							acá encuentra la guía  https://docs.microsoft.com/es-es/windows/wsl/install-on-server
+Ubuntu 				---		Una vez instalado el subsistema, ya se puede descargar la aplicación de Ubuntu desde 
+							la Microsoft Store
+
+Las dependencias se pueden encontrar en el archivo requirements.txt. 
 En el siguiente item se encontraran los pasos para su correcta instalación.
 
 INSTALACIÓN
