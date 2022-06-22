@@ -28,7 +28,7 @@ import string
 import spacy
 # from spacy_spanish_lemmatizer import SpacyCustomLemmatizer
 from django.db.models import Q
-from sklearn.feature_extraction.text import CountVectorizer
+# from sklearn.feature_extraction.text import CountVectorizer
 
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -57,7 +57,7 @@ def nube_de_palabras(text):
     words = nltk.tokenize.word_tokenize(text)
     stopwords = set(STOPWORDS)           
     stopwords.add("queryset")    
-    stopwords.add("'")                               
+    stopwords.add("'")                                
     plt.figure(figsize = (20,5))
         
     wordcloud = WordCloud(background_color='white', stopwords=stopwords).generate(text)
@@ -74,7 +74,7 @@ def nube_de_palabras(text):
     tuplas = list(word_freq.items())[:5]
     print(tuplas)
     
-    cv=CountVectorizer(stop_words=STOPWORDS, ngram_range=(1, 3))
+    #cv=CountVectorizer(stop_words=STOPWORDS, ngram_range=(1, 3))
   
     #------------------------------------------------------------------------------
     image = io.BytesIO()
@@ -117,10 +117,10 @@ def palabras_mas_usadas(text):
 def cloud_gen_t(request, id):  
     if request.method == 'GET':
             if id!=0:
-                emp = empresa.objects.get(pk=id)   
-                camp = campana_publicitaria.objects.get(empresa_campana=emp)             
+                #emp = empresa.objects.get(pk=id)   
+                camp = campana_publicitaria.objects.get(pk=id)             
                 twitter_red_social = red_social.objects.get(nombre_red_social="Twitter")                
-                twitter_data = data_red.objects.filter(data_red_campana =camp,data_red_social =twitter_red_social ).values('publicacion_texto')        
+                twitter_data = data_red.objects.filter(data_red_campana = camp,data_red_social =twitter_red_social ).values('publicacion_texto')        
                 
                 texto = str(twitter_data)    
                 word_list = normalize(texto)
@@ -188,8 +188,8 @@ def generador(texto):
 
 def red_palabras_t(request, id=0):
     #texto
-    emp = empresa.objects.get(pk=id)  
-    camp = campana_publicitaria.objects.get(empresa_campana=emp)         
+    #emp = empresa.objects.get(pk=id)  
+    camp = campana_publicitaria.objects.get(pk=id)         
     twitter_red_social = red_social.objects.get(nombre_red_social="Twitter")                
     twitter_data = data_red.objects.filter(data_red_campana =camp,data_red_social =twitter_red_social ).values_list('publicacion_texto') 
     word = list(twitter_data)
