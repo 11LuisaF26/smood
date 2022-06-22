@@ -26,15 +26,15 @@ import urllib, base64
 import json
 import string
 import spacy
-from spacy_spanish_lemmatizer import SpacyCustomLemmatizer
+# from spacy_spanish_lemmatizer import SpacyCustomLemmatizer
 from django.db.models import Q
 from sklearn.feature_extraction.text import CountVectorizer
 
 nltk.download('punkt')
 nltk.download('stopwords')
-#pip install spacy_spanish_lemmatizer
-#python -m spacy_spanish_lemmatizer download wiki
-#python -m spacy download es_core_news_sm 
+# pip install spacy_spanish_lemmatizer
+# python -m spacy_spanish_lemmatizer download wiki
+# python -m spacy download es_core_news_sm 
 
 
 STOPLIST = set(stopwords.words('spanish'))
