@@ -105,21 +105,10 @@ def palabras_mas_usadas(text):
     rel_freq=wordcloud.words_
     tuplas = list(word_freq.items())[:5]
     print(tuplas)
-    
-    cv=CountVectorizer(stop_words=STOPWORDS, ngram_range=(1, 3))
-  
-    #------------------------------------------------------------------------------
-    plt.bar(range(len(tuplas)), [val[1] for val in tuplas], align='center')
-    plt.xticks(range(len(tuplas)), [val[0] for val in tuplas])
-    plt.xticks(rotation=90)
-    
-    image = io.BytesIO()
-    plt.savefig(image, format='png')
-    image.seek(0)  # rewind the data
-    string = base64.b64encode(image.read())
-
-    image_64 = 'data:image/png;base64,' + urllib.parse.quote(string)
-    return image_64
+    arr = np.array(tuplas)
+    df = pd.DataFrame.from_records(arr, columns=['Palabras', 'Cantidad'])
+    tabla = df.to_html
+    return tabla
 
 
 # **************************
@@ -137,7 +126,7 @@ def cloud_gen_t(request, id):
                 word_list = normalize(texto)
                 text =  word_list.replace("'", '')
                 wordcloud = nube_de_palabras(text)
-                barras = palabras_mas_usadas(text)
+                barras = palabras_mas_usadas(text)                
                 return render(request, "nube_de_palabras_twitter.html",{'form': camp,'wordcloud':wordcloud ,'barras':barras})
 
 
@@ -184,7 +173,7 @@ def tokenizeText(sample):
     return a_lemmas
 
 
-def generador(red,texto):    
+def generador(texto):    
     arreglo=[]
     for i in range(0,len(texto)):                
         if len(texto[i])>5:            
@@ -199,14 +188,15 @@ def generador(red,texto):
 
 def red_palabras_t(request, id=0):
     #texto
-    emp = campana_publicitaria.objects.get(pk=id)        
+    emp = empresa.objects.get(pk=id)  
+    camp = campana_publicitaria.objects.get(empresa_campana=emp)         
     twitter_red_social = red_social.objects.get(nombre_red_social="Twitter")                
-    twitter_data = data_red.objects.filter(data_red_campana =emp,data_red_social =twitter_red_social ).values_list('publicacion_texto') 
+    twitter_data = data_red.objects.filter(data_red_campana =camp,data_red_social =twitter_red_social ).values_list('publicacion_texto') 
     word = list(twitter_data)
-    texto = [i for (i,) in word]           
-    red_palabras = generador(twitter_red_social,texto)
+    texto = [i for (i,) in word[0:50]]          
+    red_palabras = generador(texto)
     
-    return render(request, "red_palabras_twitter.html", {'red_palabras':red_palabras})
+    return render(request, "red_palabras_twitter.html", {'form': camp,'red_palabras':red_palabras})
     
 
 def red_palabras_fb(request, id=0):

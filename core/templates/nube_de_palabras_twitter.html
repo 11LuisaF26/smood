@@ -30,23 +30,18 @@
             <!-- [ stiped-table ] start -->
             <div class="col-xl-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h5>Twitter</h5>
-                        <span class="d-block m-t-5">Datos de twitter</span>
-                    </div>
                     {% if not success %}
                     <form action="" method="post" role="form">
                         {% csrf_token %}
-                        <div class="card-body table-border-style">
-                            <div class="col-xl-12 col-md-12">
-                                <div class="row" style="align-items:center;">
-                                    <div class="col-md-6 col-lg-6">
-                                        <label>{{form.empresa_campana}}</label>
-                                    </div>
-                                    <div class="col-xl-6">
-                                        <div class="table-responsive">
-                                            <img src="{{ barras }}">
-                                        </div>
+                        <div class="card-header">
+                            <div class="row" style="align-items:center;">
+                                <div class="col-xl-9">
+                                    <h1>Datos de twitter - Campaña {{form.empresa_campana}}</h1>
+                                </div>
+                                <div class="col-xl-3">
+                                    <div class="table-responsive">
+                                        <br><br>
+                                        <table class="table table-striped">{{ barras | safe }}</table>
                                     </div>
                                 </div>
                             </div>
@@ -54,15 +49,21 @@
                     </form>
                     {% endif %}
                     <div class="card-body table-border-style">
-                        <div class="table-responsive">
-                            <img src="{{ wordcloud }}">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="table-responsive">
+                                    <img src="{{ wordcloud }}">
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
-
                 </div>
+
             </div>
-            <!-- [ stiped-table ] end -->
         </div>
+        <!-- [ stiped-table ] end -->
+    </div>
     </div>
 </section>>
 <!-- [ br]end -->
