@@ -26,14 +26,15 @@ import urllib, base64
 import json
 import string
 import spacy
-# from spacy_spanish_lemmatizer import SpacyCustomLemmatizer
+from spacy_spanish_lemmatizer import SpacyCustomLemmatizer
 from django.db.models import Q
+from sklearn.feature_extraction.text import CountVectorizer
 
-
-# nltk.download('stopwords')
-# pip install spacy_spanish_lemmatizer
-# python -m spacy_spanish_lemmatizer download wiki
-# python -m spacy download es_core_news_sm 
+nltk.download('punkt')
+nltk.download('stopwords')
+#pip install spacy_spanish_lemmatizer
+#python -m spacy_spanish_lemmatizer download wiki
+#python -m spacy download es_core_news_sm 
 
 
 STOPLIST = set(stopwords.words('spanish'))
@@ -52,7 +53,8 @@ def normalize(text):
     lexical_tokens = str([t.lower() for t in words if len(t) > 3 and t.isalpha()])
     return lexical_tokens
     
-def nube_de_palabras(text):        
+def nube_de_palabras(text):  
+    words = nltk.tokenize.word_tokenize(text)
     stopwords = set(STOPWORDS)           
     stopwords.add("queryset")    
     stopwords.add("'")                               
@@ -63,6 +65,18 @@ def nube_de_palabras(text):
     plt.imshow(wordcloud, interpolation= 'bilinear')
     plt.axis("off")
     
+    #------------------------------------------------------------------------------
+    #Crear diccionario de frecuencias
+    text_dictionary = wordcloud.process_text(text)
+    #Ordenar por frecuencia
+    word_freq={k: v for k, v in sorted(text_dictionary.items(),reverse=True, key=lambda item: item[1])}
+    rel_freq=wordcloud.words_
+    tuplas = list(word_freq.items())[:5]
+    print(tuplas)
+    
+    cv=CountVectorizer(stop_words=STOPWORDS, ngram_range=(1, 3))
+  
+    #------------------------------------------------------------------------------
     image = io.BytesIO()
     plt.savefig(image, format='png')
     image.seek(0)  # rewind the data
@@ -72,18 +86,59 @@ def nube_de_palabras(text):
     return image_64
 
 # **************************
+# Palabras mas usadas
+# **************************
+def palabras_mas_usadas(text):  
+    words = nltk.tokenize.word_tokenize(text)
+    stopwords = set(STOPWORDS)           
+    stopwords.add("queryset")    
+    stopwords.add("'")                               
+    plt.figure(figsize = (3,2))
+        
+    wordcloud = WordCloud(background_color='white', stopwords=stopwords).generate(text)
+
+    #------------------------------------------------------------------------------
+    #Crear diccionario de frecuencias
+    text_dictionary = wordcloud.process_text(text)
+    #Ordenar por frecuencia
+    word_freq={k: v for k, v in sorted(text_dictionary.items(),reverse=True, key=lambda item: item[1])}
+    rel_freq=wordcloud.words_
+    tuplas = list(word_freq.items())[:5]
+    print(tuplas)
+    
+    cv=CountVectorizer(stop_words=STOPWORDS, ngram_range=(1, 3))
+  
+    #------------------------------------------------------------------------------
+    plt.bar(range(len(tuplas)), [val[1] for val in tuplas], align='center')
+    plt.xticks(range(len(tuplas)), [val[0] for val in tuplas])
+    plt.xticks(rotation=90)
+    
+    image = io.BytesIO()
+    plt.savefig(image, format='png')
+    image.seek(0)  # rewind the data
+    string = base64.b64encode(image.read())
+
+    image_64 = 'data:image/png;base64,' + urllib.parse.quote(string)
+    return image_64
+
+
+# **************************
 # Nube de palabras Twitter
 # **************************
-def cloud_gen_t(request, id):    
-    emp = campana_publicitaria.objects.get(pk=id)        
-    twitter_red_social = red_social.objects.get(nombre_red_social="Twitter")                
-    twitter_data = data_red.objects.filter(data_red_campana =emp,data_red_social =twitter_red_social ).values('publicacion_texto')        
-    texto = str(twitter_data)    
-    word_list = normalize(texto)
-    text =  word_list.replace("'", '')
-    wordcloud = nube_de_palabras(text)
-    
-    return render(request, "nube_de_palabras_twitter.html",{'wordcloud':wordcloud})
+def cloud_gen_t(request, id):  
+    if request.method == 'GET':
+            if id!=0:
+                emp = empresa.objects.get(pk=id)   
+                camp = campana_publicitaria.objects.get(empresa_campana=emp)             
+                twitter_red_social = red_social.objects.get(nombre_red_social="Twitter")                
+                twitter_data = data_red.objects.filter(data_red_campana =camp,data_red_social =twitter_red_social ).values('publicacion_texto')        
+                
+                texto = str(twitter_data)    
+                word_list = normalize(texto)
+                text =  word_list.replace("'", '')
+                wordcloud = nube_de_palabras(text)
+                barras = palabras_mas_usadas(text)
+                return render(request, "nube_de_palabras_twitter.html",{'form': camp,'wordcloud':wordcloud ,'barras':barras})
 
 
 # **************************

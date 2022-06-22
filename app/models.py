@@ -147,11 +147,11 @@ class cuentas_empresa(models.Model):
     profile_pic_url = models.CharField(null=True, max_length=500, verbose_name='Url foto perfil')
     web_site = models.CharField(null=True, max_length=500, verbose_name='Url')
     is_competition = models.BooleanField(default=False)
-    avg_compound = models.FloatField(null=True, verbose_name='AVG compouse', default=0)
     data_red_escucha = models.ForeignKey(escucha, on_delete=models.CASCADE, null=True)
     data_red_campana = models.ForeignKey(campana_publicitaria, on_delete=models.CASCADE, null=True) 
     data_red_social = models.ForeignKey(red_social, on_delete=models.CASCADE, null=True) 
-    
+    #avg_compound = models.FloatField(null=True, verbose_name='AVG compouse', default=0)
+
     class Meta():
         verbose_name = "Cuenta"
         verbose_name_plural = "Cuentas"
