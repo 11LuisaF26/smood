@@ -27,7 +27,7 @@
 </style>
 {% extends "layouts/base.html" %}
 
-{% block title %} Crear Empresa {% endblock %}
+{% block title %} Red de palabras {% endblock %}
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -57,10 +57,19 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h5>Red de palabras</h5>
-                    </div>
-                    <span class="card-body table-border-style">                        
+                    {% if not success %}
+                    <form action="" method="post" role="form">
+                        {% csrf_token %}
+                        <div class="card-header">
+                            <div class="row" style="align-items:center;">
+                                <div class="col-xl-9">
+                                    <h1>Datos de twitter - Campaña {{form.empresa_campana}}</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    {% endif %}
+                    <span class="card-body table-border-style">
                         <section>
                             <div class="container">
                                 <div class="row">
@@ -68,7 +77,7 @@
                                 </div>
                             </div>
                         </section>
-                    </span>                        
+                    </span>
                 </div>
             </div>
         </div>
@@ -87,12 +96,12 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <script>
-    
+
 </script>
 <script type="text/javascript">
     var jsonObject = JSON.parse('{{ red_palabras | escapejs }}');
-    
-    
+
+
 
     var keynet = ucc.keyWords('kwds')
         .data(jsonObject).linkAccessor('keywords')

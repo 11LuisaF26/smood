@@ -2,14 +2,14 @@
 from background_task import background
 from django.contrib.auth.models import User
 from facebook_scraper import get_posts
-from igramscraper.instagram import Instagram
+#from igramscraper.instagram import Instagram
 from app.models import *
 from requests.exceptions import HTTPError, ConnectionError, Timeout
 from . import twitter_conn
 from datetime import datetime
 import logging
 import json
-from deep_translator import GoogleTranslator
+#from deep_translator import GoogleTranslator
 import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 logger = logging.getLogger(__name__)
