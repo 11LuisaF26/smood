@@ -24339,12 +24339,12 @@ pre[class*=language-]:before {
 }
 
 .pcoded-header.headerpos-fixed ~ .pcoded-main-container {
-    padding-top: 56px;
+    padding-top: 50px;
 }
 
 @media only screen and (max-width: 991px) {
     .pcoded-header.headerpos-fixed ~ .pcoded-main-container {
-        padding-top: 56px;
+        padding-top: 50px;
     }
 }
 

@@ -180,8 +180,9 @@ def generador(texto):
             data=tokenizeText(texto[i])
             data_tree=dict()
             data_tree['submissionID']=str(i)
-            data_tree['keywords']=data           
-            
+            data_tree['keywords']=data   
+            data_tree['year']=str(i)
+            data_tree['cleanTitle']=data          
             arreglo.append(data_tree)
     return json.dumps(arreglo,ensure_ascii=False)
 
