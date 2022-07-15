@@ -158,4 +158,3 @@ class cuentas_empresa(models.Model):
 
     def __str__(self):
         return "{} {}".format(self.username, self.data_red_social)
-

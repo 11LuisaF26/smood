@@ -7,37 +7,41 @@
 
 {% block content %}
 <!-- [ Main Content ] start -->
-<section class="pcoded-main-container">
+<section class="pcoded-main-container" style="padding: 0px;">
     <div class="pcoded-content">
         <!-- [ breadcrumb ] start -->
-        <div class="page-header">
-            <div class="page-block">
-                <div class="row align-items-center">
-                    <div class="col-md-12">
-                        <div class="page-header-title">
-                            <h5 class="m-b-10">Empresas</h5>
+        <div class="row">
+            <div class="col-xl-1">
+            </div>
+            <div class="col-xl-10">
+                <div class="page-header">
+                    <div class="page-block">
+                        <div class="row align-items-center">
+                            <div class="col-md-12">
+                                <div class="page-header-title">
+                                    <h5 class="m-b-10">Empresas</h5>
+                                </div>
+                                <ul class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="/ "><i class="feather icon-home"></i></a></li>
+                                    <li class="breadcrumb-item"><a href="/empresas/">Empresas</a></li>
+                                    <li class="breadcrumb-item"><a href="#!">Crear empresa </a></li>
+                                </ul>
+                            </div>
                         </div>
-                        <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/ "><i class="feather icon-home"></i></a></li>
-                            <li class="breadcrumb-item"><a href="/empresas/">Empresas</a></li>
-                            <li class="breadcrumb-item"><a href="#!">Crear empresa </a></li>
-                        </ul>
+                    </div>
+                    <div class="col-xl-1">
                     </div>
                 </div>
-            </div>
-        </div>
-
-
-        <div class="row">
-            <!-- [ stiped-table ] start -->
-            <div class="col-xl-12">
-                <div class="card">
-                    {% if not success %}  
-                        <div class="card-body table-border-style">
-                            <form action="" method="post" role="form">
-                                {% csrf_token %}
-                                <div class="form-group">
-                                <!--label><strong>NIT*</strong></label>
+                <div class="row">
+                    <!-- [ stiped-table ] start -->
+                    <div class="col-xl-12">
+                        <div class="card">
+                            {% if not success %}
+                            <div class="card-body table-border-style">
+                                <form action="" method="post" role="form">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <!--label><strong>NIT*</strong></label>
                                     <input type="text" required="true" class="form-control" id="NIT" {{ form.nit_empresa }} </input>
                                 </div-->
                                 <div class="form-group">
@@ -49,20 +53,23 @@
                                     <select type="text" class="form-control" id="estado_empresa" {{ form.estado_empresa }}</select>
                                 </div>                          
 
-                                <div class="form-group">
-                                    <label><strong>Usuarios</strong></label>
-                                    <select type="text" class="form-control" id="empresa_campana" {{ form.usuarios }} </select>                            
-                                </div>                                
-                                <button type="submit" name="crearempresa" class="btn btn-primary btn-block mb-4">Guardar</button>
-                            </form>
+                                        <div class="form-group">
+                                            <label><strong>Usuarios</strong></label>
+                                            <select type="text" class="form-control" id="empresa_campana" {{ form.usuarios }} </select>
+                                        </div>
+                                        <button type="submit" name="crearempresa"
+                                            class="btn btn-primary btn-block mb-4">Guardar</button>
+                                </form>
+                            </div>
+
+
+
+                            {% endif %}
                         </div>
-
-
-                        
-                    {% endif %} 
+                    </div>
+                    <!-- [ stiped-table ] end -->
                 </div>
             </div>
-            <!-- [ stiped-table ] end -->
         </div>
     </div>
 </section>

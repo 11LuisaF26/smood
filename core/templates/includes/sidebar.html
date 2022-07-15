@@ -1,6 +1,6 @@
 
 	<!-- [ navigation menu ] start -->
-	<nav class="pcoded-navbar menupos-fixed menu-light ">
+	<!-- <nav class="pcoded-navbar menupos-fixed menu-light ">
 		<div class="navbar-wrapper  ">
 			<div class="navbar-content scroll-div " >
 				<ul class="nav pcoded-inner-navbar ">
@@ -46,5 +46,58 @@
 				</ul>
 			</div>
 		</div>
-	</nav>
+	</nav> -->
+	<nav class="pcoded-navbar theme-horizontal menu-light brand-blue">
+        <div class="navbar-wrapper container">
+            <div class="navbar-content sidenav-horizontal" id="layout-sidenav">
+                <ul class="nav pcoded-inner-navbar sidenav-inner">
+                    <li class="nav-item pcoded-menu-caption">
+                        <label>Navigation</label>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/" class="nav-link "><span class="pcoded-micon"><i
+                                    class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
+                    </li>
+                    <li class="nav-item pcoded-hasmenu">
+                        <a href="#!" class="nav-link "><span class="pcoded-micon"><i
+                                    class="feather icon-layout"></i></span><span
+                                class="pcoded-mtext">Empresas</span></a>
+                        <ul class="pcoded-submenu">
+                            {% if perms.app.view_empresa %}
+                            <li><a href="/empresas/">Empresas</a></li>
+                            {% endif %}
+                            {% if perms.app.add_empresa %}
+                            <li><a href="/empresas/save/">Crear empresa</a></li>
+                            {% endif %}
+                        </ul>
+                    </li>
+
+                    <li class="nav-item pcoded-hasmenu">
+                        <a href="#!" class="nav-link "><span class="pcoded-micon"><i
+                                    class="feather icon-layout"></i></span><span
+                                class="pcoded-mtext">Campañas</span></a>
+                        <ul class="pcoded-submenu">
+                            {% if perms.app.view_campana_publicitaria %}
+                            <li><a href="/campanas/">Campañas</a></li>
+                            {% endif %}
+                            {% if perms.app.add_campana_publicitaria %}
+                            <li><a href="/campanas/save/">Crear campaña</a></li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/acercade/ " class="nav-link ">
+                            <span class="pcoded-micon">
+                                <i class="feather icon-layers"></i>
+                            </span>
+                            <span class="pcoded-mtext">
+                                Acerca de
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <!-- [ navigation menu ] end -->

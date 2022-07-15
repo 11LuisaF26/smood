@@ -5,7 +5,7 @@
 
     <title>
         Dashboard
-    </title> 
+    </title>
 
     <!-- Meta -->
     <meta charset="utf-8">
@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="/static/assets/css/style.css">
 
 </head>
+
 <body>
 
     <!-- [ Pre-loader ] start -->
@@ -42,32 +43,37 @@
             <div class="navbar-content sidenav-horizontal" id="layout-sidenav">
                 <ul class="nav pcoded-inner-navbar sidenav-inner">
                     <li class="nav-item pcoded-menu-caption">
-                    	<label>Navigation</label>
+                        <label>Navigation</label>
                     </li>
                     <li class="nav-item">
-                        <a href="/" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
+                        <a href="/" class="nav-link "><span class="pcoded-micon"><i
+                                    class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
                     </li>
                     <li class="nav-item pcoded-hasmenu">
-                        <a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Empresas</span></a>
+                        <a href="#!" class="nav-link "><span class="pcoded-micon"><i
+                                    class="feather icon-layout"></i></span><span
+                                class="pcoded-mtext">Empresas</span></a>
                         <ul class="pcoded-submenu">
                             {% if perms.app.view_empresa %}
-                            <li><a href="/empresas/">Empresas</a></li>					        
+                            <li><a href="/empresas/">Empresas</a></li>
                             {% endif %}
                             {% if perms.app.add_empresa %}
                             <li><a href="/empresas/save/">Crear empresa</a></li>
                             {% endif %}
                         </ul>
                     </li>
-                    
+
                     <li class="nav-item pcoded-hasmenu">
-                        <a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Campañas</span></a>
+                        <a href="#!" class="nav-link "><span class="pcoded-micon"><i
+                                    class="feather icon-layout"></i></span><span
+                                class="pcoded-mtext">Campañas</span></a>
                         <ul class="pcoded-submenu">
                             {% if perms.app.view_campana_publicitaria %}
-							<li><a href="/campanas/">Campañas</a></li>
-							{% endif %}	
-							{% if perms.app.add_campana_publicitaria %}
-							<li><a href="/campanas/save/">Crear campaña</a></li>					        
-							{% endif %}	
+                            <li><a href="/campanas/">Campañas</a></li>
+                            {% endif %}
+                            {% if perms.app.add_campana_publicitaria %}
+                            <li><a href="/campanas/save/">Crear campaña</a></li>
+                            {% endif %}
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -79,7 +85,7 @@
                                 Acerca de
                             </span>
                         </a>
-					</li>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -102,26 +108,30 @@
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav mr-auto">
-                    
+
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     <li>
                         <div class="dropdown drp-user">
                             <a href="#!" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="/static/assets/images/utadeo.png" class="img-radius wid-70" alt="User-Profile-Image">
+                                <img src="/static/assets/images/utadeo.png" class="img-radius wid-70"
+                                    alt="User-Profile-Image">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right profile-notification">
                                 <div class="pro-head">
-                                    <img src="/static/assets/images/utadeo.png" class="img-radius" alt="User-Profile-Image">
+                                    <img src="/static/assets/images/utadeo.png" class="img-radius"
+                                        alt="User-Profile-Image">
                                     <span>{{ request.user.username }}</span>
                                     <a href={% url 'logout' %} class="dud-logout" title="Logout">
                                         <i class="feather icon-log-out"></i>
                                     </a>
                                 </div>
                                 <ul class="pro-body">
-                                    <li><a href="user-profile.html" class="dropdown-item"><i class="feather icon-user"></i> {{ request.user.email }}</a></li>
+                                    <li><a href="user-profile.html" class="dropdown-item"><i
+                                                class="feather icon-user"></i> {{ request.user.email }}</a></li>
                                     <!--li><a href="email_inbox.html" class="dropdown-item"><i class="feather icon-mail"></i> My Messages</a></li-->
-                                    <li><a href={% url 'logout' %} class="dropdown-item"><i class="feather icon-lock"></i>Logout</a></li>
+                                    <li><a href={% url 'logout' %} class="dropdown-item"><i
+                                                class="feather icon-lock"></i>Logout</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -130,7 +140,7 @@
             </div>
         </div>
     </header>
-    
+
     <div class="pcoded-main-container">
         <div class="pcoded-wrapper container">
             <div class="pcoded-content">
@@ -140,17 +150,18 @@
                             <!-- [ Main Content ] start -->
                             <div class="row">
                                 {% for data in datas %}
-                                    <div class="col-md-6 col-xl-3">
+                                <div class="col-md-6 col-xl-3">
                                     <div class="card {{data.color}} order-card">
                                         <div class="card-body">
                                             <h5 class="text-white">{{data.campana_name}}</h5>
-                                            <p class="m-b-0">Publicaciones<span class="float-right">{{data.post_account}}</span></p>
+                                            <p class="m-b-0">Publicaciones<span
+                                                    class="float-right">{{data.post_account}}</span></p>
                                         </div>
                                     </div>
                                 </div>
                                 {% endfor %}
                             </div>
-                            
+
                             <div class="row">
                                 <div class="col-xl-8">
                                     <div class="card">
@@ -158,25 +169,25 @@
                                             <div class="table-responsive">
                                                 <table class="table table-striped">
                                                     <thead>
-                                                        <tr> 
+                                                        <tr>
                                                             <th>#</th>
                                                             <!--th>NIT</th-->
                                                             <th>Nombre</th>
                                                             <th>Estado</th>
                                                         </tr>
                                                     </thead>
-                                                    
-                                                    <tbody>                                        
-                                                    {% for empresa in empresas %}
-                                                        <tr> 
+
+                                                    <tbody>
+                                                        {% for empresa in empresas %}
+                                                        <tr>
                                                             <td>{{ forloop.counter }}</td>
                                                             <!--td>{{empresa.nit_empresa}} </td-->
                                                             <td>{{empresa.nombre_empresa}}</td>
                                                             <td>{{empresa.estado_empresa}}</td>
                                                         </tr>
-                                                    {% endfor %}
+                                                        {% endfor %}
                                                     </tbody>
-                                                    
+
                                                 </table>
                                             </div>
                                         </div>
@@ -188,20 +199,18 @@
                                             <canvas id="pie-chart" width="600 " height="400"></canvas>
                                         </div>
                                     </div>
-                                </div>
-
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 col-lg-4">
                                     <div class="card">
                                         <div class="card-body text-center">
                                             <i class="fab fa-twitter text-c-green d-block f-40"></i>
-                                            <h4 class="m-t-20"><span class="text-c-blgreenue">{{data_twitter}} </span>Publicaciones</h4>
+                                            <h4 class="m-t-20"><span class="text-c-blgreenue">{{data_twitter}}
+                                                </span>Publicaciones</h4>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-lg-4">
+                            </div>
+
+
+                            <!-- <div class="col-md-6 col-lg-4">
                                     <div class="card">
                                         <div class="card-body text-center">
                                             <i class="fab fa-facebook text-c-blue d-block f-40"></i>
@@ -216,14 +225,14 @@
                                             <h4 class="m-t-20"><span class="text-c-blgreenue">{{data_instagram}} </span>Publicaciones</h4>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <!-- [ Main Content ] end -->
+                                </div> -->
                         </div>
+                        <!-- [ Main Content ] end -->
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <!-- [ Main Content ] end -->
 
@@ -233,7 +242,7 @@
     <script src="/static/assets/js/plugins/prism.js"></script>
     <script src="/static/assets/js/horizontal-menu.js"></script>
     <script>
-        (function() {
+        (function () {
             if ($('#layout-sidenav').hasClass('sidenav-horizontal') || window.layoutHelpers.isSmallScreen()) {
                 return;
             }
@@ -243,25 +252,25 @@
                     localStorage.getItem('layoutCollapsed') === 'true',
                     false
                 );
-            } catch (e) {}
+            } catch (e) { }
         })();
-        $(function() {
-            $('#layout-sidenav').each(function() {
+        $(function () {
+            $('#layout-sidenav').each(function () {
                 new SideNav(this, {
                     orientation: $(this).hasClass('sidenav-horizontal') ? 'horizontal' : 'vertical'
                 });
             });
-            $('body').on('click', '.layout-sidenav-toggle', function(e) {
+            $('body').on('click', '.layout-sidenav-toggle', function (e) {
                 e.preventDefault();
                 window.layoutHelpers.toggleCollapsed();
                 if (!window.layoutHelpers.isSmallScreen()) {
                     try {
                         localStorage.setItem('layoutCollapsed', String(window.layoutHelpers.isCollapsed()));
-                    } catch (e) {}
+                    } catch (e) { }
                 }
             });
         });
-        $(document).ready(function() {
+        $(document).ready(function () {
             $("#pcoded").pcodedmenu({
                 themelayout: 'horizontal',
                 MenuTrigger: 'hover',
@@ -273,18 +282,19 @@
     <script>
         new Chart(document.getElementById("pie-chart"), {
             type: 'pie',
-            data: {{ pie_chart|safe }},
+            data: {{ pie_chart| safe }},
             options: {
             title: {
                 display: true,
                 text: 'Social Listening con más datos',
                 fontSize: 20
             }
-            }
+        }
         });
     </script>
 
     <script src="/static/assets/js/analytics.js"></script>
 
 </body>
+
 </html>
